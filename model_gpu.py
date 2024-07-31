@@ -6,9 +6,15 @@ import copy
 from tqdm import tqdm
 import time
 from sklearn.cluster import KMeans
+# import os
+# os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
 
+
+dtype = torch.float64
+index_dtype = torch.int32
 torch.autograd.set_detect_anomaly(True)
-device = torch.device("mps")
+device = torch.device("cuda")
+
 
 def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
     N, Q = tau_init_pre.shape
@@ -20,11 +26,17 @@ def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
     pi = F.softmax(pi_pre,dim=1)
     tau_marg = tau_margin_generator(tau_init,tau_transition).to(device)
     
-    q_indices = torch.arange(Q).view(1, 1, Q, 1, 1).expand(T, Q, Q, N, N).to(device)
-    l_indices = torch.arange(Q).view(1, Q, 1, 1, 1).expand(T, Q, Q, N, N).to(device)
-    t_indices = torch.arange(T).view(T, 1, 1, 1, 1).expand(T, Q, Q, N, N).to(device)
+    tau_init = tau_init.cpu()
+    tau_transition =tau_transition.cpu()
+    alpha=alpha.cpu()
+    pi=pi.cpu()
+    tau_marg = tau_marg.cpu()
+
+
+    q_indices = torch.arange(Q,dtype=index_dtype).view(1, 1, Q, 1, 1).expand(T, Q, Q, N, N)
+    l_indices = torch.arange(Q,dtype=index_dtype).view(1, Q, 1, 1, 1).expand(T, Q, Q, N, N)
+    t_indices = torch.arange(T,dtype=index_dtype).view(T, 1, 1, 1, 1).expand(T, Q, Q, N, N)
     Y_indices = Y.view(T,1,1,N,N).expand(T, Q, Q, N, N)
-    phi_values_new = torch.zeros((T, Q, Q, N, N))
     phi_values_new = phi_vectorized(q_indices,l_indices ,t_indices, Y_indices)
 
     log_phi_values = torch.log(phi_values_new)
@@ -55,11 +67,13 @@ def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
 
         
 def phi_vectorized(q, l, t, y, distribution='Bernoulli'):
-    max_q_l = torch.max(q, l).to(device)
-    min_q_l = torch.min(q, l).to(device)
-    prob = torch.sigmoid(torch.where(q == l, beta[0, min_q_l, max_q_l], beta[t, min_q_l, max_q_l]))
+    max_q_l = torch.max(q, l)
+    min_q_l = torch.min(q, l)
+    zero = torch.zeros(min_q_l.shape,dtype=index_dtype)
+    prob = torch.sigmoid(torch.where(q == l, beta[zero, min_q_l, max_q_l], beta[t, min_q_l, max_q_l]))
+    del max_q_l, min_q_l, q, l
+    y.to(device)
     result = torch.where(y == 0, 1 - prob, prob)
-    
     return result
 
 def tau_margin_generator(tau_init, tau_transition):
@@ -79,7 +93,7 @@ def initial_clustering(adj_matrices, k):
     initial_labels = kmeans.fit_predict(stacked_matrix)
     initial_labels_tensor = torch.tensor(initial_labels, dtype=torch.int64)
     one_hot_labels = torch.nn.functional.one_hot(initial_labels_tensor, num_classes=k)
-    one_hot_labels = one_hot_labels.to(dtype=torch.float64)
+    one_hot_labels = one_hot_labels.to(dtype=dtype)
     return one_hot_labels
 
 def inital_parameter(adj_matrices,k):
@@ -96,10 +110,13 @@ def inital_parameter(adj_matrices,k):
 
 
 distribution = 'Bernoulli'
-Y = torch.tensor(torch.load('Y_large.pt'),dtype=torch.float32)
+Y = torch.tensor(torch.load('parameter/Y_large.pt'))
 time_stamp, num_nodes , _ = Y.shape
 num_latent = 10
 
+print("time_stamp:", time_stamp)
+print("num_nodes:", num_nodes)
+print("num_latent:", num_latent)
 
 # # initialization version
 # tau_init = torch.rand(num_nodes, num_latent, requires_grad=True)  # Example tau matrix
@@ -109,12 +126,12 @@ num_latent = 10
 # beta = torch.rand(time_stamp, num_latent, num_latent, requires_grad=True)
 
 # initialization GPU version
-tau_init = torch.rand(num_nodes, num_latent, dtype=torch.float32, device=device)
-tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, dtype=torch.float32, device=device)
-alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float32, device=device)
-pi = torch.rand(num_latent, num_latent, dtype=torch.float32, device=device)
-beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float32, device=device)
-Y = Y.to(device)
+tau_init = torch.rand(num_nodes, num_latent, device=device,dtype=dtype)
+tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, device=device,dtype=dtype)
+alpha = torch.full((num_latent,), 1/num_latent, device=device,dtype=dtype)
+pi = torch.rand(num_latent, num_latent, device=device,dtype=dtype)
+beta = torch.rand(time_stamp, num_latent, num_latent, device=device,dtype=dtype)
+Y = Y.to(device,dtype=dtype)
 
 
 # tau_init, tau_transition, pi, beta, alpha= inital_parameter(Y, num_latent)
