@@ -10,7 +10,7 @@ from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 
 torch.autograd.set_detect_anomaly(True)
 
-def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
+def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
     N, Q = tau_init_pre.shape
     T = Y.shape[0]
     
@@ -25,7 +25,7 @@ def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
     t_indices = torch.arange(T).view(T, 1, 1, 1, 1).expand(T, Q, Q, N, N)
     Y_indices = Y.view(T,1,1,N,N).expand(T, Q, Q, N, N)
     phi_values_new = torch.zeros((T, Q, Q, N, N))
-    phi_values_new = phi_vectorized(q_indices,l_indices ,t_indices, Y_indices)
+    phi_values_new = phi_vectorized(q_indices,l_indices ,t_indices, Y_indices, beta)
 
     log_phi_values = torch.log(phi_values_new)
     
@@ -54,7 +54,7 @@ def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
     return J_value  # Since we are using gradient ascent
 
         
-def phi_vectorized(q, l, t, y, distribution='Bernoulli'):
+def phi_vectorized(q, l, t, y, beta, distribution='Bernoulli'):
     max_q_l = torch.max(q, l)
     min_q_l = torch.min(q, l)
     prob = torch.sigmoid(torch.where(q == l, beta[0, min_q_l, max_q_l], beta[t, min_q_l, max_q_l]))
@@ -63,6 +63,7 @@ def phi_vectorized(q, l, t, y, distribution='Bernoulli'):
     return result
 
 def tau_margin_generator(tau_init, tau_transition):
+    time_stamp, num_nodes, num_latent, _ = tau_transition.shape
     tau = torch.zeros((time_stamp, num_nodes, num_latent))
     for t in range(time_stamp):
         result = tau_init[:, :]
@@ -71,23 +72,24 @@ def tau_margin_generator(tau_init, tau_transition):
         tau[t,:,:] = result
     return tau
 
-def initial_clustering(adj_matrices, k):
+def initial_clustering(adj_matrices, num_latent):
     # 인접 행렬을 쌓아 하나의 큰 행렬로 만듭니다.
     stacked_matrix = torch.hstack([matrix for matrix in adj_matrices])
     # k-means 알고리즘 적용
-    kmeans = KMeans(n_clusters=k, random_state=0)
+    kmeans = KMeans(n_clusters=num_latent, random_state=0)
     initial_labels = kmeans.fit_predict(stacked_matrix)
     initial_labels_tensor = torch.tensor(initial_labels, dtype=torch.int64)
-    one_hot_labels = torch.nn.functional.one_hot(initial_labels_tensor, num_classes=k)
+    one_hot_labels = torch.nn.functional.one_hot(initial_labels_tensor, num_classes=num_latent)
     one_hot_labels = one_hot_labels.to(dtype=torch.float64)
     return one_hot_labels
 
-def inital_parameter(adj_matrices,k):
+def inital_parameter(adj_matrices,num_latent):
+    time_stamp, num_nodes , _ = adj_matrices.shape
     pi = torch.eye(num_latent, dtype=torch.float64, requires_grad=True)
     alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64, requires_grad=True)
     beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64, requires_grad=True)
 
-    tau_init = initial_clustering(adj_matrices, k)
+    tau_init = initial_clustering(adj_matrices, num_latent)
     tau_init.requires_grad_()
     
     tau_transition = torch.eye(num_latent, dtype=torch.float64).expand(time_stamp, num_nodes, num_latent, num_latent).clone().requires_grad_()
@@ -95,71 +97,99 @@ def inital_parameter(adj_matrices,k):
     return tau_init, tau_transition, pi, beta, alpha
 
 
-num_nodes, num_latent, time_stamp = 100, 2, 5
-distribution = 'Bernoulli'
-Y = torch.tensor(torch.load('Y_MG_LPB.pt'))
 
-
-# # initialization version
-tau_init = torch.rand(num_nodes, num_latent, requires_grad=True)  # Example tau matrix
-tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, requires_grad=True)
-alpha = torch.full((num_latent,), 1/num_latent, requires_grad=True)
-pi = torch.rand(num_latent, num_latent, requires_grad=True)
-beta = torch.rand(time_stamp, num_latent, num_latent, requires_grad=True)
-
-# tau_init, tau_transition, pi, beta, alpha= inital_parameter(Y, num_latent)
-
-# load version 
-# pi, alpha, beta, tau_init, tau_transition = torch.load('para_model_MP_LPB.pt')
-
-
-# Optimizer
-optimizer_theta = optim.Adam([pi, alpha, beta], lr=0.1)
-optimizer_tau = optim.Adam([tau_init, tau_transition], lr=0.1)
-
-# Learning rate scheduler
-scheduler_theta = StepLR(optimizer_theta, step_size=300, gamma=0.9)
-scheduler_tau = StepLR(optimizer_tau, step_size=300, gamma=0.9)
-
-# Stopping criteria parameters
-patience = 5 
-threshold = 1e-6  
-no_improve_count = 0
-best_loss = float('inf')
-
-
-# Gradient ascent
-num_iterations = 50000
-for iteration in tqdm(range(num_iterations)):
-    optimizer_theta.zero_grad()
-    optimizer_tau.zero_grad()
+def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,distribution = 'Bernoulli', bernoulli_case = 'low_plus'):
     
-    loss = -J(tau_init, tau_transition, alpha, pi, Y)
-    loss.backward()
+    time_stamp, num_nodes , _ = adjacency_matrix.shape
+
+    print("time_stamp:", time_stamp)
+    print("num_nodes:", num_nodes)
+    print("num_latent:", num_latent)
+
+    # initialization version
+    tau_init = torch.rand(num_nodes, num_latent, requires_grad=True)  # Example tau matrix
+    tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, requires_grad=True)
+    alpha = torch.full((num_latent,), 1/num_latent, requires_grad=True)
+    pi = torch.rand(num_latent, num_latent, requires_grad=True)
+    beta = torch.rand(time_stamp, num_latent, num_latent, requires_grad=True)
+
+    # tau_init, tau_transition, pi, beta, alpha= inital_parameter(adjacency_matrix, num_latent)
+
+    # load version 
+    # pi, alpha, beta, tau_init, tau_transition = torch.load('para_model_MP_LPB.pt', weights_only=True)
+
+
+    # Optimizer
+    optimizer_theta = optim.Adam([pi, alpha, beta], lr=1e-1)
+    optimizer_tau = optim.Adam([tau_init, tau_transition], lr=1e-1)
+
+    # Learning rate scheduler
+    scheduler_theta = StepLR(optimizer_theta, step_size=25, gamma=0.9)
+    scheduler_tau = StepLR(optimizer_tau, step_size=25, gamma=0.9)
+
+    # Stopping criteria parameters
+    patience = 20
+    threshold = 1e-6  
+    no_improve_count = 0
+    best_loss = float('inf')
+
+    str_stability = str(stability).replace('0.', '0p')
+    # Gradient ascent
+    num_iterations = 5000
+    for iter in range(num_iterations):
+
+        optimizer_theta.zero_grad()
+        optimizer_tau.zero_grad()
+        
+        loss = -J(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
+        loss.backward()
+        
+        optimizer_theta.step()
+        optimizer_tau.step()
+
+
+        scheduler_theta.step()
+        scheduler_tau.step()
+        
+        # Check for stopping criteria every 100 iterations
+        # if iter % 100 == 0:
+        #     current_loss = -loss.item()
+        #     print(f"Iteration {iter}: Loss = {current_loss}")
+
+        #     # Stopping criteria check
+        #     if best_loss - current_loss < threshold:
+        #         no_improve_count += 1
+        #     else:
+        #         best_loss = current_loss
+        #         no_improve_count = 0
+
+        #     if no_improve_count >= patience:
+        #         print(f"Stopping early at iteration {iter} due to no improvement.")
+        #         break
+
+
+        if iter % 500 == 0:
+            torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/estimation/estimate_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt')
     
-    optimizer_theta.step()
-    optimizer_tau.step()
-
-
-    scheduler_theta.step()
-    scheduler_tau.step()
+    torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/estimation/estimate_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt')
+    return loss
     
-    # Check for stopping criteria every 100 iterations
-    if iteration % 100 == 0:
-        current_loss = -loss.item()
-        print(f"Iteration {iteration}: Loss = {current_loss}")
 
-        # Stopping criteria check
-        if best_loss - current_loss < threshold:
-            no_improve_count += 1
-        else:
-            best_loss = current_loss
-            no_improve_count = 0
+if __name__ == "__main__":
+    num_latent = 2
 
-        if no_improve_count >= patience:
-            print(f"Stopping early at iteration {iteration} due to no improvement.")
-            break
+    time_stamp = 10
+    stability = 0.9
+    iteration = 0
+    
+    bernoulli_case = 'low_plus'
+    # bernoulli_case = 'low_minus'
+    # bernoulli_case = 'low_plus'
+    # bernoulli_case = 'medium_minus'
+    # bernoulli_case = 'medium_plus'
+    # bernoulli_case = 'medium_with_affiliation'
+    # bernoulli_case = 'large'
 
-
-    if iteration % 500 == 0:
-        torch.save([pi, alpha, beta, tau_init, tau_transition], "para_model_MP_LPB.pt")
+    str_stability = str(stability).replace('0.', '0p')
+    Y = torch.load(f'parameter/adjacency/Y_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt')
+    estimate(adjacency_matrix = Y, num_latent = num_latent, stability = stability, iteration = iteration, bernoulli_case = bernoulli_case)

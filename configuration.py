@@ -1,5 +1,6 @@
 import torch
 import torch.nn.functional as F
+import numpy as np
 from sklearn.metrics import adjusted_rand_score
 
 def tau_margin_generator(tau_init, tau_transition):
@@ -14,47 +15,70 @@ def tau_margin_generator(tau_init, tau_transition):
         tau[t,:,:] = result
     return tau
 
+def eval(bernoulli_case, time_stamp, stability, iteration):
+    """""
+    compute ARI, J value,
+    """""
+    # Load the parameters from the file
+    str_stability = str(stability).replace('0.', '0p')
+    pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/estimation/estimate_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt')
+    init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/true/true_para_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt')
+    Z = torch.tensor(Z, dtype=torch.int64)
 
-# Load the parameters from the file
-pi, alpha, beta, tau_init, tau_transition = torch.load('para_old_MP_LPB.pt')
-init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load('true_para_MG_LPB.pt')
-Z = torch.tensor(Z, dtype=torch.int64)
+    ### In case of My model
+    tau_init = F.softmax(tau_init, dim=1)
+    tau_transition = F.softmax(tau_transition, dim=3)
+    alpha = F.softmax(alpha, dim=0)
+    pi = F.softmax(pi,dim=1)
+    beta = F.sigmoid(beta)
 
-# ### In case of My model
-# tau_init = F.softmax(tau_init, dim=1)
-# tau_transition = F.softmax(tau_transition, dim=3)
-# alpha = F.softmax(alpha, dim=0)
-# pi = F.softmax(pi,dim=1)
-# beta = F.sigmoid(beta)
+    tau_marg = tau_margin_generator(tau_init, tau_transition)
 
+    # Print each parameter
+    # print("pi:", pi)
+    # print("alpha:", alpha)
+    # print("beta:", beta)
 
-tau_marg = tau_margin_generator(tau_init, tau_transition)
+    # print("tau_init:", tau_init)
+    # print("tau_transition:", tau_transition)
+    # print("tau_marg:", tau_marg)
 
+    all_pred = []
+    all_true = [] 
+    ARI = []
+    for time in range(time_stamp):
+        print("time is", time)
+        indices = torch.argmax(tau_marg[time], dim=1)
+        pred = indices
+        true = Z[time]
+        all_pred.extend(pred)
+        all_true.extend(true)
+        print(pred)
+        print(true)
+        difference = torch.sum(pred != true).item()
+        print("Difference count:", difference)
+        ari_score = adjusted_rand_score(true, pred)
+        ARI.append(ari_score)
+        print("Adjusted Rand Index:", ari_score)  
 
-# Print each parameter
-print("pi:", pi)
-print("alpha:", alpha)
-print("beta:", beta)
+    global_ARI = adjusted_rand_score(all_true, all_pred)
+    print("Global Adjusted Rand Index:", global_ARI)  
+    average_ARI = np.mean(ARI)
+    print("Average Adjusted Rand Index:", average_ARI)  
+    
+    return global_ARI, average_ARI
 
-# print("tau_init:", tau_init)
-# print("tau_transition:", tau_transition)
-# print("tau_marg:", tau_marg)
-
-# all_pred = []
-# all_true = [] 
-# for time in range(5):
-#     print("time is", time)
-#     indices = torch.argmax(tau_marg[time], dim=1)
-#     pred = indices
-#     true = Z[time]
-#     all_pred.extend(pred)
-#     all_true.extend(true)
-#     print(pred)
-#     print(true)
-#     difference = torch.sum(pred != true).item()
-#     print("Difference count:", difference)
-#     ari_score = adjusted_rand_score(true, pred)
-#     print("Adjusted Rand Index:", ari_score)  
-
-# overall_ari_score = adjusted_rand_score(all_true, all_pred)
-# print("Overall Adjusted Rand Index:", overall_ari_score)  
+if __name__ == "__main__":
+    time_stamp = 10
+    iteration = 0
+    stability = 0.9
+    
+    bernoulli_case = 'low_plus'
+    # bernoulli_case = 'low_minus'
+    # bernoulli_case = 'low_plus'
+    # bernoulli_case = 'medium_minus'
+    # bernoulli_case = 'medium_plus'
+    # bernoulli_case = 'medium_with_affiliation'
+    # bernoulli_case = 'large'
+    
+    eval(bernoulli_case =bernoulli_case, time_stamp = time_stamp , stability = stability, iteration = iteration)

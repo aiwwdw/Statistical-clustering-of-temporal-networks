@@ -24,20 +24,14 @@ def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
     tau_transition = F.softmax(tau_transition_pre, dim=3)
     alpha = F.softmax(alpha_pre, dim=0)
     pi = F.softmax(pi_pre,dim=1)
-    tau_marg = tau_margin_generator(tau_init,tau_transition).to(device)
-    
-    tau_init = tau_init.cpu()
-    tau_transition =tau_transition.cpu()
-    alpha=alpha.cpu()
-    pi=pi.cpu()
-    tau_marg = tau_marg.cpu()
-
+    tau_marg = tau_margin_generator(tau_init,tau_transition)
 
     q_indices = torch.arange(Q,dtype=index_dtype).view(1, 1, Q, 1, 1).expand(T, Q, Q, N, N)
     l_indices = torch.arange(Q,dtype=index_dtype).view(1, Q, 1, 1, 1).expand(T, Q, Q, N, N)
     t_indices = torch.arange(T,dtype=index_dtype).view(T, 1, 1, 1, 1).expand(T, Q, Q, N, N)
     Y_indices = Y.view(T,1,1,N,N).expand(T, Q, Q, N, N)
     phi_values_new = phi_vectorized(q_indices,l_indices ,t_indices, Y_indices)
+    del q_indices,l_indices,t_indices,Y_indices
 
     log_phi_values = torch.log(phi_values_new)
     
@@ -59,7 +53,7 @@ def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
         term2 += (torch.einsum('ij,ijk->ijk', tau_marg[t-1, :, :], tau_transition[t, :, :,:]) * (torch.log(pi[:, :]).unsqueeze(0).expand(N,Q,Q) - torch.log(tau_transition[t, :, :, :]))).sum()
 
     # Third term
-    indices = torch.triu_indices(N, N, offset=1)    
+    indices = torch.triu_indices(N, N, offset=1).to(device)
     term3 = torch.mul(torch.einsum('aik,ajl->aklij', tau_marg, tau_marg), log_phi_values)[:,:, :, indices[0], indices[1]].sum()
     
     J_value = term1 + term2 + term3
@@ -67,17 +61,24 @@ def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
 
         
 def phi_vectorized(q, l, t, y, distribution='Bernoulli'):
+
     max_q_l = torch.max(q, l)
     min_q_l = torch.min(q, l)
-    zero = torch.zeros(min_q_l.shape,dtype=index_dtype)
-    prob = torch.sigmoid(torch.where(q == l, beta[zero, min_q_l, max_q_l], beta[t, min_q_l, max_q_l]))
-    del max_q_l, min_q_l, q, l
-    y.to(device)
+    
+    indentication = (q == l).to(device)
+    outer = beta[t, min_q_l, max_q_l]
+    inner = beta[0, min_q_l, max_q_l]
+
+    prob = torch.sigmoid(torch.where(indentication, inner, outer))
+
     result = torch.where(y == 0, 1 - prob, prob)
+
+    del prob
+
     return result
 
 def tau_margin_generator(tau_init, tau_transition):
-    tau = torch.zeros((time_stamp, num_nodes, num_latent))
+    tau = torch.zeros((time_stamp, num_nodes, num_latent), device=device, dtype=dtype)
     for t in range(time_stamp):
         result = tau_init[:, :]
         for t_prime in range(t):
@@ -110,7 +111,7 @@ def inital_parameter(adj_matrices,k):
 
 
 distribution = 'Bernoulli'
-Y = torch.tensor(torch.load('parameter/Y_large.pt'))
+Y = torch.tensor(torch.load('parameter/adjacency/Y_medium_plus_10_0p9_0.pt'))
 time_stamp, num_nodes , _ = Y.shape
 num_latent = 10
 
@@ -126,11 +127,11 @@ print("num_latent:", num_latent)
 # beta = torch.rand(time_stamp, num_latent, num_latent, requires_grad=True)
 
 # initialization GPU version
-tau_init = torch.rand(num_nodes, num_latent, device=device,dtype=dtype)
-tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, device=device,dtype=dtype)
-alpha = torch.full((num_latent,), 1/num_latent, device=device,dtype=dtype)
-pi = torch.rand(num_latent, num_latent, device=device,dtype=dtype)
-beta = torch.rand(time_stamp, num_latent, num_latent, device=device,dtype=dtype)
+tau_init = torch.rand(num_nodes, num_latent, device=device,dtype=dtype,requires_grad=True)
+tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, device=device,dtype=dtype,requires_grad=True)
+alpha = torch.full((num_latent,), 1/num_latent, device=device,dtype=dtype,requires_grad=True)
+pi = torch.rand(num_latent, num_latent, device=device,dtype=dtype,requires_grad=True)
+beta = torch.rand(time_stamp, num_latent, num_latent, device=device,dtype=dtype,requires_grad=True)
 Y = Y.to(device,dtype=dtype)
 
 
@@ -149,21 +150,23 @@ num_iterations = 50000
 for iteration in tqdm(range(num_iterations)):
     optimizer_theta.zero_grad()
     optimizer_tau.zero_grad()
-    start_time = time.time()  # 시작 시간 기록
+
+    # start_time = time.time()  # 시작 시간 기록
     loss = - J(tau_init,tau_transition, alpha, pi, Y)
-    end_time = time.time()  # 끝 시간 기록
-    elapsed_time = end_time - start_time  # 경과 시간 계산
-    print(f"Iteration {iteration}:Time per calculation = {elapsed_time:.4f} seconds")
-    start_time = time.time()  # 시작 시간 기록
+    # end_time = time.time()  # 끝 시간 기록
+    # elapsed_time = end_time - start_time  # 경과 시간 계산
+    # print(f"Iteration {iteration}:Time per calculation = {elapsed_time:.4f} seconds")
+    
+    # start_time = time.time()  # 시작 시간 기록
     loss.backward()
     optimizer_theta.step()
     optimizer_tau.step()
-    end_time = time.time()  # 끝 시간 기록
-    elapsed_time = end_time - start_time  # 경과 시간 계산
-    print(f"Iteration {iteration}:Time per gradient = {elapsed_time:.4f} seconds")
-    # if iteration % 100 ==0:
-    print(f"Iteration {iteration}: Loss = {-loss.item()}")
-    if iteration % 500 == 0:
-        torch.save([pi,alpha,beta,tau_init, tau_transition], "para_model_large.pt")
+    # end_time = time.time()  # 끝 시간 기록
+    # elapsed_time = end_time - start_time  # 경과 시간 계산
+    # print(f"Iteration {iteration}:Time per gradient = {elapsed_time:.4f} seconds")
+    if iteration % 100 ==0:
+        print(f"Iteration {iteration}: Loss = {-loss.item()}")
+    # if iteration % 500 == 0:
+        # torch.save([pi,alpha,beta,tau_init, tau_transition], "para_model_medium.pt")
 
 
