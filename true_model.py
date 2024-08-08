@@ -123,6 +123,7 @@ def true_J(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,dis
     return loss
 
 if __name__ == "__main__":
+    num_nodes = 100
     num_latent = 2
 
     bernoulli_case ='low_plus'
@@ -132,6 +133,6 @@ if __name__ == "__main__":
     stability = 0.9
     
     str_stability = str(stability).replace('0.', '0p')
-    Y = torch.tensor(torch.load(f'parameter/adjacency/Y_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt'))
+    Y = torch.tensor(torch.load(f'parameter/adjacency/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt'))
     
     true_J(Y,num_latent = num_latent ,stability = stability, iteration = iteration ,distribution = distribution, bernoulli_case = bernoulli_case)

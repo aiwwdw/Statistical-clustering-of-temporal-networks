@@ -16,7 +16,7 @@ torch.autograd.set_detect_anomaly(True)
 device = torch.device("cuda")
 
 
-def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
+def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta,Y):
     N, Q = tau_init_pre.shape
     T = Y.shape[0]
     
@@ -24,13 +24,13 @@ def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
     tau_transition = F.softmax(tau_transition_pre, dim=3)
     alpha = F.softmax(alpha_pre, dim=0)
     pi = F.softmax(pi_pre,dim=1)
-    tau_marg = tau_margin_generator(tau_init,tau_transition)
+    tau_marg = tau_margin_generator(tau_init,tau_transition).to(device)
 
     q_indices = torch.arange(Q,dtype=index_dtype).view(1, 1, Q, 1, 1).expand(T, Q, Q, N, N)
     l_indices = torch.arange(Q,dtype=index_dtype).view(1, Q, 1, 1, 1).expand(T, Q, Q, N, N)
     t_indices = torch.arange(T,dtype=index_dtype).view(T, 1, 1, 1, 1).expand(T, Q, Q, N, N)
     Y_indices = Y.view(T,1,1,N,N).expand(T, Q, Q, N, N)
-    phi_values_new = phi_vectorized(q_indices,l_indices ,t_indices, Y_indices)
+    phi_values_new = phi_vectorized(q_indices,l_indices ,t_indices, Y_indices, beta)
     del q_indices,l_indices,t_indices,Y_indices
 
     log_phi_values = torch.log(phi_values_new)
@@ -60,7 +60,7 @@ def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
     return J_value  # Since we are using gradient ascent
 
         
-def phi_vectorized(q, l, t, y, distribution='Bernoulli'):
+def phi_vectorized(q, l, t, y, beta, distribution='Bernoulli'):
 
     max_q_l = torch.max(q, l)
     min_q_l = torch.min(q, l)
@@ -73,12 +73,12 @@ def phi_vectorized(q, l, t, y, distribution='Bernoulli'):
 
     result = torch.where(y == 0, 1 - prob, prob)
 
-    del prob
 
     return result
 
 def tau_margin_generator(tau_init, tau_transition):
-    tau = torch.zeros((time_stamp, num_nodes, num_latent), device=device, dtype=dtype)
+    time_stamp, num_nodes, num_latent, _ = tau_transition.shape
+    tau = torch.zeros((time_stamp, num_nodes, num_latent))
     for t in range(time_stamp):
         result = tau_init[:, :]
         for t_prime in range(t):
@@ -110,63 +110,86 @@ def inital_parameter(adj_matrices,k):
     return tau_init, tau_transition, pi, beta, alpha
 
 
-distribution = 'Bernoulli'
-Y = torch.tensor(torch.load('parameter/adjacency/Y_medium_plus_10_0p9_0.pt'))
-time_stamp, num_nodes , _ = Y.shape
-num_latent = 10
+def  estimate_gpu(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,distribution = 'Bernoulli', bernoulli_case = 'low_plus'):
 
-print("time_stamp:", time_stamp)
-print("num_nodes:", num_nodes)
-print("num_latent:", num_latent)
+    time_stamp, num_nodes , _ = adjacency_matrix.shape
 
-# # initialization version
-# tau_init = torch.rand(num_nodes, num_latent, requires_grad=True)  # Example tau matrix
-# tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, requires_grad=True)
-# alpha = torch.full((num_latent,), 1/num_latent, requires_grad=True)
-# pi = torch.rand(num_latent, num_latent, requires_grad=True)
-# beta = torch.rand(time_stamp, num_latent, num_latent, requires_grad=True)
+    print("time_stamp:", time_stamp)
+    print("num_nodes:", num_nodes)
+    print("num_latent:", num_latent)
 
-# initialization GPU version
-tau_init = torch.rand(num_nodes, num_latent, device=device,dtype=dtype,requires_grad=True)
-tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, device=device,dtype=dtype,requires_grad=True)
-alpha = torch.full((num_latent,), 1/num_latent, device=device,dtype=dtype,requires_grad=True)
-pi = torch.rand(num_latent, num_latent, device=device,dtype=dtype,requires_grad=True)
-beta = torch.rand(time_stamp, num_latent, num_latent, device=device,dtype=dtype,requires_grad=True)
-Y = Y.to(device,dtype=dtype)
+    # # initialization version
+    # tau_init = torch.rand(num_nodes, num_latent, requires_grad=True)  # Example tau matrix
+    # tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, requires_grad=True)
+    # alpha = torch.full((num_latent,), 1/num_latent, requires_grad=True)
+    # pi = torch.rand(num_latent, num_latent, requires_grad=True)
+    # beta = torch.rand(time_stamp, num_latent, num_latent, requires_grad=True)
 
+    # initialization GPU version
+    tau_init = torch.rand(num_nodes, num_latent, device=device,dtype=dtype,requires_grad=True)
+    tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, device=device,dtype=dtype,requires_grad=True)
+    alpha = torch.full((num_latent,), 1/num_latent, device=device,dtype=dtype,requires_grad=True)
+    pi = torch.rand(num_latent, num_latent, device=device,dtype=dtype,requires_grad=True)
+    beta = torch.rand(time_stamp, num_latent, num_latent, device=device,dtype=dtype,requires_grad=True)
+    adjacency_matrix = adjacency_matrix.to(device,dtype=dtype)
 
-# tau_init, tau_transition, pi, beta, alpha= inital_parameter(Y, num_latent)
+    # tau_init, tau_transition, pi, beta, alpha= inital_parameter(Y, num_latent)
 
-# load version 
-# pi, alpha, beta, tau_init, tau_transition = torch.load('para_model_2.pt')
+    # load version 
+    # pi, alpha, beta, tau_init, tau_transition = torch.load('para_model_2.pt')
 
 
-# Optimizer
-optimizer_theta = optim.Adam([pi,alpha,beta], lr=0.01)
-optimizer_tau =  optim.Adam([tau_init, tau_transition], lr=0.01)
+    # Optimizer
+    optimizer_theta = optim.Adam([pi,alpha,beta], lr=0.01)
+    optimizer_tau =  optim.Adam([tau_init, tau_transition], lr=0.01)
 
-# Gradient ascent
-num_iterations = 50000
-for iteration in tqdm(range(num_iterations)):
-    optimizer_theta.zero_grad()
-    optimizer_tau.zero_grad()
+    # Gradient ascent
+    num_iterations = 50000
+    for iteration in tqdm(range(num_iterations)):
+        optimizer_theta.zero_grad()
+        optimizer_tau.zero_grad()
 
-    # start_time = time.time()  # 시작 시간 기록
-    loss = - J(tau_init,tau_transition, alpha, pi, Y)
-    # end_time = time.time()  # 끝 시간 기록
-    # elapsed_time = end_time - start_time  # 경과 시간 계산
-    # print(f"Iteration {iteration}:Time per calculation = {elapsed_time:.4f} seconds")
+        # start_time = time.time()  # 시작 시간 기록
+        loss = - J(tau_init,tau_transition, alpha, pi, beta, adjacency_matrix)
+        # end_time = time.time()  # 끝 시간 기록
+        # elapsed_time = end_time - start_time  # 경과 시간 계산
+        # print(f"Iteration {iteration}:Time per calculation = {elapsed_time:.4f} seconds")
+        
+        # start_time = time.time()  # 시작 시간 기록
+        loss.backward()
+        optimizer_theta.step()
+        optimizer_tau.step()
+        # end_time = time.time()  # 끝 시간 기록
+        # elapsed_time = end_time - start_time  # 경과 시간 계산
+        # print(f"Iteration {iteration}:Time per gradient = {elapsed_time:.4f} seconds")
+        if iteration % 100 ==0:
+            print(f"Iteration {iteration}: Loss = {-loss.item()}")
+        # if iteration % 500 == 0:
+            # torch.save([pi,alpha,beta,tau_init, tau_transition], "para_model_medium.pt")
+
+
+if __name__ == "__main__":
     
-    # start_time = time.time()  # 시작 시간 기록
-    loss.backward()
-    optimizer_theta.step()
-    optimizer_tau.step()
-    # end_time = time.time()  # 끝 시간 기록
-    # elapsed_time = end_time - start_time  # 경과 시간 계산
-    # print(f"Iteration {iteration}:Time per gradient = {elapsed_time:.4f} seconds")
-    if iteration % 100 ==0:
-        print(f"Iteration {iteration}: Loss = {-loss.item()}")
-    # if iteration % 500 == 0:
-        # torch.save([pi,alpha,beta,tau_init, tau_transition], "para_model_medium.pt")
+    num_nodes = 100
+    num_latent = 2
 
+    time_stamp = 10
+    stability = 0.9
+    iteration = 0
+    
+    bernoulli_case = 'low_plus'
+    # bernoulli_case = 'low_minus'
+    # bernoulli_case = 'low_plus'
+    # bernoulli_case = 'medium_minus'
+    # bernoulli_case = 'medium_plus'
+    # bernoulli_case = 'medium_with_affiliation'
+    # bernoulli_case = 'large'
 
+    distribution = 'Bernoulli'
+    Y = torch.tensor(torch.load('parameter/adjacency/Y_medium_plus_5_0p9_0.pt'))
+    time_stamp, num_nodes , _ = Y.shape
+    num_latent = 10
+
+    str_stability = str(stability).replace('0.', '0p')
+    Y = torch.load(f'parameter/adjacency/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
+    estimate_gpu(adjacency_matrix = Y, num_latent = num_latent, stability = stability, iteration = iteration, bernoulli_case = bernoulli_case)

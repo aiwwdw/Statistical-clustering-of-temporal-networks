@@ -125,15 +125,15 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,d
     scheduler_tau = StepLR(optimizer_tau, step_size=25, gamma=0.9)
 
     # Stopping criteria parameters
-    patience = 20
+    patience = 10
     threshold = 1e-6  
-    no_improve_count = 0
-    best_loss = float('inf')
+    no_improve_count = 0 
+    best_loss = float('inf') 
 
     str_stability = str(stability).replace('0.', '0p')
     # Gradient ascent
-    num_iterations = 5000
-    for iter in range(num_iterations):
+    num_iterations = 10000
+    for iter in tqdm(range(num_iterations)):
 
         optimizer_theta.zero_grad()
         optimizer_tau.zero_grad()
@@ -153,10 +153,10 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,d
         scheduler_theta.step()
         scheduler_tau.step()
         
-        # Check for stopping criteria every 100 iterations
+        # # Check for stopping criteria every 100 iterations
         # if iter % 100 == 0:
         #     current_loss = -loss.item()
-        #     print(f"Iteration {iter}: Loss = {current_loss}")
+        #     # print(f"Iteration {iter}: Loss = {current_loss}")
 
         #     # Stopping criteria check
         #     if best_loss - current_loss < threshold:
@@ -169,7 +169,6 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,d
         #         print(f"Stopping early at iteration {iter} due to no improvement.")
         #         break
 
-
         if iter % 500 == 0:
             torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/estimation/estimate_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt')
     
@@ -178,6 +177,7 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,d
     
 
 if __name__ == "__main__":
+    num_nodes = 100
     num_latent = 2
 
     time_stamp = 10
@@ -193,5 +193,5 @@ if __name__ == "__main__":
     # bernoulli_case = 'large'
 
     str_stability = str(stability).replace('0.', '0p')
-    Y = torch.load(f'parameter/adjacency/Y_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt')
+    Y = torch.load(f'parameter/adjacency/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
     estimate(adjacency_matrix = Y, num_latent = num_latent, stability = stability, iteration = iteration, bernoulli_case = bernoulli_case)

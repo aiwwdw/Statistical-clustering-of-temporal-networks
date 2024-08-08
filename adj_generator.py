@@ -55,7 +55,7 @@ def transition(Z,num_nodes,num_latent,transition_matrix):
 
     return latent_variables
 
-def generate_data(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, iteration = 0, distribution = 'Bernoulli',bernoulli_case = 'low_plus'):
+def generate_data(time_stamp = 10, num_nodes = 100, num_latent = 2,  stability = 0.9, iteration = 0, distribution = 'Bernoulli',bernoulli_case = 'low_plus'):
 
     Z = []
     Y = []
@@ -100,8 +100,8 @@ def generate_data(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 
     Y = torch.tensor(Y)
 
     str_stability = str(stability).replace('0.', '0p')
-    torch.save(Y, f'parameter/adjacency/Y_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt')
-    torch.save((init_dist,transition_matrix,Bernoulli_parameter,Z),f'parameter/true/true_para_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt')
+    torch.save(Y, f'parameter/adjacency/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
+    torch.save((init_dist,transition_matrix,Bernoulli_parameter,Z),f'parameter/true/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
 
     return Y
     # Plot the graph for each timestamp and save to file
@@ -139,4 +139,4 @@ if __name__ == "__main__":
     # bernoulli_case = 'medium_with_affiliation'
     # bernoulli_case = 'large'
 
-    generate_data(time_stamp = time_stamp, num_latent = num_latent, num_nodes = num_nodes, stability = stability, iteration = iteration, distribution = 'Bernoulli',bernoulli_case = bernoulli_case)
+    generate_data(time_stamp = time_stamp, num_nodes = num_nodes, num_latent = num_latent, stability = stability, iteration = iteration, distribution = 'Bernoulli',bernoulli_case = bernoulli_case)

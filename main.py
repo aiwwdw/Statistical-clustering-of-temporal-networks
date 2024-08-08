@@ -2,6 +2,7 @@ from adj_generator import generate_data
 from model_compact import estimate
 from configuration import eval
 from true_model import true_J
+from model_gpu import estimate_gpu
 import numpy as np
 from tqdm import tqdm
 import pandas as pd
@@ -10,8 +11,8 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, iter
 
     # 데이터 생성
     Y = generate_data(time_stamp = time_stamp, 
-                      num_latent = num_latent, 
                       num_nodes = num_nodes, 
+                      num_latent = num_latent, 
                       stability = stability, 
                       iteration = iteration, 
                       distribution = distribution,
@@ -23,11 +24,17 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, iter
                       distribution = distribution, 
                       bernoulli_case = bernoulli_case)
     # 데이터 추정
-    loss = estimate(adjacency_matrix = Y, 
-                    num_latent = num_latent, 
-                    stability = stability, 
-                    iteration = iteration, 
-                    bernoulli_case = bernoulli_case)
+    # loss = estimate(adjacency_matrix = Y, 
+    #                 num_latent = num_latent, 
+    #                 stability = stability, 
+    #                 iteration = iteration, 
+    #                 bernoulli_case = bernoulli_case)
+    
+    loss = estimate_gpu(adjacency_matrix = Y, 
+                        num_latent = num_latent, 
+                        stability = stability, 
+                        iteration = iteration, 
+                        bernoulli_case = bernoulli_case)
    
     # 추정 결과 평가
     global_ARI, average_ARI  = eval(bernoulli_case =bernoulli_case, 
@@ -38,10 +45,10 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, iter
     
 
 if __name__ == "__main__":
-    time_stamp = 10
+    time_stamp = 5
     num_latent = 2
     num_nodes = 100
-    stability = 0.9
+    stability = 0.75
     iteration = 0
     distribution = 'Bernoulli'
 
@@ -55,18 +62,18 @@ if __name__ == "__main__":
     str_stability = str(stability).replace('0.', '0p')
 
     iterations = 100
-    csv_file_path = f'output/result_{bernoulli_case}_{time_stamp}_{str_stability}.csv'
+    csv_file_path = f'output/result_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}.csv'
     df = pd.DataFrame(columns=["iteration", "global_ari", "average_ari", "loss", "true_loss"])
     df.to_csv(csv_file_path, index=False)
 
-    for i in tqdm(range(iterations)):
+    for i in tqdm(range(56,iterations)):
         print("-------------------------------------")
         print(f"This iteration is {i}")
         global_ARI, average_ARI, loss, true_loss = main(time_stamp = time_stamp, 
                                                         num_latent = num_latent, 
                                                         num_nodes = num_nodes, 
                                                         stability = stability, 
-                                                        iteration = iteration, 
+                                                        iteration = i, 
                                                         distribution = distribution, 
                                                         bernoulli_case = bernoulli_case)
         iteration_data = pd.DataFrame([{"iteration": i,
