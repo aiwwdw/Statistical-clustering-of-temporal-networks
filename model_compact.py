@@ -175,6 +175,7 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,d
     
 
 if __name__ == "__main__":
+    num_nodes = 100
     num_latent = 2
 
     time_stamp = 10
@@ -190,5 +191,5 @@ if __name__ == "__main__":
     # bernoulli_case = 'large'
 
     str_stability = str(stability).replace('0.', '0p')
-    Y = torch.load(f'parameter/adjacency/Y_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt')
+    Y = torch.load(f'parameter/adjacency/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
     estimate(adjacency_matrix = Y, num_latent = num_latent, stability = stability, iteration = iteration, bernoulli_case = bernoulli_case)
