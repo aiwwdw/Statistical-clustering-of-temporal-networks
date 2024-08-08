@@ -59,7 +59,7 @@ if __name__ == "__main__":
     df = pd.DataFrame(columns=["iteration", "global_ari", "average_ari", "loss", "true_loss"])
     df.to_csv(csv_file_path, index=False)
 
-    for i in tqdm(range(iterations)):
+    for i in tqdm(range(56,iterations)):
         print("-------------------------------------")
         print(f"This iteration is {i}")
         global_ARI, average_ARI, loss, true_loss = main(time_stamp = time_stamp, 
