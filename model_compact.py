@@ -14,10 +14,7 @@ def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
     N, Q = tau_init_pre.shape
     T = Y.shape[0]
     
-    tau_init = F.softmax(tau_init_pre, dim=1)
-    tau_transition = F.softmax(tau_transition_pre, dim=3)
-    alpha = F.softmax(alpha_pre, dim=0)
-    pi = F.softmax(pi_pre,dim=1)
+
     tau_marg = tau_margin_generator(tau_init,tau_transition)
     
     q_indices = torch.arange(Q).view(1, 1, Q, 1, 1).expand(T, Q, Q, N, N)
@@ -107,10 +104,10 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,d
     print("num_latent:", num_latent)
 
     # initialization version
-    tau_init = torch.rand(num_nodes, num_latent, requires_grad=True)  # Example tau matrix
-    tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, requires_grad=True)
-    alpha = torch.full((num_latent,), 1/num_latent, requires_grad=True)
-    pi = torch.rand(num_latent, num_latent, requires_grad=True)
+    tau_init_pre = torch.rand(num_nodes, num_latent, requires_grad=True)  # Example tau matrix
+    tau_transition_pre = torch.rand(time_stamp, num_nodes, num_latent, num_latent, requires_grad=True)
+    alpha_pre = torch.full((num_latent,), 1/num_latent, requires_grad=True)
+    pi_pre = torch.rand(num_latent, num_latent, requires_grad=True)
     beta = torch.rand(time_stamp, num_latent, num_latent, requires_grad=True)
 
     # tau_init, tau_transition, pi, beta, alpha= inital_parameter(adjacency_matrix, num_latent)
@@ -141,6 +138,11 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,d
         optimizer_theta.zero_grad()
         optimizer_tau.zero_grad()
         
+        tau_init = F.softmax(tau_init_pre, dim=1)
+        tau_transition = F.softmax(tau_transition_pre, dim=3)
+        alpha = F.softmax(alpha_pre, dim=0)
+        pi = F.softmax(pi_pre,dim=1)
+
         loss = -J(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
         loss.backward()
         
