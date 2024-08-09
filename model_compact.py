@@ -10,8 +10,8 @@ from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 
 torch.autograd.set_detect_anomaly(True)
 
-def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
-    N, Q = tau_init_pre.shape
+def J(tau_init, tau_transition, alpha, pi, beta, Y):
+    N, Q = tau_init.shape
     T = Y.shape[0]
     
 
@@ -54,7 +54,7 @@ def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
 def phi_vectorized(q, l, t, y, beta, distribution='Bernoulli'):
     max_q_l = torch.max(q, l)
     min_q_l = torch.min(q, l)
-    prob = torch.sigmoid(torch.where(q == l, beta[0, min_q_l, max_q_l], beta[t, min_q_l, max_q_l]))
+    prob = torch.where(q == l, beta[0, min_q_l, max_q_l], beta[t, min_q_l, max_q_l])
     result = torch.where(y == 0, 1 - prob, prob)
     
     return result
@@ -95,7 +95,7 @@ def inital_parameter(adj_matrices,num_latent):
 
 
 
-def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,distribution = 'Bernoulli', bernoulli_case = 'low_plus'):
+def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, total_iteration = 0 ,distribution = 'Bernoulli', bernoulli_case = 'low_plus', trial = 0):
     
     time_stamp, num_nodes , _ = adjacency_matrix.shape
 
@@ -103,12 +103,14 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,d
     print("num_nodes:", num_nodes)
     print("num_latent:", num_latent)
 
+    scale_factor = 5
+
     # initialization version
-    tau_init_pre = torch.rand(num_nodes, num_latent, requires_grad=True)  # Example tau matrix
-    tau_transition_pre = torch.rand(time_stamp, num_nodes, num_latent, num_latent, requires_grad=True)
+    tau_init_pre = torch.rand(num_nodes, num_latent, requires_grad=True) 
+    tau_transition_pre = torch.rand(time_stamp, num_nodes, num_latent, num_latent, requires_grad=True) 
     alpha_pre = torch.full((num_latent,), 1/num_latent, requires_grad=True)
-    pi_pre = torch.rand(num_latent, num_latent, requires_grad=True)
-    beta = torch.rand(time_stamp, num_latent, num_latent, requires_grad=True)
+    pi_pre = torch.rand(num_latent, num_latent, requires_grad=True) 
+    beta_pre = torch.rand(time_stamp, num_latent, num_latent, requires_grad=True)
 
     # tau_init, tau_transition, pi, beta, alpha= inital_parameter(adjacency_matrix, num_latent)
 
@@ -117,12 +119,12 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,d
 
 
     # Optimizer
-    optimizer_theta = optim.Adam([pi, alpha, beta], lr=1e-1)
-    optimizer_tau = optim.Adam([tau_init, tau_transition], lr=1e-1)
+    optimizer_theta = optim.Adam([pi_pre, alpha_pre, beta_pre], lr=1e-1)
+    optimizer_tau = optim.Adam([tau_init_pre, tau_transition_pre], lr=1e-1)
 
     # Learning rate scheduler
-    scheduler_theta = StepLR(optimizer_theta, step_size=25, gamma=0.9)
-    scheduler_tau = StepLR(optimizer_tau, step_size=25, gamma=0.9)
+    scheduler_theta = StepLR(optimizer_theta, step_size=200, gamma=0.9)
+    scheduler_tau = StepLR(optimizer_tau, step_size=200, gamma=0.9)
 
     # Stopping criteria parameters
     patience = 10
@@ -133,7 +135,7 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,d
     str_stability = str(stability).replace('0.', '0p')
     # Gradient ascent
     num_iterations = 10000
-    for iter in tqdm(range(num_iterations)):
+    for iter in range(num_iterations):
 
         optimizer_theta.zero_grad()
         optimizer_tau.zero_grad()
@@ -142,6 +144,7 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,d
         tau_transition = F.softmax(tau_transition_pre, dim=3)
         alpha = F.softmax(alpha_pre, dim=0)
         pi = F.softmax(pi_pre,dim=1)
+        beta = F.sigmoid(beta_pre)
 
         loss = -J(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
         loss.backward()
@@ -153,26 +156,26 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,d
         scheduler_theta.step()
         scheduler_tau.step()
         
-        # # Check for stopping criteria every 100 iterations
-        # if iter % 100 == 0:
-        #     current_loss = -loss.item()
-        #     # print(f"Iteration {iter}: Loss = {current_loss}")
+        # Check for stopping criteria every 100 iterations
+        if iter % 100 == 0:
+            current_loss = -loss.item()
+            print(f"Iteration {iter}: Loss = {current_loss}")
 
-        #     # Stopping criteria check
-        #     if best_loss - current_loss < threshold:
-        #         no_improve_count += 1
-        #     else:
-        #         best_loss = current_loss
-        #         no_improve_count = 0
+            # Stopping criteria check
+            if best_loss - current_loss < threshold:
+                no_improve_count += 1
+            else:
+                best_loss = current_loss
+                no_improve_count = 0
 
-        #     if no_improve_count >= patience:
-        #         print(f"Stopping early at iteration {iter} due to no improvement.")
-        #         break
+            if no_improve_count >= patience:
+                print(f"Stopping early at iteration {iter} due to no improvement.")
+                break
 
         if iter % 500 == 0:
-            torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/estimation/estimate_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt')
+            torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/estimation/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     
-    torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/estimation/estimate_{bernoulli_case}_{time_stamp}_{str_stability}_{iteration}.pt')
+    torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/estimation/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     return loss
     
 
@@ -194,4 +197,4 @@ if __name__ == "__main__":
 
     str_stability = str(stability).replace('0.', '0p')
     Y = torch.load(f'parameter/adjacency/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
-    estimate(adjacency_matrix = Y, num_latent = num_latent, stability = stability, iteration = iteration, bernoulli_case = bernoulli_case)
+    estimate(adjacency_matrix = Y, num_latent = num_latent, stability = stability, total_iteration = iteration, bernoulli_case = bernoulli_case)
