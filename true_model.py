@@ -6,6 +6,7 @@ import copy
 from tqdm import tqdm
 import time
 from sklearn.cluster import KMeans
+import os
 
 torch.autograd.set_detect_anomaly(True)
 
@@ -96,7 +97,7 @@ def true_J(adjacency_matrix, num_nodes, num_latent = 2 ,stability = 0.9, total_i
     str_stability = str(stability).replace('0.', '0p')
     time_stamp, num_nodes , _ = adjacency_matrix.shape
 
-    init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/true/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+    init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
 
     init_dist = torch.tensor(init_dist, dtype=torch.float64)
     transition_matrix = torch.tensor(transition_matrix, dtype=torch.float64)
@@ -105,17 +106,6 @@ def true_J(adjacency_matrix, num_nodes, num_latent = 2 ,stability = 0.9, total_i
 
     tau_init, tau_transition = true_tau(Z, num_latent)
     beta = true_beta(Bernoulli_parameter, time_stamp)
-
-    # # initialization version
-    # tau_init = torch.zeros(num_nodes, num_latent)  # Example tau matrix
-    # tau_transition = torch.zeros(time_stamp, num_nodes, num_latent, num_latent)
-    # alpha = torch.full((num_latent,), 1/num_latent)
-    # pi = torch.rand(num_latent, num_latent)
-    # beta = torch.rand(time_stamp, num_latent, num_latent)
-
-
-    # load version 
-    # pi, alpha, beta, tau_init, tau_transition = torch.load('parameter1.pt')
 
     loss = - J(tau_init,tau_transition, init_dist, transition_matrix,beta, adjacency_matrix)
     print(f"True Objective function: Loss = {-loss.item()}")
@@ -133,6 +123,6 @@ if __name__ == "__main__":
     stability = 0.9
     
     str_stability = str(stability).replace('0.', '0p')
-    Y = torch.tensor(torch.load(f'parameter/adjacency/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt'))
+    Y = torch.tensor(torch.load(f'parameter/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt'))
     
     true_J(Y,num_nodes = num_nodes, num_latent = num_latent ,stability = stability, total_iteration = iteration ,distribution = distribution, bernoulli_case = bernoulli_case)

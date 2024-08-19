@@ -2,6 +2,7 @@ import torch
 import torch.nn.functional as F
 import numpy as np
 from sklearn.metrics import adjusted_rand_score
+import os
 
 def tau_margin_generator(tau_init, tau_transition):
     T,N,Q,_ = tau_transition.shape
@@ -21,8 +22,8 @@ def eval(bernoulli_case, num_nodes, time_stamp, stability, total_iteration, tria
     """""
     # Load the parameters from the file
     str_stability = str(stability).replace('0.', '0p')
-    pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/estimation/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
-    init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/true/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+    pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+    init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
     Z = torch.tensor(Z, dtype=torch.int64)
 
     ### In case of My model
@@ -70,15 +71,15 @@ def eval(bernoulli_case, num_nodes, time_stamp, stability, total_iteration, tria
 
 if __name__ == "__main__":
     num_nodes = 100
-    time_stamp = 10
-    iteration = 0
-    stability = 0.9
-    trial = 0
+    time_stamp = 5
+    iteration = 11
+    stability = 0.75
+    trial = 3
     
-    bernoulli_case = 'low_plus'
+    # bernoulli_case = 'low_plus'
     # bernoulli_case = 'low_minus'
     # bernoulli_case = 'low_plus'
-    # bernoulli_case = 'medium_minus'
+    bernoulli_case = 'medium_minus'
     # bernoulli_case = 'medium_plus'
     # bernoulli_case = 'medium_with_affiliation'
     # bernoulli_case = 'large'

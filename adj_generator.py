@@ -3,6 +3,7 @@ from scipy.stats import gamma
 import networkx as nx
 import matplotlib.pyplot as plt
 import torch
+import os
 
 def create_transition_matrix(num_nodes, stability):
     # Initialize an n x n matrix with zeros
@@ -100,8 +101,9 @@ def generate_data(time_stamp = 10, num_nodes = 100, num_latent = 2,  stability =
     Y = torch.tensor(Y)
 
     str_stability = str(stability).replace('0.', '0p')
-    torch.save(Y, f'parameter/adjacency/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
-    torch.save((init_dist,transition_matrix,Bernoulli_parameter,Z),f'parameter/true/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+
+    torch.save(Y, f'parameter/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+    torch.save((init_dist,transition_matrix,Bernoulli_parameter,Z),f'parameter/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
 
     return Y
     # Plot the graph for each timestamp and save to file
@@ -131,11 +133,11 @@ if __name__ == "__main__":
     iteration = 0
     distribution = 'Bernoulli'
 
-    bernoulli_case = 'low_plus'
+    # bernoulli_case = 'low_plus'
     # bernoulli_case = 'low_minus'
     # bernoulli_case = 'low_plus'
     # bernoulli_case = 'medium_minus'
-    # bernoulli_case = 'medium_plus'
+    bernoulli_case = 'medium_plus'
     # bernoulli_case = 'medium_with_affiliation'
     # bernoulli_case = 'large'
 

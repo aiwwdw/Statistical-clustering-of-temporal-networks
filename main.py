@@ -6,6 +6,7 @@ from model_gpu import estimate_gpu
 import numpy as np
 from tqdm import tqdm
 import pandas as pd
+import os
 
 def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, total_iteration = 0, distribution = 'Bernoulli', bernoulli_case = 'medium_plus', num_trials = 1):
 
@@ -53,7 +54,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
         trial_global_ARI.append(global_ARI)
         trial_average_ARI.append(average_ARI)
         trial_loss.append(loss.item())
-    
+    print(true_loss.item())
     print(trial_global_ARI,trial_average_ARI,trial_loss)
 
     max_index = trial_global_ARI.index(max(trial_global_ARI))
@@ -73,7 +74,7 @@ if __name__ == "__main__":
     stability = 0.75
     total_iteration = 0
     distribution = 'Bernoulli'
-    num_trials = 3
+    num_trials = 2
 
     # bernoulli_case = 'low_minus'
     # bernoulli_case = 'low_plus'
@@ -89,6 +90,20 @@ if __name__ == "__main__":
     df = pd.DataFrame(columns=["iteration", "global_ari", "average_ari", "loss", "true_loss"])
     df.to_csv(csv_file_path, index=False)
 
+
+    directory_adj = f"parameter/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
+    directory_true = f"parameter/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
+    directory_est = f"parameter/estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
+
+    if not os.path.exists(directory_adj):
+        os.makedirs(directory_adj)
+
+    if not os.path.exists(directory_true):
+        os.makedirs(directory_true)
+    
+    if not os.path.exists(directory_est):
+        os.makedirs(directory_est)
+    
     for i in tqdm(range(iterations)):
         print("-------------------------------------")
         print(f"This iteration is {i}")
@@ -103,7 +118,7 @@ if __name__ == "__main__":
         iteration_data = pd.DataFrame([{"iteration": i,
                                         "global_ari": global_ARI,
                                         "average_ari": average_ARI,
-                                        "loss": loss,
-                                        "true_loss": true_loss}])
+                                        "loss": -loss,
+                                        "true_loss": -true_loss}])
         
         iteration_data.to_csv(csv_file_path, mode='a', header=False, index=False)

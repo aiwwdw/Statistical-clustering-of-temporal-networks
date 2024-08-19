@@ -7,6 +7,7 @@ from tqdm import tqdm
 import time
 from sklearn.cluster import KMeans
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
+import os
 
 torch.autograd.set_detect_anomaly(True)
 
@@ -95,7 +96,14 @@ def inital_parameter(adj_matrices,num_latent):
 
 
 
-def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, total_iteration = 0 ,distribution = 'Bernoulli', bernoulli_case = 'low_plus', trial = 0):
+def estimate(adjacency_matrix, 
+             num_latent = 2 , 
+             stability = 0.9, 
+             total_iteration = 0 ,
+             distribution = 'Bernoulli', 
+             bernoulli_case = 'low_plus', 
+             trial = 0,
+             num_iterations = 20000):
     
     time_stamp, num_nodes , _ = adjacency_matrix.shape
 
@@ -105,14 +113,23 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, total_iteration 
 
     scale_factor = 5
 
-    # initialization version
-    tau_init_pre = torch.rand(num_nodes, num_latent, requires_grad=True) 
-    tau_transition_pre = torch.rand(time_stamp, num_nodes, num_latent, num_latent, requires_grad=True) 
-    alpha_pre = torch.full((num_latent,), 1/num_latent, requires_grad=True)
-    pi_pre = torch.rand(num_latent, num_latent, requires_grad=True) 
-    beta_pre = torch.rand(time_stamp, num_latent, num_latent, requires_grad=True)
+    # # initialization version
+    # tau_init_pre = torch.rand(num_nodes, num_latent, requires_grad=True) 
+    # tau_transition_pre = torch.rand(time_stamp, num_nodes, num_latent, num_latent, requires_grad=True) 
+    # alpha_pre = torch.rand(num_latent, requires_grad=True) 
+    # # torch.full((num_latent,), 1/num_latent, requires_grad=True) 
+    # pi_pre = torch.rand(num_latent, num_latent, requires_grad=True) 
+    # beta_pre = torch.rand(time_stamp, num_latent, num_latent, requires_grad=True) 
 
-    # tau_init, tau_transition, pi, beta, alpha= inital_parameter(adjacency_matrix, num_latent)
+    # tau_init_pre = (tau_init_pre * 10 - 5).detach().requires_grad_(True)
+    # tau_transition_pre = (tau_transition_pre * 10 - 5).detach().requires_grad_(True)
+    # alpha_pre = (alpha_pre * 10 - 5).detach().requires_grad_(True)
+    # pi_pre = (pi_pre * 10 - 5).detach().requires_grad_(True)
+    # beta_pre = (beta_pre * 10 - 5).detach().requires_grad_(True)
+
+
+    tau_init_pre, tau_transition_pre, pi_pre, beta_pre, alpha_pre= inital_parameter(adjacency_matrix, num_latent)
+
 
     # load version 
     # pi, alpha, beta, tau_init, tau_transition = torch.load('para_model_MP_LPB.pt', weights_only=True)
@@ -127,14 +144,14 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, total_iteration 
     scheduler_tau = StepLR(optimizer_tau, step_size=200, gamma=0.9)
 
     # Stopping criteria parameters
-    patience = 10
-    threshold = 1e-6  
+    patience = 15
+    threshold = 1e-4
     no_improve_count = 0 
     best_loss = float('inf') 
 
     str_stability = str(stability).replace('0.', '0p')
     # Gradient ascent
-    num_iterations = 10000
+
     for iter in range(num_iterations):
 
         optimizer_theta.zero_grad()
@@ -152,30 +169,31 @@ def estimate(adjacency_matrix, num_latent = 2 ,stability = 0.9, total_iteration 
         optimizer_theta.step()
         optimizer_tau.step()
 
-
-        scheduler_theta.step()
-        scheduler_tau.step()
+        # scheduler_theta.step()
+        # scheduler_tau.step()
         
+        # Stopping criteria check
+       
         # Check for stopping criteria every 100 iterations
         if iter % 100 == 0:
             current_loss = -loss.item()
             print(f"Iteration {iter}: Loss = {current_loss}")
-
-            # Stopping criteria check
-            if best_loss - current_loss < threshold:
+            # print(best_loss, loss)
+            if loss > best_loss + threshold :
                 no_improve_count += 1
+                print(no_improve_count)
             else:
-                best_loss = current_loss
+                best_loss = loss
                 no_improve_count = 0
-
+            
             if no_improve_count >= patience:
                 print(f"Stopping early at iteration {iter} due to no improvement.")
                 break
 
-        if iter % 500 == 0:
-            torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/estimation/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+            if iter % 500 == 0:
+                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     
-    torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/estimation/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+    torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     return loss
     
 
@@ -183,18 +201,18 @@ if __name__ == "__main__":
     num_nodes = 100
     num_latent = 2
 
-    time_stamp = 10
-    stability = 0.9
+    time_stamp = 5
+    stability = 0.75
     iteration = 0
+    trial = 2
     
-    bernoulli_case = 'low_plus'
     # bernoulli_case = 'low_minus'
-    # bernoulli_case = 'low_plus'
+    bernoulli_case = 'low_plus'
     # bernoulli_case = 'medium_minus'
     # bernoulli_case = 'medium_plus'
-    # bernoulli_case = 'medium_with_affiliation'
+    # bernoulli_case = 'medium_with_affiliation's
     # bernoulli_case = 'large'
 
     str_stability = str(stability).replace('0.', '0p')
-    Y = torch.load(f'parameter/adjacency/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
-    estimate(adjacency_matrix = Y, num_latent = num_latent, stability = stability, total_iteration = iteration, bernoulli_case = bernoulli_case)
+    Y = torch.load(f'parameter/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
+    estimate(adjacency_matrix = Y, num_latent = num_latent, stability = stability, total_iteration = iteration, bernoulli_case = bernoulli_case, trial = trial)

@@ -1,7 +1,13 @@
 nohup python main.py > output/output__medium_plus_10_0p9.txt 2>&1 &
 
 
-nohup python main.py > output/output__medium_plus_100_5_0p75..txt 2>&1 &
+
+nohup python main.py > output/output_low_minus_100_5_0p75.txt 2>&1 &
+nohup python main.py > output/output_low_plus_100_5_0p75.txt 2>&1 &
+nohup python main.py > output/output_medium_minus_100_5_0p75.txt 2>&1 &
+nohup python main.py > output/output_medium_plus_100_5_0p75.txt 2>&1 &
+nohup python main.py > output/output_medium_with_affiliation_100_5_0p75.txt 2>&1 &
+
 
 
 cd git_repository/Statistical-clustering-of-temporal-networks

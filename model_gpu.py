@@ -16,14 +16,11 @@ torch.autograd.set_detect_anomaly(True)
 device = torch.device("cuda")
 
 
-def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta,Y):
-    N, Q = tau_init_pre.shape
+def J(tau_init, tau_transition, alpha, pi, beta,Y):
+    N, Q = tau_init.shape
     T = Y.shape[0]
-    
-    tau_init = F.softmax(tau_init_pre, dim=1)
-    tau_transition = F.softmax(tau_transition_pre, dim=3)
-    alpha = F.softmax(alpha_pre, dim=0)
-    pi = F.softmax(pi_pre,dim=1)
+    Y = Y.to(device)
+
     tau_marg = tau_margin_generator(tau_init,tau_transition).to(device)
 
     q_indices = torch.arange(Q,dtype=index_dtype).view(1, 1, Q, 1, 1).expand(T, Q, Q, N, N)
@@ -41,6 +38,8 @@ def J(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta,Y):
     alpha = torch.clamp(alpha, min=eps)
     pi = torch.clamp(pi, min=eps)
     tau_transition = torch.clamp(tau_transition, min=eps)
+
+
 
     # First term
     term1 = torch.sum(tau_init * (torch.log(alpha) - torch.log(tau_init)))
@@ -69,7 +68,7 @@ def phi_vectorized(q, l, t, y, beta, distribution='Bernoulli'):
     outer = beta[t, min_q_l, max_q_l]
     inner = beta[0, min_q_l, max_q_l]
 
-    prob = torch.sigmoid(torch.where(indentication, inner, outer))
+    prob = torch.where(indentication, inner, outer)
 
     result = torch.where(y == 0, 1 - prob, prob)
 
@@ -98,19 +97,28 @@ def initial_clustering(adj_matrices, k):
     return one_hot_labels
 
 def inital_parameter(adj_matrices,k):
-    pi = torch.eye(num_latent, dtype=torch.float64, requires_grad=True)
-    alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64, requires_grad=True)
-    beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64, requires_grad=True)
+    # pi = torch.eye(num_latent, dtype=torch.float64, requires_grad=True)
+    # alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64, requires_grad=True)
+    # beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64, requires_grad=True)
 
-    tau_init = initial_clustering(adj_matrices, k)
+    alpha_pre = torch.rand(num_latent, device=device,dtype=dtype, requires_grad=True) 
+    # torch.full((num_latent,), 1/num_latent, requires_grad=True) 
+    pi_pre = torch.rand(num_latent, num_latent,device=device,dtype=dtype, requires_grad=True) 
+    beta_pre = torch.rand(time_stamp, num_latent, num_latent, device=device,dtype=dtype, requires_grad=True) 
+
+    alpha_pre = (alpha_pre * 10 - 5).detach().requires_grad_(True)
+    pi_pre = (pi_pre * 10 - 5).detach().requires_grad_(True)
+    beta_pre = (beta_pre * 10 - 5).detach().requires_grad_(True)
+
+    tau_init = initial_clustering(adj_matrices, k).to(device)
     tau_init.requires_grad_()
     
-    tau_transition = torch.eye(num_latent, dtype=torch.float64).expand(time_stamp, num_nodes, num_latent, num_latent).clone().requires_grad_()
-    
-    return tau_init, tau_transition, pi, beta, alpha
+    tau_transition = torch.eye(num_latent, device= device,dtype=torch.float64).expand(time_stamp, num_nodes, num_latent, num_latent).clone().requires_grad_()
+
+    return tau_init, tau_transition, pi_pre, beta_pre, alpha_pre
 
 
-def  estimate_gpu(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,distribution = 'Bernoulli', bernoulli_case = 'low_plus'):
+def estimate_gpu(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,distribution = 'Bernoulli', bernoulli_case = 'low_plus'):
 
     time_stamp, num_nodes , _ = adjacency_matrix.shape
 
@@ -125,29 +133,42 @@ def  estimate_gpu(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration =
     # pi = torch.rand(num_latent, num_latent, requires_grad=True)
     # beta = torch.rand(time_stamp, num_latent, num_latent, requires_grad=True)
 
-    # initialization GPU version
-    tau_init = torch.rand(num_nodes, num_latent, device=device,dtype=dtype,requires_grad=True)
-    tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, device=device,dtype=dtype,requires_grad=True)
-    alpha = torch.full((num_latent,), 1/num_latent, device=device,dtype=dtype,requires_grad=True)
-    pi = torch.rand(num_latent, num_latent, device=device,dtype=dtype,requires_grad=True)
-    beta = torch.rand(time_stamp, num_latent, num_latent, device=device,dtype=dtype,requires_grad=True)
-    adjacency_matrix = adjacency_matrix.to(device,dtype=dtype)
+    # initialization version
+    tau_init_pre = torch.rand(num_nodes, num_latent, device=device,dtype=dtype, requires_grad=True) 
+    tau_transition_pre = torch.rand(time_stamp, num_nodes, num_latent, num_latent, device=device,dtype=dtype, requires_grad=True) 
+    alpha_pre = torch.rand(num_latent, device=device,dtype=dtype, requires_grad=True) 
+    # torch.full((num_latent,), 1/num_latent, requires_grad=True) 
+    pi_pre = torch.rand(num_latent, num_latent,device=device,dtype=dtype, requires_grad=True) 
+    beta_pre = torch.rand(time_stamp, num_latent, num_latent, device=device,dtype=dtype, requires_grad=True) 
 
-    # tau_init, tau_transition, pi, beta, alpha= inital_parameter(Y, num_latent)
+    tau_init_pre = (tau_init_pre * 10 - 5).detach().requires_grad_(True)
+    tau_transition_pre = (tau_transition_pre * 10 - 5).detach().requires_grad_(True)
+    alpha_pre = (alpha_pre * 10 - 5).detach().requires_grad_(True)
+    pi_pre = (pi_pre * 10 - 5).detach().requires_grad_(True)
+    beta_pre = (beta_pre * 10 - 5).detach().requires_grad_(True)
+
+    # tau_init_pre, tau_transition_pre, pi_pre, beta_pre, alpha_pre= inital_parameter(Y, num_latent)
 
     # load version 
     # pi, alpha, beta, tau_init, tau_transition = torch.load('para_model_2.pt')
 
 
     # Optimizer
-    optimizer_theta = optim.Adam([pi,alpha,beta], lr=0.01)
-    optimizer_tau =  optim.Adam([tau_init, tau_transition], lr=0.01)
+    optimizer_theta = optim.Adam([pi_pre,alpha_pre,beta_pre], lr=1e-4)
+    optimizer_tau =  optim.Adam([tau_init_pre, tau_transition_pre], lr=1e-4)
 
     # Gradient ascent
     num_iterations = 50000
     for iteration in tqdm(range(num_iterations)):
+
         optimizer_theta.zero_grad()
         optimizer_tau.zero_grad()
+        
+        tau_init = F.softmax(tau_init_pre, dim=1)
+        tau_transition = F.softmax(tau_transition_pre, dim=3)
+        alpha = F.softmax(alpha_pre, dim=0)
+        pi = F.softmax(pi_pre,dim=1)
+        beta = torch.sigmoid(beta_pre)
 
         # start_time = time.time()  # 시작 시간 기록
         loss = - J(tau_init,tau_transition, alpha, pi, beta, adjacency_matrix)
@@ -157,8 +178,10 @@ def  estimate_gpu(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration =
         
         # start_time = time.time()  # 시작 시간 기록
         loss.backward()
+
         optimizer_theta.step()
         optimizer_tau.step()
+
         # end_time = time.time()  # 끝 시간 기록
         # elapsed_time = end_time - start_time  # 경과 시간 계산
         # print(f"Iteration {iteration}:Time per gradient = {elapsed_time:.4f} seconds")
@@ -173,23 +196,20 @@ if __name__ == "__main__":
     num_nodes = 100
     num_latent = 2
 
-    time_stamp = 10
-    stability = 0.9
+    time_stamp = 5
+    stability = 0.75
     iteration = 0
+    trial = 2
     
-    bernoulli_case = 'low_plus'
     # bernoulli_case = 'low_minus'
-    # bernoulli_case = 'low_plus'
+    bernoulli_case = 'low_plus'
     # bernoulli_case = 'medium_minus'
     # bernoulli_case = 'medium_plus'
-    # bernoulli_case = 'medium_with_affiliation'
+    # bernoulli_case = 'medium_with_affiliation's
     # bernoulli_case = 'large'
 
     distribution = 'Bernoulli'
-    Y = torch.tensor(torch.load('parameter/adjacency/Y_medium_plus_5_0p9_0.pt'))
-    time_stamp, num_nodes , _ = Y.shape
-    num_latent = 10
 
     str_stability = str(stability).replace('0.', '0p')
-    Y = torch.load(f'parameter/adjacency/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
+    Y = torch.load(f'parameter/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
     estimate_gpu(adjacency_matrix = Y, num_latent = num_latent, stability = stability, iteration = iteration, bernoulli_case = bernoulli_case)

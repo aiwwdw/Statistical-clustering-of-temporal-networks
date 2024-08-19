@@ -9,7 +9,7 @@ from sklearn.cluster import KMeans
 
 torch.autograd.set_detect_anomaly(True)
 
-def J(tau_init, tau_transition, alpha, pi, Y):
+def J(tau_init, tau_transition, alpha, pi, beta, Y):
     N, Q = tau_init.shape
     T = Y.shape[0]
 
@@ -20,7 +20,7 @@ def J(tau_init, tau_transition, alpha, pi, Y):
     t_indices = torch.arange(T).view(T, 1, 1, 1, 1).expand(T, Q, Q, N, N)
     Y_indices = Y.view(T,1,1,N,N).expand(T, Q, Q, N, N)
     phi_values_new = torch.zeros((T, Q, Q, N, N))
-    phi_values_new = phi_vectorized(q_indices,l_indices ,t_indices, Y_indices)
+    phi_values_new = phi_vectorized(q_indices,l_indices ,t_indices, Y_indices, beta)
 
     log_phi_values = torch.log(phi_values_new)
     
@@ -45,7 +45,7 @@ def J(tau_init, tau_transition, alpha, pi, Y):
     return J_value  # Since we are using gradient ascent
 
         
-def phi_vectorized(q, l, t, y,  distribution='Bernoulli'):
+def phi_vectorized(q, l, t, y, beta, distribution='Bernoulli'):
     max_q_l = torch.max(q, l)
     min_q_l = torch.min(q, l)
     prob = torch.where(q == l, beta[0, min_q_l, max_q_l], beta[t, min_q_l, max_q_l])
@@ -74,20 +74,26 @@ def initial_clustering(adj_matrices, k):
     return one_hot_labels
 
 def inital_parameter(adj_matrices,k):
-    stability = 0.9
-    pi = torch.eye(num_latent, dtype=torch.float64)
-    pi.fill_diagonal_(stability)
-    pi[pi == 0] = (1-stability)/(num_latent-1)
-    alpha = alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64)
+    # stability = 0.9
+    # pi = torch.eye(num_latent, dtype=torch.float64)
+    # pi.fill_diagonal_(stability)
+    # pi[pi == 0] = (1-stability)/(num_latent-1)
+
+    # alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64)
+    # beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
+
+    alpha = torch.rand(num_latent) * 10 - 5
+    pi = torch.rand(num_latent, num_latent, dtype=torch.float64) * 10 - 5
     beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
 
+    
     tau_init = initial_clustering(adj_matrices, k)
     tau_transition = torch.eye(num_latent, dtype=torch.float64).expand(time_stamp, num_nodes, num_latent, num_latent)
     return tau_init, tau_transition, pi, beta, alpha
 
 
 
-def VE_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
+def VE_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
     N, Q = tau_init_pre.shape
     T = Y.shape[0]
     
@@ -101,7 +107,7 @@ def VE_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
     t_indices = torch.arange(T).view(T, 1, 1, 1, 1).expand(T, Q, Q, N, N)
     Y_indices = Y.view(T,1,1,N,N).expand(T, Q, Q, N, N)
     phi_values_new = torch.zeros((T, Q, Q, N, N))
-    phi_values_new = phi_vectorized(q_indices,l_indices ,t_indices, Y_indices)
+    phi_values_new = phi_vectorized(q_indices,l_indices ,t_indices, Y_indices, beta)
 
     tau_init_pre_expanded = tau_init_pre.permute(1,0).unsqueeze(0).unsqueeze(2).expand(Q, Q, N, N)
     result = pow(phi_values_new[0], tau_init_pre_expanded)
@@ -128,7 +134,7 @@ def VE_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
     return tau_init, tau_transition
         
 
-def M_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
+def M_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
     N, Q = tau_init_pre.shape
     T = Y.shape[0]
     
@@ -163,38 +169,57 @@ def M_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, Y):
 
 
 
+def estimate_old(adjacency_matrix, num_latent = 2 ,stability = 0.9, total_iteration = 0 ,distribution = 'Bernoulli', bernoulli_case = 'low_plus', trial = 0):
+    
+    time_stamp, num_nodes , _ = adjacency_matrix.shape
 
-distribution = 'Bernoulli'
-Y = torch.tensor(torch.load('Y_MG_LPB.pt'))
-time_stamp, num_nodes , _ = Y.shape
-num_latent = 2
+    # # initialization version
+    # tau_init = torch.rand(num_nodes, num_latent, dtype=torch.float64) * 10 - 5
+    # tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, dtype=torch.float64) * 10 - 5
+    # # alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64)
+    # alpha = torch.rand(num_latent, requires_grad=True) 
+    # pi = torch.rand(num_latent, num_latent, dtype=torch.float64) * 10 - 5
+    # beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
 
-# initialization version
-tau_init = torch.rand(num_nodes, num_latent, dtype=torch.float64)  
-tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, dtype=torch.float64)
-alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64)
-pi = torch.rand(num_latent, num_latent, dtype=torch.float64)
-beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
+    # tau_init = F.softmax(tau_init, dim=1)
+    # tau_transition = F.softmax(tau_transition, dim=3)
+    # pi = F.softmax(pi,dim=1)
 
-tau_init = F.softmax(tau_init, dim=1)
-tau_transition = F.softmax(tau_transition, dim=3)
-pi = F.softmax(pi,dim=1)
+    #K-means initialization
+    tau_init, tau_transition, pi, beta, alpha= inital_parameter(Y,num_latent)
 
-# tau_init, tau_transition, pi, beta, alpha= inital_parameter(Y,num_latent)
-
-# load version 
-# pi, alpha, beta, tau_init, tau_transition = torch.load('para_old_3.pt')
-
-
-# Gradient ascent
-num_iterations = 50000
-for iteration in tqdm(range(num_iterations)):
-    tau_init, tau_transition = VE_step(tau_init, tau_transition, alpha, pi, Y)
-    alpha, pi, beta = M_step(tau_init, tau_transition, alpha, pi, Y)
-    loss = - J(tau_init,tau_transition, alpha, pi, Y)
-    if iteration % 100 ==0:
-        print(f"Iteration {iteration}: Loss = {-loss.item()}")
-    if iteration % 500 == 0:
-        torch.save([pi,alpha,beta,tau_init, tau_transition], "para_old_MP_LPB.pt")
+    # load version 
+    # pi, alpha, beta, tau_init, tau_transition = torch.load('para_old_3.pt')
 
 
+    # Gradient ascent
+    num_iterations = 50000
+    for iteration in tqdm(range(num_iterations)):
+        tau_init, tau_transition = VE_step(tau_init, tau_transition, alpha, pi, beta, Y)
+        alpha, pi, beta = M_step(tau_init, tau_transition, alpha, pi, beta, Y)
+        loss = - J(tau_init,tau_transition, alpha, pi, beta, Y)
+        if iteration % 100 ==0:
+            print(f"Iteration {iteration}: Loss = {-loss.item()}")
+        # if iteration % 500 == 0:
+        #     torch.save([pi, alpha, beta, tau_init, tau_transition], "para_old_MP_LPB.pt")
+
+if __name__ == "__main__":
+    num_nodes = 100
+    num_latent = 2
+
+    time_stamp = 5
+    stability = 0.75
+    iteration = 0
+    trial = 3
+    
+    # bernoulli_case = 'low_plus'
+    # bernoulli_case = 'low_minus'
+    bernoulli_case = 'low_plus'
+    # bernoulli_case = 'medium_minus'
+    # bernoulli_case = 'medium_plus'
+    # bernoulli_case = 'medium_with_affiliation'
+    # bernoulli_case = 'large'
+
+    str_stability = str(stability).replace('0.', '0p')
+    Y = torch.load(f'parameter/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
+    estimate_old(adjacency_matrix = Y, num_latent = num_latent, stability = stability, total_iteration = iteration, bernoulli_case = bernoulli_case, trial = trial)
