@@ -97,7 +97,7 @@ def true_J(adjacency_matrix, num_nodes, num_latent = 2 ,stability = 0.9, total_i
     str_stability = str(stability).replace('0.', '0p')
     time_stamp, num_nodes , _ = adjacency_matrix.shape
 
-    init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+    init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
 
     init_dist = torch.tensor(init_dist, dtype=torch.float64)
     transition_matrix = torch.tensor(transition_matrix, dtype=torch.float64)
@@ -123,6 +123,6 @@ if __name__ == "__main__":
     stability = 0.9
     
     str_stability = str(stability).replace('0.', '0p')
-    Y = torch.tensor(torch.load(f'parameter/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt'))
+    Y = torch.tensor(torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt'))
     
     true_J(Y,num_nodes = num_nodes, num_latent = num_latent ,stability = stability, total_iteration = iteration ,distribution = distribution, bernoulli_case = bernoulli_case)

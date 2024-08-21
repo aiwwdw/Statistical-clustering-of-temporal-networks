@@ -6,6 +6,7 @@ import copy
 from tqdm import tqdm
 import time
 from sklearn.cluster import KMeans
+import os
 
 torch.autograd.set_detect_anomaly(True)
 
@@ -54,6 +55,7 @@ def phi_vectorized(q, l, t, y, beta, distribution='Bernoulli'):
     return result
 
 def tau_margin_generator(tau_init, tau_transition):
+    time_stamp, num_nodes, num_latent, _ = tau_transition.shape
     tau = torch.zeros((time_stamp, num_nodes, num_latent))
     for t in range(time_stamp):
         result = tau_init[:, :]
@@ -73,7 +75,7 @@ def initial_clustering(adj_matrices, k):
     one_hot_labels = one_hot_labels.to(dtype=torch.float64)
     return one_hot_labels
 
-def inital_parameter(adj_matrices,k):
+def inital_parameter(adj_matrices,num_latent):
     # stability = 0.9
     # pi = torch.eye(num_latent, dtype=torch.float64)
     # pi.fill_diagonal_(stability)
@@ -81,13 +83,19 @@ def inital_parameter(adj_matrices,k):
 
     # alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64)
     # beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
+    time_stamp, num_nodes , _ = adj_matrices.shape
+    alpha = torch.rand(num_latent) * 10
+    alpha = F.softmax(alpha,dim=0)
 
-    alpha = torch.rand(num_latent) * 10 - 5
-    pi = torch.rand(num_latent, num_latent, dtype=torch.float64) * 10 - 5
+    pi = torch.rand(num_latent, num_latent, dtype=torch.float64) * 10
+    pi = F.softmax(pi,dim=1)
+
     beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
-
     
-    tau_init = initial_clustering(adj_matrices, k)
+    
+    
+    
+    tau_init = initial_clustering(adj_matrices, num_latent)
     tau_transition = torch.eye(num_latent, dtype=torch.float64).expand(time_stamp, num_nodes, num_latent, num_latent)
     return tau_init, tau_transition, pi, beta, alpha
 
@@ -169,39 +177,73 @@ def M_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
 
 
 
-def estimate_old(adjacency_matrix, num_latent = 2 ,stability = 0.9, total_iteration = 0 ,distribution = 'Bernoulli', bernoulli_case = 'low_plus', trial = 0):
+def estimate_old(adjacency_matrix, 
+                 num_latent = 2 ,
+                 stability = 0.9, 
+                 total_iteration = 0 ,
+                 distribution = 'Bernoulli', 
+                 bernoulli_case = 'low_plus', 
+                 trial = 0,
+                 mode = 'prior_random'):
     
     time_stamp, num_nodes , _ = adjacency_matrix.shape
 
-    # # initialization version
-    # tau_init = torch.rand(num_nodes, num_latent, dtype=torch.float64) * 10 - 5
-    # tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, dtype=torch.float64) * 10 - 5
-    # # alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64)
-    # alpha = torch.rand(num_latent, requires_grad=True) 
-    # pi = torch.rand(num_latent, num_latent, dtype=torch.float64) * 10 - 5
-    # beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
+    # initialization version
+    if mode == 'prior_random':
+        tau_init = torch.rand(num_nodes, num_latent, dtype=torch.float64) * 10 - 5
+        tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, dtype=torch.float64) * 10 - 5
+        # alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64)
+        alpha = torch.rand(num_latent) * 10 - 5
+        pi = torch.rand(num_latent, num_latent, dtype=torch.float64) * 10 - 5
+        beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
 
-    # tau_init = F.softmax(tau_init, dim=1)
-    # tau_transition = F.softmax(tau_transition, dim=3)
-    # pi = F.softmax(pi,dim=1)
+        tau_init = F.softmax(tau_init, dim=1)
+        tau_transition = F.softmax(tau_transition, dim=3)
+        pi = F.softmax(pi,dim=1)
+        alpha = F.softmax(alpha,dim=0)
 
     #K-means initialization
-    tau_init, tau_transition, pi, beta, alpha= inital_parameter(Y,num_latent)
+    elif mode == 'prior_kmeans':
+        tau_init, tau_transition, pi, beta, alpha= inital_parameter(adjacency_matrix,num_latent)
 
     # load version 
     # pi, alpha, beta, tau_init, tau_transition = torch.load('para_old_3.pt')
 
+    no_improve_count = 0 
+    best_loss = float('inf') 
+
+    str_stability = str(stability).replace('0.', '0p')
 
     # Gradient ascent
-    num_iterations = 50000
-    for iteration in tqdm(range(num_iterations)):
-        tau_init, tau_transition = VE_step(tau_init, tau_transition, alpha, pi, beta, Y)
-        alpha, pi, beta = M_step(tau_init, tau_transition, alpha, pi, beta, Y)
-        loss = - J(tau_init,tau_transition, alpha, pi, beta, Y)
-        if iteration % 100 ==0:
-            print(f"Iteration {iteration}: Loss = {-loss.item()}")
-        # if iteration % 500 == 0:
-        #     torch.save([pi, alpha, beta, tau_init, tau_transition], "para_old_MP_LPB.pt")
+    num_iterations = 5000
+    for iteration in range(num_iterations):
+        tau_init, tau_transition = VE_step(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
+        alpha, pi, beta = M_step(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
+        loss = - J(tau_init,tau_transition, alpha, pi, beta, adjacency_matrix)
+        
+        if iteration % 10 == 0:
+            current_loss = -loss.item()
+            if np.isnan(current_loss):
+                break
+            current_loss = -loss.item()
+            print(f"Iteration {iteration}: Loss = {current_loss}")
+            # print(best_loss, loss)
+            if loss >= best_loss:
+                no_improve_count += 1
+                print(no_improve_count)
+            else:
+                best_loss = loss
+                no_improve_count = 0
+            
+            if no_improve_count >= 3:
+                print(f"Stopping early at iteration {iteration} due to no improvement.")
+                break
+
+            if iteration % 50 == 0:
+                torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+    
+    torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+    return loss
 
 if __name__ == "__main__":
     num_nodes = 100
@@ -210,16 +252,26 @@ if __name__ == "__main__":
     time_stamp = 5
     stability = 0.75
     iteration = 0
-    trial = 3
+    trial = 0
+
+    mode = 'prior_kmeans'
+    # mode = 'prior_random'
+    
     
     # bernoulli_case = 'low_plus'
     # bernoulli_case = 'low_minus'
-    bernoulli_case = 'low_plus'
+    # bernoulli_case = 'low_plus'
     # bernoulli_case = 'medium_minus'
-    # bernoulli_case = 'medium_plus'
+    bernoulli_case = 'medium_plus'
     # bernoulli_case = 'medium_with_affiliation'
     # bernoulli_case = 'large'
 
     str_stability = str(stability).replace('0.', '0p')
-    Y = torch.load(f'parameter/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
-    estimate_old(adjacency_matrix = Y, num_latent = num_latent, stability = stability, total_iteration = iteration, bernoulli_case = bernoulli_case, trial = trial)
+    Y = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
+
+    directory_prior_est = f"parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
+    if not os.path.exists(directory_prior_est):
+        os.makedirs(directory_prior_est)
+    
+
+    estimate_old(adjacency_matrix = Y, num_latent = num_latent, stability = stability, total_iteration = iteration, bernoulli_case = bernoulli_case, trial = trial, mode = mode)

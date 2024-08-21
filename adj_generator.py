@@ -56,7 +56,14 @@ def transition(Z,num_nodes,num_latent,transition_matrix):
 
     return latent_variables
 
-def generate_data(time_stamp = 10, num_nodes = 100, num_latent = 2,  stability = 0.9, total_iteration = 0, distribution = 'Bernoulli',bernoulli_case = 'low_plus'):
+def generate_data(time_stamp = 10, 
+                  num_nodes = 100, 
+                  num_latent = 2,  
+                  stability = 0.9, 
+                  total_iteration = 0, 
+                  distribution = 'Bernoulli',
+                  bernoulli_case = 'low_plus',
+                  mode = 'new'):
 
     Z = []
     Y = []
@@ -102,8 +109,8 @@ def generate_data(time_stamp = 10, num_nodes = 100, num_latent = 2,  stability =
 
     str_stability = str(stability).replace('0.', '0p')
 
-    torch.save(Y, f'parameter/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
-    torch.save((init_dist,transition_matrix,Bernoulli_parameter,Z),f'parameter/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+    torch.save(Y, f'parameter/{num_nodes}_{time_stamp}_{str_stability}/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+    torch.save((init_dist,transition_matrix,Bernoulli_parameter,Z),f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
 
     return Y
     # Plot the graph for each timestamp and save to file
@@ -133,6 +140,9 @@ if __name__ == "__main__":
     iteration = 0
     distribution = 'Bernoulli'
 
+    mode = 'prior'
+    mode = 'new'
+
     # bernoulli_case = 'low_plus'
     # bernoulli_case = 'low_minus'
     # bernoulli_case = 'low_plus'
@@ -141,4 +151,4 @@ if __name__ == "__main__":
     # bernoulli_case = 'medium_with_affiliation'
     # bernoulli_case = 'large'
 
-    generate_data(time_stamp = time_stamp, num_nodes = num_nodes, num_latent = num_latent, stability = stability, total_iteration = iteration, distribution = 'Bernoulli',bernoulli_case = bernoulli_case)
+    generate_data(time_stamp = time_stamp, num_nodes = num_nodes, num_latent = num_latent, stability = stability, total_iteration = iteration, distribution = 'Bernoulli',bernoulli_case = bernoulli_case, mode = mode)

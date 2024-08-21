@@ -118,7 +118,7 @@ def inital_parameter(adj_matrices,k):
     return tau_init, tau_transition, pi_pre, beta_pre, alpha_pre
 
 
-def estimate_gpu(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 0 ,distribution = 'Bernoulli', bernoulli_case = 'low_plus'):
+def estimate_gpu(adjacency_matrix, num_latent = 2 ,stability = 0.9, total_iteration = 0 ,distribution = 'Bernoulli', bernoulli_case = 'low_plus', trial = 0):
 
     time_stamp, num_nodes , _ = adjacency_matrix.shape
 
@@ -157,9 +157,16 @@ def estimate_gpu(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 
     optimizer_theta = optim.Adam([pi_pre,alpha_pre,beta_pre], lr=1e-4)
     optimizer_tau =  optim.Adam([tau_init_pre, tau_transition_pre], lr=1e-4)
 
+    # Stopping criteria parameters
+    patience = 15
+    threshold = 1e-4
+    no_improve_count = 0 
+    best_loss = float('inf') 
+
+    str_stability = str(stability).replace('0.', '0p')
     # Gradient ascent
     num_iterations = 50000
-    for iteration in tqdm(range(num_iterations)):
+    for iter in tqdm(range(num_iterations)):
 
         optimizer_theta.zero_grad()
         optimizer_tau.zero_grad()
@@ -169,26 +176,32 @@ def estimate_gpu(adjacency_matrix, num_latent = 2 ,stability = 0.9, iteration = 
         alpha = F.softmax(alpha_pre, dim=0)
         pi = F.softmax(pi_pre,dim=1)
         beta = torch.sigmoid(beta_pre)
-
-        # start_time = time.time()  # 시작 시간 기록
         loss = - J(tau_init,tau_transition, alpha, pi, beta, adjacency_matrix)
-        # end_time = time.time()  # 끝 시간 기록
-        # elapsed_time = end_time - start_time  # 경과 시간 계산
-        # print(f"Iteration {iteration}:Time per calculation = {elapsed_time:.4f} seconds")
-        
-        # start_time = time.time()  # 시작 시간 기록
         loss.backward()
 
         optimizer_theta.step()
         optimizer_tau.step()
 
-        # end_time = time.time()  # 끝 시간 기록
-        # elapsed_time = end_time - start_time  # 경과 시간 계산
-        # print(f"Iteration {iteration}:Time per gradient = {elapsed_time:.4f} seconds")
-        if iteration % 100 ==0:
-            print(f"Iteration {iteration}: Loss = {-loss.item()}")
-        # if iteration % 500 == 0:
-            # torch.save([pi,alpha,beta,tau_init, tau_transition], "para_model_medium.pt")
+        if iter % 100 == 0:
+            current_loss = -loss.item()
+            print(f"Iteration {iter}: Loss = {current_loss}")
+            # print(best_loss, loss)
+            if loss > best_loss + threshold :
+                no_improve_count += 1
+                print(no_improve_count)
+            else:
+                best_loss = loss
+                no_improve_count = 0
+            
+            if no_improve_count >= patience:
+                print(f"Stopping early at iteration {iter} due to no improvement.")
+                break
+
+            if iter % 500 == 0:
+                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/new_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+    
+    torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/new_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+    return loss
 
 
 if __name__ == "__main__":
@@ -198,8 +211,9 @@ if __name__ == "__main__":
 
     time_stamp = 5
     stability = 0.75
-    iteration = 0
+    total_iteration = 0
     trial = 2
+
     
     # bernoulli_case = 'low_minus'
     bernoulli_case = 'low_plus'
@@ -211,5 +225,5 @@ if __name__ == "__main__":
     distribution = 'Bernoulli'
 
     str_stability = str(stability).replace('0.', '0p')
-    Y = torch.load(f'parameter/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
-    estimate_gpu(adjacency_matrix = Y, num_latent = num_latent, stability = stability, iteration = iteration, bernoulli_case = bernoulli_case)
+    Y = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+    estimate_gpu(adjacency_matrix = Y, num_latent = num_latent, stability = stability, total_iteration = total_iteration, bernoulli_case = bernoulli_case, trial = trial)

@@ -144,7 +144,7 @@ def estimate(adjacency_matrix,
     scheduler_tau = StepLR(optimizer_tau, step_size=200, gamma=0.9)
 
     # Stopping criteria parameters
-    patience = 15
+    patience = 5
     threshold = 1e-4
     no_improve_count = 0 
     best_loss = float('inf') 
@@ -177,9 +177,11 @@ def estimate(adjacency_matrix,
         # Check for stopping criteria every 100 iterations
         if iter % 100 == 0:
             current_loss = -loss.item()
+            if np.isnan(current_loss):
+                break
             print(f"Iteration {iter}: Loss = {current_loss}")
             # print(best_loss, loss)
-            if loss > best_loss + threshold :
+            if loss >= best_loss:
                 no_improve_count += 1
                 print(no_improve_count)
             else:
@@ -191,9 +193,9 @@ def estimate(adjacency_matrix,
                 break
 
             if iter % 500 == 0:
-                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/new_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     
-    torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+    torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/new_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     return loss
     
 
@@ -203,16 +205,17 @@ if __name__ == "__main__":
 
     time_stamp = 5
     stability = 0.75
-    iteration = 0
+    iteration = 64
     trial = 2
-    
+
+
     # bernoulli_case = 'low_minus'
-    bernoulli_case = 'low_plus'
+    # bernoulli_case = 'low_plus'
     # bernoulli_case = 'medium_minus'
-    # bernoulli_case = 'medium_plus'
+    bernoulli_case = 'medium_plus'
     # bernoulli_case = 'medium_with_affiliation's
     # bernoulli_case = 'large'
 
     str_stability = str(stability).replace('0.', '0p')
-    Y = torch.load(f'parameter/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
+    Y = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
     estimate(adjacency_matrix = Y, num_latent = num_latent, stability = stability, total_iteration = iteration, bernoulli_case = bernoulli_case, trial = trial)
