@@ -177,7 +177,8 @@ def M_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
 
 
 
-def estimate_old(adjacency_matrix, 
+def estimate_old(adjacency_matrix,
+                 initialization,
                  num_latent = 2 ,
                  stability = 0.9, 
                  total_iteration = 0 ,
@@ -188,23 +189,25 @@ def estimate_old(adjacency_matrix,
     
     time_stamp, num_nodes , _ = adjacency_matrix.shape
 
-    # initialization version
-    if mode == 'prior_random':
-        tau_init = torch.rand(num_nodes, num_latent, dtype=torch.float64) * 10 - 5
-        tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, dtype=torch.float64) * 10 - 5
-        # alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64)
-        alpha = torch.rand(num_latent) * 10 - 5
-        pi = torch.rand(num_latent, num_latent, dtype=torch.float64) * 10 - 5
-        beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
+    tau_init, tau_transition, pi, beta, alpha= initialization
 
-        tau_init = F.softmax(tau_init, dim=1)
-        tau_transition = F.softmax(tau_transition, dim=3)
-        pi = F.softmax(pi,dim=1)
-        alpha = F.softmax(alpha,dim=0)
+    # # initialization version
+    # if mode == 'prior_random':
+    #     tau_init = torch.rand(num_nodes, num_latent, dtype=torch.float64) * 10 - 5
+    #     tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, dtype=torch.float64) * 10 - 5
+    #     # alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64)
+    #     alpha = torch.rand(num_latent) * 10 - 5
+    #     pi = torch.rand(num_latent, num_latent, dtype=torch.float64) * 10 - 5
+    #     beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
 
-    #K-means initialization
-    elif mode == 'prior_kmeans':
-        tau_init, tau_transition, pi, beta, alpha= inital_parameter(adjacency_matrix,num_latent)
+    #     tau_init = F.softmax(tau_init, dim=1)
+    #     tau_transition = F.softmax(tau_transition, dim=3)
+    #     pi = F.softmax(pi,dim=1)
+    #     alpha = F.softmax(alpha,dim=0)
+
+    # #K-means initialization
+    # elif mode == 'prior_kmeans':
+    #     tau_init, tau_transition, pi, beta, alpha= inital_parameter(adjacency_matrix,num_latent)
 
     # load version 
     # pi, alpha, beta, tau_init, tau_transition = torch.load('para_old_3.pt')
@@ -275,3 +278,4 @@ if __name__ == "__main__":
     
 
     estimate_old(adjacency_matrix = Y, num_latent = num_latent, stability = stability, total_iteration = iteration, bernoulli_case = bernoulli_case, trial = trial, mode = mode)
+

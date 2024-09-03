@@ -97,6 +97,7 @@ def inital_parameter(adj_matrices,num_latent):
 
 
 def estimate(adjacency_matrix, 
+             initialization,
              num_latent = 2 , 
              stability = 0.9, 
              total_iteration = 0 ,
@@ -127,8 +128,9 @@ def estimate(adjacency_matrix,
     # pi_pre = (pi_pre * 10 - 5).detach().requires_grad_(True)
     # beta_pre = (beta_pre * 10 - 5).detach().requires_grad_(True)
 
+    tau_init_pre, tau_transition_pre, pi_pre, beta_pre, alpha_pre= initialization
 
-    tau_init_pre, tau_transition_pre, pi_pre, beta_pre, alpha_pre= inital_parameter(adjacency_matrix, num_latent)
+    # tau_init_pre, tau_transition_pre, pi_pre, beta_pre, alpha_pre= inital_parameter(adjacency_matrix, num_latent)
 
 
     # load version 

@@ -5,9 +5,64 @@ from true_model import true_J
 from model_gpu import estimate_gpu
 from old_model_compact import estimate_old
 import numpy as np
+import torch
 from tqdm import tqdm
+from sklearn.cluster import KMeans
 import pandas as pd
 import os
+import torch.nn.functional as F
+
+def inital_kmeans(adj_matrices,num_latent):
+    time_stamp, num_nodes , _ = adj_matrices.shape
+    pi = torch.eye(num_latent, dtype=torch.float64, requires_grad=True)
+    alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64, requires_grad=True)
+    beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64, requires_grad=True)
+
+    tau_init = initial_clustering(adj_matrices, num_latent)
+    tau_init.requires_grad_()
+    
+    tau_transition = torch.eye(num_latent, dtype=torch.float64).expand(time_stamp, num_nodes, num_latent, num_latent).clone().requires_grad_()
+    
+    return tau_init, tau_transition, pi, beta, alpha
+
+def initial_clustering(adj_matrices, num_latent):
+    # 인접 행렬을 쌓아 하나의 큰 행렬로 만듭니다.
+    stacked_matrix = torch.hstack([matrix for matrix in adj_matrices])
+    # k-means 알고리즘 적용
+    kmeans = KMeans(n_clusters=num_latent, random_state=0)
+    initial_labels = kmeans.fit_predict(stacked_matrix)
+    initial_labels_tensor = torch.tensor(initial_labels, dtype=torch.int64)
+    one_hot_labels = torch.nn.functional.one_hot(initial_labels_tensor, num_classes=num_latent)
+    one_hot_labels = one_hot_labels.to(dtype=torch.float64)
+    return one_hot_labels
+
+def inital_random(adj_matrices,num_latent):
+    time_stamp, num_nodes , _ = adj_matrices.shape
+    tau_init = torch.rand(num_nodes, num_latent, dtype=torch.float64) * 10 - 5
+    tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, dtype=torch.float64) * 10 - 5
+    # alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64)
+    alpha = torch.rand(num_latent) * 10 - 5
+    pi = torch.rand(num_latent, num_latent, dtype=torch.float64) * 10 - 5
+    beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
+    
+    return tau_init, tau_transition, pi, beta, alpha
+
+def inital_prior(intitalization):
+    tau_init, tau_transition, pi, beta, alpha = intitalization
+    tau_init = F.softmax(tau_init, dim=1)
+    tau_transition = F.softmax(tau_transition, dim=3)
+    pi = F.softmax(pi,dim=1)
+    alpha = F.softmax(alpha,dim=0)
+
+    return tau_init, tau_transition, pi, beta, alpha
+
+def inital_new(intitalization):
+    tau_init, tau_transition, pi, beta, alpha = intitalization
+    tau_init.requires_grad_()
+    tau_transition.requires_grad_()
+    pi.requires_grad_()
+    beta.requires_grad_()
+    alpha.requires_grad_()
 
 def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, total_iteration = 0, distribution = 'Bernoulli', bernoulli_case = 'medium_plus', num_trials = 1, mode = 'new'):
 
@@ -26,38 +81,22 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                         total_iteration = total_iteration, 
                         distribution = distribution, 
                         bernoulli_case = bernoulli_case)
-    
-    prior_random_loss = estimate_old(adjacency_matrix = Y, 
-                        num_latent = num_latent, 
-                        stability = stability, 
-                        total_iteration = total_iteration, 
-                        bernoulli_case = bernoulli_case, 
-                        trial = 0,
-                        mode= 'prior_random')
-    
-    prior_random_global_ARI, prior_random_average_ARI = eval(bernoulli_case =bernoulli_case, 
-                                                            num_nodes = num_nodes,
-                                                            time_stamp = time_stamp, 
-                                                            stability = stability, 
-                                                            total_iteration = total_iteration,
-                                                            trial = 0,
-                                                            mode = 'prior_random')
                         
-    prior_kmeans_loss = estimate_old(adjacency_matrix = Y, 
-                        num_latent = num_latent, 
-                        stability = stability, 
-                        total_iteration = total_iteration, 
-                        bernoulli_case = bernoulli_case, 
-                        trial = 0,
-                        mode= 'prior_kmeans')
+    # prior_kmeans_loss = estimate_old(adjacency_matrix = Y, 
+    #                     num_latent = num_latent, 
+    #                     stability = stability, 
+    #                     total_iteration = total_iteration, 
+    #                     bernoulli_case = bernoulli_case, 
+    #                     trial = 0,
+    #                     mode= 'prior_kmeans')
     
-    prior_kmeans_global_ARI, prior_kmeans_average_ARI = eval(bernoulli_case =bernoulli_case, 
-                                                            num_nodes = num_nodes,
-                                                            time_stamp = time_stamp, 
-                                                            stability = stability, 
-                                                            total_iteration = total_iteration,
-                                                            trial = 0,
-                                                            mode = 'prior_kmeans')
+    # prior_kmeans_global_ARI, prior_kmeans_average_ARI = eval(bernoulli_case =bernoulli_case, 
+    #                                                         num_nodes = num_nodes,
+    #                                                         time_stamp = time_stamp, 
+    #                                                         stability = stability, 
+    #                                                         total_iteration = total_iteration,
+    #                                                         trial = 0,
+    #                                                         mode = 'prior_kmeans')
     
 
 
@@ -66,9 +105,35 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
     trial_average_ARI = []
     trial_loss = []
 
+    prior_trial_global_ARI = []
+    prior_trial_average_ARI = []
+    prior_trial_loss = []
+
     for j in range(num_trials):
         # 추정
+        initialization = inital_random(Y,num_latent)
+        prior_initialization = inital_prior(initialization)
+        
+        prior_random_loss = estimate_old(adjacency_matrix = Y, 
+                                        initialization = prior_initialization,
+                                        num_latent = num_latent, 
+                                        stability = stability, 
+                                        total_iteration = total_iteration, 
+                                        bernoulli_case = bernoulli_case, 
+                                        trial = 0,
+                                        mode= 'prior_random')
+        
+        prior_random_global_ARI, prior_random_average_ARI = eval(bernoulli_case =bernoulli_case, 
+                                                                num_nodes = num_nodes,
+                                                                time_stamp = time_stamp, 
+                                                                stability = stability, 
+                                                                total_iteration = total_iteration,
+                                                                trial = 0,
+                                                                mode = 'prior_random')
+        
+        inital_new(initialization)
         loss = estimate(adjacency_matrix = Y, 
+                        initialization = initialization,
                         num_latent = num_latent, 
                         stability = stability, 
                         total_iteration = total_iteration, 
@@ -87,16 +152,23 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                                         time_stamp = time_stamp, 
                                         stability = stability, 
                                         total_iteration = total_iteration,
-                                        trial = j,
-                                        mode = 'new')
+                                        trial = j)
         
         trial_global_ARI.append(global_ARI)
         trial_average_ARI.append(average_ARI)
         trial_loss.append(loss.item())
+
+        prior_trial_global_ARI.append(prior_random_global_ARI)
+        prior_trial_average_ARI.append(prior_random_average_ARI)
+        prior_trial_loss.append(prior_random_loss.item())
+
+
     print(true_loss.item())
-    print(trial_global_ARI,trial_average_ARI,trial_loss)
+    print("new: " ,trial_global_ARI,trial_average_ARI,trial_loss)
+    print("prior: ",prior_trial_global_ARI,prior_trial_average_ARI,prior_trial_loss)
 
     max_index = trial_global_ARI.index(max(trial_global_ARI))
+    prior_max_index = prior_trial_global_ARI.index(max(prior_trial_global_ARI))
     
 
         
@@ -104,7 +176,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
     
     return (
         trial_global_ARI[max_index], trial_average_ARI[max_index], 
-        prior_random_global_ARI, prior_random_average_ARI,  
+        prior_trial_global_ARI[prior_max_index], prior_trial_average_ARI[prior_max_index],  
         prior_kmeans_global_ARI, prior_kmeans_average_ARI, 
         trial_loss[max_index], true_loss.item(),
         prior_random_loss.item(), prior_kmeans_loss.item()
@@ -113,7 +185,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
     
 
 if __name__ == "__main__":
-    time_stamp = 5
+    time_stamp = 4
     num_latent = 2
     num_nodes = 100
     stability = 0.75
