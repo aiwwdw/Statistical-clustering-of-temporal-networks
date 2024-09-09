@@ -104,7 +104,8 @@ def estimate(adjacency_matrix,
              distribution = 'Bernoulli', 
              bernoulli_case = 'low_plus', 
              trial = 0,
-             num_iterations = 20000):
+             num_iterations = 1000,
+             mode = 'new_kmeans'):
     
     time_stamp, num_nodes , _ = adjacency_matrix.shape
 
@@ -138,8 +139,8 @@ def estimate(adjacency_matrix,
 
 
     # Optimizer
-    optimizer_theta = optim.Adam([pi_pre, alpha_pre, beta_pre], lr=1e-1)
-    optimizer_tau = optim.Adam([tau_init_pre, tau_transition_pre], lr=1e-1)
+    optimizer_theta = optim.Adam([pi_pre, alpha_pre, beta_pre], lr=1e-2)
+    optimizer_tau = optim.Adam([tau_init_pre, tau_transition_pre], lr=1e-2)
 
     # Learning rate scheduler
     scheduler_theta = StepLR(optimizer_theta, step_size=200, gamma=0.9)
@@ -153,6 +154,13 @@ def estimate(adjacency_matrix,
 
     str_stability = str(stability).replace('0.', '0p')
     # Gradient ascent
+    tau_init = F.softmax(tau_init_pre, dim=1)
+    tau_transition = F.softmax(tau_transition_pre, dim=3)
+    alpha = F.softmax(alpha_pre, dim=0)
+    pi = F.softmax(pi_pre,dim=1)
+    beta = F.sigmoid(beta_pre)
+
+    # print(tau_init, tau_transition, pi, beta, alpha)
 
     for iter in range(num_iterations):
 
@@ -164,6 +172,7 @@ def estimate(adjacency_matrix,
         alpha = F.softmax(alpha_pre, dim=0)
         pi = F.softmax(pi_pre,dim=1)
         beta = F.sigmoid(beta_pre)
+
 
         loss = -J(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
         loss.backward()
@@ -195,9 +204,9 @@ def estimate(adjacency_matrix,
                 break
 
             if iter % 500 == 0:
-                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/new_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     
-    torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/new_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+    torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     return loss
     
 

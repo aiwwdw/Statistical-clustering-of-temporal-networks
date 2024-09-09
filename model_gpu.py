@@ -118,7 +118,14 @@ def inital_parameter(adj_matrices,k):
     return tau_init, tau_transition, pi_pre, beta_pre, alpha_pre
 
 
-def estimate_gpu(adjacency_matrix, num_latent = 2 ,stability = 0.9, total_iteration = 0 ,distribution = 'Bernoulli', bernoulli_case = 'low_plus', trial = 0):
+def estimate_gpu(adjacency_matrix, 
+                 num_latent = 2 ,
+                 stability = 0.9, 
+                 total_iteration = 0 ,
+                 distribution = 'Bernoulli', 
+                 bernoulli_case = 'low_plus', 
+                 trial = 0,
+                 mode = 'new_kmeans'):
 
     time_stamp, num_nodes , _ = adjacency_matrix.shape
 
@@ -198,9 +205,9 @@ def estimate_gpu(adjacency_matrix, num_latent = 2 ,stability = 0.9, total_iterat
                 break
 
             if iter % 500 == 0:
-                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/new_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     
-    torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/new_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+    torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     return loss
 
 

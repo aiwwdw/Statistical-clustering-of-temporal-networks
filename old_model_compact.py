@@ -92,9 +92,6 @@ def inital_parameter(adj_matrices,num_latent):
 
     beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
     
-    
-    
-    
     tau_init = initial_clustering(adj_matrices, num_latent)
     tau_transition = torch.eye(num_latent, dtype=torch.float64).expand(time_stamp, num_nodes, num_latent, num_latent)
     return tau_init, tau_transition, pi, beta, alpha
@@ -217,6 +214,10 @@ def estimate_old(adjacency_matrix,
 
     str_stability = str(stability).replace('0.', '0p')
 
+    loss = - J(tau_init,tau_transition, alpha, pi, beta, adjacency_matrix)
+    current_loss = -loss.item()
+    print(f"Iteration {0}: Loss = {current_loss}")
+
     # Gradient ascent
     num_iterations = 5000
     for iteration in range(num_iterations):
@@ -224,12 +225,11 @@ def estimate_old(adjacency_matrix,
         alpha, pi, beta = M_step(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
         loss = - J(tau_init,tau_transition, alpha, pi, beta, adjacency_matrix)
         
-        if iteration % 10 == 0:
+        if iteration % 10 == 9:
             current_loss = -loss.item()
             if np.isnan(current_loss):
                 break
-            current_loss = -loss.item()
-            print(f"Iteration {iteration}: Loss = {current_loss}")
+            print(f"Iteration {iteration+1}: Loss = {current_loss}")
             # print(best_loss, loss)
             if loss >= best_loss:
                 no_improve_count += 1

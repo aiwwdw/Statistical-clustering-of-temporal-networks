@@ -16,7 +16,7 @@ def tau_margin_generator(tau_init, tau_transition):
         tau[t,:,:] = result
     return tau
 
-def eval(bernoulli_case, num_nodes, time_stamp, stability, total_iteration, trial = 0, mode = 'new'):
+def eval(bernoulli_case, num_nodes, time_stamp, stability, total_iteration, trial = 0, mode = 'new_random'):
     """""
     compute ARI, J value,
     """""
@@ -27,7 +27,7 @@ def eval(bernoulli_case, num_nodes, time_stamp, stability, total_iteration, tria
     Z = torch.tensor(Z, dtype=torch.int64)
 
     ### In case of My model
-    if mode == 'new':
+    if mode == 'new_random' or mode == 'new_kmeans':
         tau_init = F.softmax(tau_init, dim=1)
         tau_transition = F.softmax(tau_transition, dim=3)
         alpha = F.softmax(alpha, dim=0)
@@ -37,9 +37,9 @@ def eval(bernoulli_case, num_nodes, time_stamp, stability, total_iteration, tria
     tau_marg = tau_margin_generator(tau_init, tau_transition)
 
     # Print each parameter
-    print("pi:", pi)
-    print("alpha:", alpha)
-    print("beta:", beta)
+    # print("pi:", pi)
+    # print("alpha:", alpha)
+    # print("beta:", beta)
 
     # print("tau_init:", tau_init)
     # print("tau_transition:", tau_transition)
