@@ -51,6 +51,7 @@ def initial_clustering(adj_matrices, num_latent):
 
 def inital_random(adj_matrices,num_latent):
     time_stamp, num_nodes , _ = adj_matrices.shape
+    epsilon = 1e-5
 
     concentration = torch.ones(num_latent, dtype=torch.float64)
     tau_init = torch.stack([Dirichlet(concentration).sample() for _ in range(num_nodes)])
@@ -63,6 +64,12 @@ def inital_random(adj_matrices,num_latent):
     alpha = Dirichlet(concentration).sample()
     pi = torch.stack([Dirichlet(concentration).sample() for _ in range(num_latent)])
     beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
+
+
+    tau_init = torch.clamp(tau_init, min=epsilon, max=1 - epsilon)
+    alpha = torch.clamp(alpha, min=epsilon, max=1 - epsilon)
+    pi = torch.clamp(pi, min=epsilon, max=1 - epsilon)
+    beta = torch.clamp(beta, min=epsilon, max=1 - epsilon)
 
     # tau_init = torch.rand(num_nodes, num_latent, dtype=torch.float64) * 10 - 5
     # tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, dtype=torch.float64) * 10 - 5
@@ -85,12 +92,12 @@ def inital_prior(intitalization):
 
 def initial_before_softmax(intitalization):
     tau_init, tau_transition, pi, beta, alpha = intitalization
-    epsilon = 1e-50
-    # 로그를 취할 때 양수인 값만 허용
-    tau_init = torch.log(torch.clamp(tau_init, min=epsilon))
-    tau_transition = torch.log(torch.clamp(tau_transition, min=epsilon))
-    pi = torch.log(torch.clamp(pi, min=epsilon))
-    alpha = torch.log(torch.clamp(alpha, min=epsilon))
+    epsilon = 1e-2
+    # 로그를 취할 때 양수인 값만 허용≈
+    tau_init = torch.log(torch.clamp(tau_init, min=epsilon, max = 1-epsilon))
+    tau_transition = torch.log(torch.clamp(tau_transition, min=epsilon, max = 1-epsilon))
+    pi = torch.log(torch.clamp(pi, min=epsilon, max = 1-epsilon))
+    alpha = torch.log(torch.clamp(alpha, min=epsilon, max = 1-epsilon))
 
     beta = logit_safe(beta)
 
@@ -144,6 +151,8 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                                                             mode = 'prior_kmeans')
     
     intitalization_kmeans_new_pre = initial_before_softmax(initialization_kmeans_new)
+    tau_init, tau_transition, pi, beta, alpha = intitalization_kmeans_new_pre
+    print(tau_init,tau_transition)
     inital_gradient(intitalization_kmeans_new_pre)
 
     kmeans_loss = estimate(adjacency_matrix = Y, 
@@ -153,7 +162,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                         total_iteration = total_iteration, 
                         bernoulli_case = bernoulli_case,
                         trial = 0,
-                        num_iterations = 200000,
+                        num_iterations = 20000,
                         mode = 'new_kmeans')
     
     kmeans_global_ARI, kmeans_average_ARI = eval(bernoulli_case =bernoulli_case, 
@@ -206,7 +215,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                         total_iteration = total_iteration, 
                         bernoulli_case = bernoulli_case,
                         trial = j,
-                        num_iterations = 200000,
+                        num_iterations = 20000,
                         mode = 'new_random')
     
         # loss = estimate_gpu(adjacency_matrix = Y, 
@@ -250,7 +259,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
         prior_trial_global_ARI[prior_max_index], prior_trial_average_ARI[prior_max_index],  
         prior_kmeans_global_ARI, prior_kmeans_average_ARI, 
         trial_loss[max_index], true_loss.item(), kmeans_loss.item(),
-        prior_random_loss.item(), prior_kmeans_loss.item()
+        prior_trial_loss[prior_max_index].item(), prior_kmeans_loss.item()
         )
     # return global_ARI, average_ARI, loss, true_loss
     
@@ -267,8 +276,8 @@ if __name__ == "__main__":
     # bernoulli_case = 'low_minus'
     # bernoulli_case = 'low_plus'
     # bernoulli_case = 'medium_minus'
-    bernoulli_case = 'medium_plus'
-    # bernoulli_case = 'medium_with_affiliation'
+    # bernoulli_case = 'medium_plus'
+    bernoulli_case = 'medium_with_affiliation'
     # bernoulli_case = 'large'
 
     str_stability = str(stability).replace('0.', '0p')

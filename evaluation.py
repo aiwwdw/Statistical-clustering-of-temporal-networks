@@ -28,6 +28,7 @@ def eval(bernoulli_case, num_nodes, time_stamp, stability, total_iteration, tria
 
     ### In case of My model
     if mode == 'new_random' or mode == 'new_kmeans':
+        print(tau_init)
         tau_init = F.softmax(tau_init, dim=1)
         tau_transition = F.softmax(tau_transition, dim=3)
         alpha = F.softmax(alpha, dim=0)
@@ -37,9 +38,9 @@ def eval(bernoulli_case, num_nodes, time_stamp, stability, total_iteration, tria
     tau_marg = tau_margin_generator(tau_init, tau_transition)
 
     # Print each parameter
-    # print("pi:", pi)
-    # print("alpha:", alpha)
-    # print("beta:", beta)
+    print("pi:", pi)
+    print("alpha:", alpha)
+    print("beta:", beta)
 
     # print("tau_init:", tau_init)
     # print("tau_transition:", tau_transition)
