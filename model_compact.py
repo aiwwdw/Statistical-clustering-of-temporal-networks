@@ -139,8 +139,8 @@ def estimate(adjacency_matrix,
 
 
     # Optimizer
-    optimizer_theta = optim.Adam([pi_pre, alpha_pre, beta_pre], lr=1e-1)
-    optimizer_tau = optim.Adam([tau_init_pre, tau_transition_pre], lr=1e-1)
+    optimizer_theta = optim.Adam([pi_pre, alpha_pre, beta_pre], lr=5e-1)
+    optimizer_tau = optim.Adam([tau_init_pre, tau_transition_pre], lr=5e-1)
 
     # Learning rate scheduler
     scheduler_theta = StepLR(optimizer_theta, step_size=200, gamma=0.9)

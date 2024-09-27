@@ -15,6 +15,7 @@ def J(tau_init, tau_transition, alpha, pi, beta, Y):
     T = Y.shape[0]
 
     tau_marg = tau_margin_generator(tau_init,tau_transition)
+    # print(tau_marg[0])
     
     q_indices = torch.arange(Q).view(1, 1, Q, 1, 1).expand(T, Q, Q, N, N)
     l_indices = torch.arange(Q).view(1, Q, 1, 1, 1).expand(T, Q, Q, N, N)
@@ -223,8 +224,9 @@ def estimate_old(adjacency_matrix,
     for iteration in range(num_iterations):
         tau_init, tau_transition = VE_step(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
         alpha, pi, beta = M_step(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
+        print(alpha,pi,beta)
         loss = - J(tau_init,tau_transition, alpha, pi, beta, adjacency_matrix)
-        
+
         if iteration % 10 == 9:
             current_loss = -loss.item()
             if np.isnan(current_loss):
@@ -253,7 +255,7 @@ if __name__ == "__main__":
     num_latent = 2
 
     time_stamp = 5
-    stability = 0.75
+    stability = 0.751
     iteration = 0
     trial = 0
 
@@ -264,8 +266,8 @@ if __name__ == "__main__":
     # bernoulli_case = 'low_plus'
     # bernoulli_case = 'low_minus'
     # bernoulli_case = 'low_plus'
-    # bernoulli_case = 'medium_minus'
-    bernoulli_case = 'medium_plus'
+    bernoulli_case = 'medium_minus'
+    # bernoulli_case = 'medium_plus'
     # bernoulli_case = 'medium_with_affiliation'
     # bernoulli_case = 'large'
 
