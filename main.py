@@ -26,6 +26,7 @@ def logit_safe(y, epsilon=1e-50):
     return np.log(y / (1 - y))
 
 def inital_kmeans(adj_matrices,num_latent):
+    epsilon = 1e-5
     time_stamp, num_nodes , _ = adj_matrices.shape
     concentration = torch.ones(num_latent, dtype=torch.float64)
 
@@ -36,6 +37,11 @@ def inital_kmeans(adj_matrices,num_latent):
     tau_init = initial_clustering(adj_matrices, num_latent)
     tau_transition = torch.eye(num_latent, dtype=torch.float64).expand(time_stamp, num_nodes, num_latent, num_latent)
     
+    tau_init = torch.clamp(tau_init, min=epsilon, max=1 - epsilon)
+    alpha = torch.clamp(alpha, min=epsilon, max=1 - epsilon)
+    pi = torch.clamp(pi, min=epsilon, max=1 - epsilon)
+    beta = torch.clamp(beta, min=epsilon, max=1 - epsilon)
+
     return tau_init, tau_transition, pi, beta, alpha
 
 def initial_clustering(adj_matrices, num_latent):
@@ -132,7 +138,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
     initialization_kmeans = inital_kmeans(Y,num_latent)
     initialization_kmeans_new = tuple(tensor.clone() for tensor in initialization_kmeans)
 
-                        
+    print("prior kmeans ------------------------------------------------------------------------------")
     prior_kmeans_loss = estimate_old(adjacency_matrix = Y, 
                                     initialization = initialization_kmeans,
                                     num_latent = num_latent, 
@@ -151,10 +157,11 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                                                             mode = 'prior_kmeans')
     
     intitalization_kmeans_new_pre = initial_before_softmax(initialization_kmeans_new)
-    tau_init, tau_transition, pi, beta, alpha = intitalization_kmeans_new_pre
-    print(tau_init,tau_transition)
+    # tau_init, tau_transition, pi, beta, alpha = intitalization_kmeans_new_pre
+    # print(tau_init,tau_transition)
     inital_gradient(intitalization_kmeans_new_pre)
 
+    print("ours kmeans ------------------------------------------------------------------------------")
     kmeans_loss = estimate(adjacency_matrix = Y, 
                         initialization = intitalization_kmeans_new_pre,
                         num_latent = num_latent, 
@@ -187,7 +194,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
         initialization = inital_random(Y,num_latent)
         initialization_new = tuple(tensor.clone() for tensor in initialization)
 
-        
+        print(f"prior {j} times ------------------------------------------------------------------------------")
         prior_random_loss = estimate_old(adjacency_matrix = Y, 
                                         initialization = initialization,
                                         num_latent = num_latent, 
@@ -208,6 +215,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
         intitalization_new_pre = initial_before_softmax(initialization_new)
         inital_gradient(intitalization_new_pre)
 
+        print(f"ours {j} times ------------------------------------------------------------------------------")
         loss = estimate(adjacency_matrix = Y, 
                         initialization = intitalization_new_pre,
                         num_latent = num_latent, 
@@ -215,7 +223,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                         total_iteration = total_iteration, 
                         bernoulli_case = bernoulli_case,
                         trial = j,
-                        num_iterations = 20000,
+                        num_iterations = 10000,
                         mode = 'new_random')
     
         # loss = estimate_gpu(adjacency_matrix = Y, 
@@ -268,16 +276,16 @@ if __name__ == "__main__":
     time_stamp = 5
     num_latent = 2
     num_nodes = 100
-    stability = 0.75
+    stability = 0.751
     total_iteration = 0
     distribution = 'Bernoulli'
-    num_trials = 4
+    num_trials = 8
     
     # bernoulli_case = 'low_minus'
     # bernoulli_case = 'low_plus'
-    # bernoulli_case = 'medium_minus'
+    bernoulli_case = 'medium_minus'
     # bernoulli_case = 'medium_plus'
-    bernoulli_case = 'medium_with_affiliation'
+    # bernoulli_case = 'medium_with_affiliation'
     # bernoulli_case = 'large'
 
     str_stability = str(stability).replace('0.', '0p')
@@ -320,7 +328,10 @@ if __name__ == "__main__":
     
     for i in tqdm(range(iterations)):
         print("-----------------------------------------------------------------------------------------")
+        print("-----------------------------------------------------------------------------------------")
         print(f"This iteration is {i}")
+        print("-----------------------------------------------------------------------------------------")
+        print("-----------------------------------------------------------------------------------------")
 
         global_ARI, average_ARI, \
         kmeans_global_ARI, kmeans_average_ARI, \
@@ -328,13 +339,13 @@ if __name__ == "__main__":
         prior_kmeans_global_ARI, prior_kmeans_average_ARI, \
         loss, true_loss, kmeans_loss,\
         prior_random_loss, prior_kmeans_loss = main(time_stamp = time_stamp, 
-                                                            num_latent = num_latent, 
-                                                            num_nodes = num_nodes, 
-                                                            stability = stability, 
-                                                            total_iteration = i, 
-                                                            distribution = distribution, 
-                                                            bernoulli_case = bernoulli_case,
-                                                            num_trials = num_trials)
+                                                    num_latent = num_latent, 
+                                                    num_nodes = num_nodes, 
+                                                    stability = stability, 
+                                                    total_iteration = i, 
+                                                    distribution = distribution, 
+                                                    bernoulli_case = bernoulli_case,
+                                                    num_trials = num_trials)
         
         iteration_data = pd.DataFrame([{"iteration": i,
                                         "global_ari": global_ARI,
