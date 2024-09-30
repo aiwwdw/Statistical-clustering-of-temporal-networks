@@ -26,7 +26,7 @@ def logit_safe(y, epsilon=1e-50):
     return np.log(y / (1 - y))
 
 def inital_kmeans(adj_matrices,num_latent):
-    epsilon = 1e-5
+    epsilon = 1e-2
     time_stamp, num_nodes , _ = adj_matrices.shape
     concentration = torch.ones(num_latent, dtype=torch.float64)
 
@@ -38,6 +38,7 @@ def inital_kmeans(adj_matrices,num_latent):
     tau_transition = torch.eye(num_latent, dtype=torch.float64).expand(time_stamp, num_nodes, num_latent, num_latent)
     
     tau_init = torch.clamp(tau_init, min=epsilon, max=1 - epsilon)
+    tau_transition = torch.clamp(tau_transition, min=epsilon, max=1 - epsilon)
     alpha = torch.clamp(alpha, min=epsilon, max=1 - epsilon)
     pi = torch.clamp(pi, min=epsilon, max=1 - epsilon)
     beta = torch.clamp(beta, min=epsilon, max=1 - epsilon)
@@ -57,7 +58,7 @@ def initial_clustering(adj_matrices, num_latent):
 
 def inital_random(adj_matrices,num_latent):
     time_stamp, num_nodes , _ = adj_matrices.shape
-    epsilon = 1e-5
+    epsilon = 1e-2
 
     concentration = torch.ones(num_latent, dtype=torch.float64)
     tau_init = torch.stack([Dirichlet(concentration).sample() for _ in range(num_nodes)])
@@ -73,9 +74,16 @@ def inital_random(adj_matrices,num_latent):
 
 
     tau_init = torch.clamp(tau_init, min=epsilon, max=1 - epsilon)
+    tau_transition = torch.clamp(tau_transition, min=epsilon, max=1 - epsilon)
     alpha = torch.clamp(alpha, min=epsilon, max=1 - epsilon)
     pi = torch.clamp(pi, min=epsilon, max=1 - epsilon)
     beta = torch.clamp(beta, min=epsilon, max=1 - epsilon)
+
+    tau_init = tau_init / tau_init.sum(dim=1, keepdim=True)
+    tau_transition = tau_transition/tau_transition.sum(dim=3, keepdim=True)
+    alpha =alpha/alpha.sum(dim=0, keepdim=True)
+    pi = pi / pi.sum(dim=1, keepdim=True)
+    
 
     # tau_init = torch.rand(num_nodes, num_latent, dtype=torch.float64) * 10 - 5
     # tau_transition = torch.rand(time_stamp, num_nodes, num_latent, num_latent, dtype=torch.float64) * 10 - 5
@@ -99,7 +107,7 @@ def inital_prior(intitalization):
 def initial_before_softmax(intitalization):
     tau_init, tau_transition, pi, beta, alpha = intitalization
     epsilon = 1e-2
-    # 로그를 취할 때 양수인 값만 허용≈
+    # 로그를 취할 때 양수인 값만 허용
     tau_init = torch.log(torch.clamp(tau_init, min=epsilon, max = 1-epsilon))
     tau_transition = torch.log(torch.clamp(tau_transition, min=epsilon, max = 1-epsilon))
     pi = torch.log(torch.clamp(pi, min=epsilon, max = 1-epsilon))
@@ -157,8 +165,6 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                                                             mode = 'prior_kmeans')
     
     intitalization_kmeans_new_pre = initial_before_softmax(initialization_kmeans_new)
-    # tau_init, tau_transition, pi, beta, alpha = intitalization_kmeans_new_pre
-    # print(tau_init,tau_transition)
     inital_gradient(intitalization_kmeans_new_pre)
 
     print("ours kmeans ------------------------------------------------------------------------------")
@@ -250,7 +256,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
         prior_trial_loss.append(prior_random_loss.item())
 
 
-    print(true_loss.item())
+    print("True loss: ", true_loss.item())
     print("new: " ,trial_global_ARI,trial_average_ARI,trial_loss)
     print("prior: ",prior_trial_global_ARI,prior_trial_average_ARI,prior_trial_loss)
 
@@ -276,7 +282,7 @@ if __name__ == "__main__":
     time_stamp = 5
     num_latent = 2
     num_nodes = 100
-    stability = 0.751
+    stability = 0.75
     total_iteration = 0
     distribution = 'Bernoulli'
     num_trials = 8

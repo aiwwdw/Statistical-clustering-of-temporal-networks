@@ -8,6 +8,8 @@ import time
 from sklearn.cluster import KMeans
 from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 import os
+import torch.nn.functional as F
+from torch.distributions import Dirichlet
 
 torch.autograd.set_detect_anomaly(True)
 
@@ -62,7 +64,7 @@ def phi_vectorized(q, l, t, y, beta, distribution='Bernoulli'):
 
 def tau_margin_generator(tau_init, tau_transition):
     time_stamp, num_nodes, num_latent, _ = tau_transition.shape
-    tau = torch.zeros((time_stamp, num_nodes, num_latent))
+    tau = torch.zeros((time_stamp, num_nodes, num_latent), dtype= torch.float64)
     for t in range(time_stamp):
         result = tau_init[:, :]
         for t_prime in range(t):
@@ -94,6 +96,57 @@ def inital_parameter(adj_matrices,num_latent):
     
     return tau_init, tau_transition, pi, beta, alpha
 
+def inital_random(adj_matrices,num_latent):
+    time_stamp, num_nodes , _ = adj_matrices.shape
+    epsilon = 1e-2
+
+    concentration = torch.ones(num_latent, dtype=torch.float64)
+    tau_init = torch.stack([Dirichlet(concentration).sample() for _ in range(num_nodes)])
+    tau_transition = torch.stack([
+                        torch.stack([
+                            torch.stack([Dirichlet(concentration).sample() for _ in range(num_latent)])
+                                for __ in range(num_nodes)
+                            ]) for ___ in range(time_stamp)
+                        ])
+    alpha = Dirichlet(concentration).sample()
+    pi = torch.stack([Dirichlet(concentration).sample() for _ in range(num_latent)])
+    beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
+
+
+    tau_init = torch.clamp(tau_init, min=epsilon, max=1 - epsilon)
+    tau_transition = torch.clamp(tau_transition, min=epsilon, max=1 - epsilon)
+    alpha = torch.clamp(alpha, min=epsilon, max=1 - epsilon)
+    pi = torch.clamp(pi, min=epsilon, max=1 - epsilon)
+    beta = torch.clamp(beta, min=epsilon, max=1 - epsilon)
+
+    tau_init = tau_init / tau_init.sum(dim=1, keepdim=True)
+    tau_transition = tau_transition/tau_transition.sum(dim=3, keepdim=True)
+    alpha =alpha/alpha.sum(dim=0, keepdim=True)
+    pi = pi / pi.sum(dim=1, keepdim=True)
+    
+    return tau_init, tau_transition, pi, beta, alpha
+
+def initial_before_softmax(intitalization):
+    tau_init, tau_transition, pi, beta, alpha = intitalization
+    epsilon = 1e-2
+    # 로그를 취할 때 양수인 값만 허용≈
+    tau_init = torch.log(torch.clamp(tau_init, min=epsilon, max = 1-epsilon))
+    tau_transition = torch.log(torch.clamp(tau_transition, min=epsilon, max = 1-epsilon))
+    pi = torch.log(torch.clamp(pi, min=epsilon, max = 1-epsilon))
+    alpha = torch.log(torch.clamp(alpha, min=epsilon, max = 1-epsilon))
+
+    beta = np.log(beta/ (1 - beta))
+
+    return tau_init, tau_transition, pi, beta, alpha
+
+def inital_gradient(intitalization):
+    tau_init, tau_transition, pi, beta, alpha = intitalization
+    tau_init.requires_grad_()
+    tau_transition.requires_grad_()
+    pi.requires_grad_()
+    beta.requires_grad_()
+    alpha.requires_grad_()
+
 
 
 def estimate(adjacency_matrix, 
@@ -104,8 +157,8 @@ def estimate(adjacency_matrix,
              distribution = 'Bernoulli', 
              bernoulli_case = 'low_plus', 
              trial = 0,
-             num_iterations = 1000,
-             mode = 'new_kmeans'):
+             num_iterations = 10000,
+             mode = 'new_random'):
     
     time_stamp, num_nodes , _ = adjacency_matrix.shape
 
@@ -139,8 +192,8 @@ def estimate(adjacency_matrix,
 
 
     # Optimizer
-    optimizer_theta = optim.Adam([pi_pre, alpha_pre, beta_pre], lr=5e-1)
-    optimizer_tau = optim.Adam([tau_init_pre, tau_transition_pre], lr=5e-1)
+    optimizer_theta = optim.Adam([pi_pre, alpha_pre, beta_pre], lr=5e-2)
+    optimizer_tau = optim.Adam([tau_init_pre, tau_transition_pre], lr=5e-2)
 
     # Learning rate scheduler
     scheduler_theta = StepLR(optimizer_theta, step_size=200, gamma=0.9)
@@ -204,9 +257,9 @@ def estimate(adjacency_matrix,
                 break
 
             if iter % 500 == 0:
-                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}_4/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     
-    torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+    torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}_4/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     return loss
     
 
@@ -216,17 +269,26 @@ if __name__ == "__main__":
 
     time_stamp = 5
     stability = 0.75
-    iteration = 64
-    trial = 2
+    iteration = 92
+    trial = 5
 
 
     # bernoulli_case = 'low_minus'
     # bernoulli_case = 'low_plus'
-    # bernoulli_case = 'medium_minus'
-    bernoulli_case = 'medium_plus'
+    bernoulli_case = 'medium_minus'
+    # bernoulli_case = 'medium_plus'
     # bernoulli_case = 'medium_with_affiliation's
     # bernoulli_case = 'large'
 
     str_stability = str(stability).replace('0.', '0p')
-    Y = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
-    estimate(adjacency_matrix = Y, num_latent = num_latent, stability = stability, total_iteration = iteration, bernoulli_case = bernoulli_case, trial = trial)
+    Y = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}_4/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
+    
+    # initialization = inital_random(Y,num_latent)
+    # torch.save(initialization,f"initalization.pt")
+    
+    initialization = torch.load(f"initalization.pt")
+    
+    intitalization_new_pre = initial_before_softmax(initialization)
+    inital_gradient(intitalization_new_pre)
+
+    estimate(adjacency_matrix = Y, initialization = intitalization_new_pre, num_latent = num_latent, stability = stability, total_iteration = iteration, bernoulli_case = bernoulli_case, trial = trial)

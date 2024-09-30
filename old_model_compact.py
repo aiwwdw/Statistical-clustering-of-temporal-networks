@@ -57,7 +57,7 @@ def phi_vectorized(q, l, t, y, beta, distribution='Bernoulli'):
 
 def tau_margin_generator(tau_init, tau_transition):
     time_stamp, num_nodes, num_latent, _ = tau_transition.shape
-    tau = torch.zeros((time_stamp, num_nodes, num_latent))
+    tau = torch.zeros((time_stamp, num_nodes, num_latent), dtype= torch.float64)
     for t in range(time_stamp):
         result = tau_init[:, :]
         for t_prime in range(t):
@@ -102,9 +102,10 @@ def inital_parameter(adj_matrices,num_latent):
 def VE_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
     N, Q = tau_init_pre.shape
     T = Y.shape[0]
+    epsilon =0
     
     tau_marg = tau_margin_generator(tau_init_pre,tau_transition_pre)
-
+    
     tau_init = torch.zeros(tau_init_pre.size(),dtype=torch.float64)
     tau_transition = torch.zeros(tau_transition_pre.size(),dtype=torch.float64)
 
@@ -115,26 +116,41 @@ def VE_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
     phi_values_new = torch.zeros((T, Q, Q, N, N))
     phi_values_new = phi_vectorized(q_indices,l_indices ,t_indices, Y_indices, beta)
 
+
+
     tau_init_pre_expanded = tau_init_pre.permute(1,0).unsqueeze(0).unsqueeze(2).expand(Q, Q, N, N)
     result = pow(phi_values_new[0], tau_init_pre_expanded)
+
     result_prod = torch.prod(result, dim = 3)
+
     result_prod = torch.prod(result_prod, dim = 1)
+
+
     result_prod = result_prod.permute(1,0)
 
+
     tau_init = alpha_pre.unsqueeze(0).expand(N, -1) * result_prod
-    tau_init = tau_init / tau_init.sum(dim=1, keepdim=True)
+
+    tau_init = tau_init / (tau_init.sum(dim=1, keepdim=True) + epsilon)
+  
+
 
 
     tau_marg_expanded = tau_marg.permute(0, 2, 1).unsqueeze(1).unsqueeze(3).expand(T, Q, Q, N, N)
+    
     result = pow(phi_values_new , tau_marg_expanded)
+
     result_prod = torch.prod(result, dim = 4)
+
     result_prod = torch.prod(result_prod, dim = 2)
 
 
     pi_pre_expanded = pi_pre.unsqueeze(0).unsqueeze(0).expand(T, N, -1, -1)
     result_prod_expanded = result_prod.permute(0, 2, 1).unsqueeze(2).expand(-1, -1, Q, -1)
     tau_transition = pi_pre_expanded * result_prod_expanded
-    tau_transition = tau_transition / tau_transition.sum(dim=3, keepdim=True)
+
+    tau_transition = tau_transition / (tau_transition.sum(dim=3, keepdim=True)+epsilon)
+
 
 
     return tau_init, tau_transition
@@ -143,9 +159,9 @@ def VE_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
 def M_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
     N, Q = tau_init_pre.shape
     T = Y.shape[0]
-    
-    tau_marg = tau_margin_generator(tau_init_pre,tau_transition_pre)
+    epsilon = 0
 
+    tau_marg = tau_margin_generator(tau_init_pre,tau_transition_pre)
     pi = torch.zeros(pi_pre.size(),dtype=torch.float64)
 
     alpha = tau_marg.sum(dim=(0, 1))
@@ -156,21 +172,21 @@ def M_step(tau_init_pre, tau_transition_pre, alpha_pre, pi_pre, beta, Y):
             for t in range(1,T):
                 for i in range(N):
                     pi[q,q_prime] += tau_marg[t-1,i,q] * tau_transition_pre[t,i,q,q_prime]
-        pi[q,:] = pi[q,:] / pi[q,:].sum()
-
+        pi[q,:] = pi[q,:] / (pi[q,:].sum())
     
-    tau_prod = torch.einsum("tik,tjk->tijk",tau_marg,tau_marg)
+    tau_prod = torch.einsum("tiq,tjq->tijq",tau_marg,tau_marg)
     tau_prod_Y = tau_prod * Y.unsqueeze(-1).expand(-1,-1,-1,Q)
-    beta_q=tau_prod_Y.sum(dim=(0,1,2)) / tau_prod.sum(dim=(0,1,2))
+    beta_q= (tau_prod_Y.sum(dim=(0,1,2)) )/ (tau_prod.sum(dim=(0,1,2))+ epsilon)
     for q in range(Q):
         beta[0,q,q] = beta_q[q]
 
-    tau_prod = torch.einsum("tiq,tjl->tijql",tau_marg,tau_marg)
-    tau_prod_Y = tau_prod * Y.unsqueeze(-1).unsqueeze(-1).expand(-1,-1,-1,Q,Q)
-    beta_tql = tau_prod_Y.sum(dim=(1,2)) / tau_prod.sum(dim=(1,2))
+    tau_prod_1 = torch.einsum("tiq,tjl->tijql",tau_marg,tau_marg)
+    tau_prod_Y_1 = tau_prod_1 * Y.unsqueeze(-1).unsqueeze(-1).expand(-1,-1,-1,Q,Q)
+    beta_tql = (tau_prod_Y_1.sum(dim=(1,2)) ) / (tau_prod_1.sum(dim=(1,2)) + epsilon)
     upper_tri_indices = torch.triu_indices(Q, Q, offset=1)
     beta[:,upper_tri_indices[0], upper_tri_indices[1]] = beta_tql[:,upper_tri_indices[0], upper_tri_indices[1]]
 
+    
     return alpha, pi, beta
 
 
@@ -224,14 +240,13 @@ def estimate_old(adjacency_matrix,
     for iteration in range(num_iterations):
         tau_init, tau_transition = VE_step(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
         alpha, pi, beta = M_step(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
-        print(alpha,pi,beta)
         loss = - J(tau_init,tau_transition, alpha, pi, beta, adjacency_matrix)
 
         if iteration % 10 == 9:
             current_loss = -loss.item()
+            print(f"Iteration {iteration+1}: Loss = {current_loss}")
             if np.isnan(current_loss):
                 break
-            print(f"Iteration {iteration+1}: Loss = {current_loss}")
             # print(best_loss, loss)
             if loss >= best_loss:
                 no_improve_count += 1
