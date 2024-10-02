@@ -1,0 +1,2815 @@
+nohup: ignoring input
+
+  0%|          | 0/100 [00:00<?, ?it/s]/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/adj_generator.py:108: UserWarning: Creating a tensor from a list of numpy.ndarrays is extremely slow. Please consider converting the list to a single numpy.ndarray with numpy.array() before converting to a tensor. (Triggered internally at /opt/conda/conda-bld/pytorch_1720538439675/work/torch/csrc/utils/tensor_new.cpp:278.)
+  Y = torch.tensor(Y)
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/true_model.py:100: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:25: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  pi, alpha, beta, tau_init, tau_transition = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/evaluation.py:26: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  init_dist,transition_matrix, Bernoulli_parameter, Z = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/true/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/true_para_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}.pt')
+  0%|          | 0/100 [33:52<?, ?it/s]
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+This iteration is 0
+-----------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+True Objective function: Loss = -11247.151078605853
+prior kmeans ------------------------------------------------------------------------------
+Iteration 0: Loss = -18672.58857333388
+Iteration 10: Loss = -11481.063624374834
+Iteration 20: Loss = -11287.702658591112
+Iteration 30: Loss = -11227.131209578158
+Iteration 40: Loss = -11227.144659163356
+1
+Iteration 50: Loss = -11227.144738590137
+2
+Iteration 60: Loss = -11227.144739048716
+3
+Stopping early at iteration 59 due to no improvement.
+pi: tensor([[0.7166, 0.2834],
+        [0.2541, 0.7459]], dtype=torch.float64)
+alpha: tensor([0.5087, 0.4913], dtype=torch.float64)
+beta: tensor([[[0.1928, 0.1056],
+         [0.9456, 0.2953]],
+
+        [[0.6854, 0.1050],
+         [0.0247, 0.4151]],
+
+        [[0.3528, 0.0966],
+         [0.9438, 0.0791]],
+
+        [[0.3412, 0.0962],
+         [0.6450, 0.6969]],
+
+        [[0.8505, 0.1172],
+         [0.5566, 0.6051]]], dtype=torch.float64)
+time is 0
+tensor([0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0,
+        0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1,
+        0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1,
+        0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+        0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 97
+Adjusted Rand Index: 0.8824145678101706
+time is 2
+tensor([0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1,
+        0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0,
+        1, 1, 1, 1])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 96
+Adjusted Rand Index: 0.8448436976567872
+time is 3
+tensor([1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0,
+        1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 100
+Adjusted Rand Index: 1.0
+time is 4
+tensor([0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0,
+        1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0,
+        1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 99
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.9214426515516987
+Average Adjusted Rand Index: 0.9216132692550077
+ours kmeans ------------------------------------------------------------------------------
+time_stamp: 5
+num_nodes: 100
+num_latent: 2
+Iteration 0: Loss = -18672.588573333876
+Iteration 100: Loss = -11501.516246075202
+Iteration 200: Loss = -11495.240741361506
+Iteration 300: Loss = -11489.17962672568
+Iteration 400: Loss = -11483.85657246298
+Iteration 500: Loss = -11481.755345668515
+Iteration 600: Loss = -11479.72088971743
+Iteration 700: Loss = -11360.213983975595
+Iteration 800: Loss = -11296.610504052032
+Iteration 900: Loss = -11246.415324098574
+Iteration 1000: Loss = -11233.265578241835
+Iteration 1100: Loss = -11232.828762441171
+Iteration 1200: Loss = -11232.633050229171
+Iteration 1300: Loss = -11232.53378188424
+Iteration 1400: Loss = -11232.470896148963
+Iteration 1500: Loss = -11232.426582150367
+Iteration 1600: Loss = -11232.39156583717
+Iteration 1700: Loss = -11232.3395876742
+Iteration 1800: Loss = -11222.16976642721
+Iteration 1900: Loss = -11222.126123656373
+Iteration 2000: Loss = -11222.107784610678
+Iteration 2100: Loss = -11222.094251982406
+Iteration 2200: Loss = -11222.083531124827
+Iteration 2300: Loss = -11222.074753776174
+Iteration 2400: Loss = -11222.067416727295
+Iteration 2500: Loss = -11222.061137531227
+Iteration 2600: Loss = -11222.055516264858
+Iteration 2700: Loss = -11222.05000609253
+Iteration 2800: Loss = -11222.045468105163
+Iteration 2900: Loss = -11222.042188411784
+Iteration 3000: Loss = -11222.03934064904
+Iteration 3100: Loss = -11222.036816800042
+Iteration 3200: Loss = -11222.03459338026
+Iteration 3300: Loss = -11222.0326209927
+Iteration 3400: Loss = -11222.030855929612
+Iteration 3500: Loss = -11222.029276938243
+Iteration 3600: Loss = -11222.027858773747
+Iteration 3700: Loss = -11222.026579524443
+Iteration 3800: Loss = -11222.025423446667
+Iteration 3900: Loss = -11222.024380020932
+Iteration 4000: Loss = -11222.023421246531
+Iteration 4100: Loss = -11222.022553917992
+Iteration 4200: Loss = -11222.021760832211
+Iteration 4300: Loss = -11222.021065741095
+Iteration 4400: Loss = -11222.020371719718
+Iteration 4500: Loss = -11222.019762194928
+Iteration 4600: Loss = -11222.019213374737
+Iteration 4700: Loss = -11222.018730112415
+Iteration 4800: Loss = -11222.018206313327
+Iteration 4900: Loss = -11222.0177653714
+Iteration 5000: Loss = -11222.0174008705
+Iteration 5100: Loss = -11222.016983659125
+Iteration 5200: Loss = -11222.016636772358
+Iteration 5300: Loss = -11222.016323241003
+Iteration 5400: Loss = -11222.01601884095
+Iteration 5500: Loss = -11222.015742250267
+Iteration 5600: Loss = -11222.015486217979
+Iteration 5700: Loss = -11222.01525331584
+Iteration 5800: Loss = -11222.015036740853
+Iteration 5900: Loss = -11222.014830270056
+Iteration 6000: Loss = -11222.014631553251
+Iteration 6100: Loss = -11222.014474782904
+Iteration 6200: Loss = -11222.014296478077
+Iteration 6300: Loss = -11222.014162086374
+Iteration 6400: Loss = -11222.01399391371
+Iteration 6500: Loss = -11222.01397869936
+Iteration 6600: Loss = -11222.014262475937
+1
+Iteration 6700: Loss = -11222.013616969893
+Iteration 6800: Loss = -11222.013525914763
+Iteration 6900: Loss = -11222.01594781582
+1
+Iteration 7000: Loss = -11222.013288472945
+Iteration 7100: Loss = -11222.013227690888
+Iteration 7200: Loss = -11222.012976506181
+Iteration 7300: Loss = -11222.01283954174
+Iteration 7400: Loss = -11222.014989572084
+1
+Iteration 7500: Loss = -11222.012693254213
+Iteration 7600: Loss = -11222.012598020823
+Iteration 7700: Loss = -11222.012618400091
+1
+Iteration 7800: Loss = -11222.012864505929
+2
+Iteration 7900: Loss = -11222.014209384224
+3
+Iteration 8000: Loss = -11222.012482032114
+Iteration 8100: Loss = -11222.012355736382
+Iteration 8200: Loss = -11222.012279514227
+Iteration 8300: Loss = -11222.012341283784
+1
+Iteration 8400: Loss = -11222.012225349848
+Iteration 8500: Loss = -11222.012170239122
+Iteration 8600: Loss = -11222.026519083094
+1
+Iteration 8700: Loss = -11222.012097036788
+Iteration 8800: Loss = -11222.012229759765
+1
+Iteration 8900: Loss = -11222.012041924654
+Iteration 9000: Loss = -11222.012008529326
+Iteration 9100: Loss = -11222.012042192382
+1
+Iteration 9200: Loss = -11222.011957483353
+Iteration 9300: Loss = -11222.013009138938
+1
+Iteration 9400: Loss = -11222.011912551541
+Iteration 9500: Loss = -11222.01189214025
+Iteration 9600: Loss = -11222.011958098716
+1
+Iteration 9700: Loss = -11222.011855378683
+Iteration 9800: Loss = -11222.01184230728
+Iteration 9900: Loss = -11222.011831305937
+Iteration 10000: Loss = -11222.011974999337
+1
+Iteration 10100: Loss = -11222.012519971684
+2
+Iteration 10200: Loss = -11222.012368960826
+3
+Iteration 10300: Loss = -11222.011937693245
+4
+Iteration 10400: Loss = -11222.011757404749
+Iteration 10500: Loss = -11222.01176112052
+1
+Iteration 10600: Loss = -11222.011781064588
+2
+Iteration 10700: Loss = -11222.01172497715
+Iteration 10800: Loss = -11222.020387061162
+1
+Iteration 10900: Loss = -11222.011709208831
+Iteration 11000: Loss = -11222.011842569991
+1
+Iteration 11100: Loss = -11222.011696686059
+Iteration 11200: Loss = -11222.011686089163
+Iteration 11300: Loss = -11222.011702302285
+1
+Iteration 11400: Loss = -11222.011674385816
+Iteration 11500: Loss = -11222.012455809172
+1
+Iteration 11600: Loss = -11222.011664267127
+Iteration 11700: Loss = -11222.04487532297
+1
+Iteration 11800: Loss = -11222.011659886532
+Iteration 11900: Loss = -11222.011651214909
+Iteration 12000: Loss = -11222.012432660962
+1
+Iteration 12100: Loss = -11222.011643895865
+Iteration 12200: Loss = -11222.011640518102
+Iteration 12300: Loss = -11222.011762130585
+1
+Iteration 12400: Loss = -11222.011634450158
+Iteration 12500: Loss = -11222.012074866216
+1
+Iteration 12600: Loss = -11222.011639253426
+2
+Iteration 12700: Loss = -11222.011706605466
+3
+Iteration 12800: Loss = -11222.011764614293
+4
+Iteration 12900: Loss = -11222.01186956578
+5
+Iteration 13000: Loss = -11222.026087211078
+6
+Iteration 13100: Loss = -11222.011640714754
+7
+Iteration 13200: Loss = -11222.011641978137
+8
+Iteration 13300: Loss = -11222.014513104856
+9
+Iteration 13400: Loss = -11222.015684678934
+10
+Stopping early at iteration 13400 due to no improvement.
+pi: tensor([[0.7637, 0.2363],
+        [0.2668, 0.7332]], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+alpha: tensor([0.4347, 0.5653], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+beta: tensor([[[0.3026, 0.1053],
+         [0.9456, 0.1961]],
+
+        [[0.6854, 0.1046],
+         [0.0247, 0.4151]],
+
+        [[0.3528, 0.0974],
+         [0.9438, 0.0791]],
+
+        [[0.3412, 0.0966],
+         [0.6450, 0.6969]],
+
+        [[0.8505, 0.1171],
+         [0.5566, 0.6051]]], dtype=torch.float64, grad_fn=<SigmoidBackward0>)
+time is 0
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 2
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 2
+Adjusted Rand Index: 0.9208031161549398
+time is 2
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 2
+Adjusted Rand Index: 0.9208023791611811
+time is 3
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 0
+Adjusted Rand Index: 1.0
+time is 4
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 1
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.9446732460693126
+Average Adjusted Rand Index: 0.9444827152248404
+prior 0 times ------------------------------------------------------------------------------
+Iteration 0: Loss = -31148.053131400316
+Iteration 10: Loss = -11491.65557265765
+Iteration 20: Loss = -11478.551994966903
+Iteration 30: Loss = -11326.118902368506
+Iteration 40: Loss = -11227.124846649529
+Iteration 50: Loss = -11227.14461733938
+1
+Iteration 60: Loss = -11227.144738377941
+2
+Iteration 70: Loss = -11227.14473904786
+3
+Stopping early at iteration 69 due to no improvement.
+pi: tensor([[0.7166, 0.2834],
+        [0.2541, 0.7459]], dtype=torch.float64)
+alpha: tensor([0.5087, 0.4913], dtype=torch.float64)
+beta: tensor([[[0.1928, 0.1056],
+         [0.6691, 0.2953]],
+
+        [[0.2993, 0.1050],
+         [0.9516, 0.2088]],
+
+        [[0.9731, 0.0966],
+         [0.0504, 0.1775]],
+
+        [[0.0633, 0.0962],
+         [0.2039, 0.9803]],
+
+        [[0.3920, 0.1172],
+         [0.5367, 0.7269]]], dtype=torch.float64)
+time is 0
+tensor([0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0,
+        0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1,
+        0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1,
+        0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+        0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 97
+Adjusted Rand Index: 0.8824145678101706
+time is 2
+tensor([0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1,
+        0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0,
+        1, 1, 1, 1])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 96
+Adjusted Rand Index: 0.8448436976567872
+time is 3
+tensor([1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0,
+        1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 100
+Adjusted Rand Index: 1.0
+time is 4
+tensor([0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0,
+        1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0,
+        1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 99
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.9214426515516987
+Average Adjusted Rand Index: 0.9216132692550077
+ours 0 times ------------------------------------------------------------------------------
+time_stamp: 5
+num_nodes: 100
+num_latent: 2
+Iteration 0: Loss = -31148.053131400313
+Iteration 100: Loss = -11659.940162827601
+Iteration 200: Loss = -11571.938885003285
+Iteration 300: Loss = -11541.15936073784
+Iteration 400: Loss = -11523.640427684322
+Iteration 500: Loss = -11506.9588502103
+Iteration 600: Loss = -11503.073369451953
+Iteration 700: Loss = -11500.986795875398
+Iteration 800: Loss = -11499.65075357529
+Iteration 900: Loss = -11498.738273018746
+Iteration 1000: Loss = -11498.09421870999
+Iteration 1100: Loss = -11497.622316963238
+Iteration 1200: Loss = -11497.26454212342
+Iteration 1300: Loss = -11496.984936176763
+Iteration 1400: Loss = -11496.761246359883
+Iteration 1500: Loss = -11496.578772291285
+Iteration 1600: Loss = -11496.427091389274
+Iteration 1700: Loss = -11496.29856970509
+Iteration 1800: Loss = -11496.187654600397
+Iteration 1900: Loss = -11496.090133815664
+Iteration 2000: Loss = -11496.002622992628
+Iteration 2100: Loss = -11495.923586207904
+Iteration 2200: Loss = -11495.85321109825
+Iteration 2300: Loss = -11495.790525140003
+Iteration 2400: Loss = -11495.734842381857
+Iteration 2500: Loss = -11495.685003277122
+Iteration 2600: Loss = -11495.640678758244
+Iteration 2700: Loss = -11495.601632639378
+Iteration 2800: Loss = -11495.567232475423
+Iteration 2900: Loss = -11495.536574268113
+Iteration 3000: Loss = -11495.508802789553
+Iteration 3100: Loss = -11495.483161144351
+Iteration 3200: Loss = -11495.459073731936
+Iteration 3300: Loss = -11495.435993250801
+Iteration 3400: Loss = -11495.413217660573
+Iteration 3500: Loss = -11495.388987215823
+Iteration 3600: Loss = -11495.357640548884
+Iteration 3700: Loss = -11495.325927147545
+Iteration 3800: Loss = -11495.285863326208
+Iteration 3900: Loss = -11495.21904760714
+Iteration 4000: Loss = -11495.079864801392
+Iteration 4100: Loss = -11494.820717872948
+Iteration 4200: Loss = -11494.1115525949
+Iteration 4300: Loss = -11493.32783311788
+Iteration 4400: Loss = -11492.114543929645
+Iteration 4500: Loss = -11491.023275660478
+Iteration 4600: Loss = -11480.650948929122
+Iteration 4700: Loss = -11472.932324861193
+Iteration 4800: Loss = -11466.848605692892
+Iteration 4900: Loss = -11461.927555035572
+Iteration 5000: Loss = -11447.953652739274
+Iteration 5100: Loss = -11436.604661230169
+Iteration 5200: Loss = -11414.347480329056
+Iteration 5300: Loss = -11400.109070123859
+Iteration 5400: Loss = -11385.520787683474
+Iteration 5500: Loss = -11383.322355208256
+Iteration 5600: Loss = -11382.09095597706
+Iteration 5700: Loss = -11379.583810452757
+Iteration 5800: Loss = -11368.147862661051
+Iteration 5900: Loss = -11362.633799289957
+Iteration 6000: Loss = -11351.691928417538
+Iteration 6100: Loss = -11350.684109119016
+Iteration 6200: Loss = -11350.141680471368
+Iteration 6300: Loss = -11347.756155242763
+Iteration 6400: Loss = -11342.973397407357
+Iteration 6500: Loss = -11332.10172798523
+Iteration 6600: Loss = -11325.584431509875
+Iteration 6700: Loss = -11322.249763436086
+Iteration 6800: Loss = -11317.631882187135
+Iteration 6900: Loss = -11317.527723642375
+Iteration 7000: Loss = -11317.337803632861
+Iteration 7100: Loss = -11317.306983890023
+Iteration 7200: Loss = -11317.285937893092
+Iteration 7300: Loss = -11314.04112418144
+Iteration 7400: Loss = -11314.016872280708
+Iteration 7500: Loss = -11314.00324822604
+Iteration 7600: Loss = -11313.981840841094
+Iteration 7700: Loss = -11313.9636368139
+Iteration 7800: Loss = -11313.658958667338
+Iteration 7900: Loss = -11313.535626128654
+Iteration 8000: Loss = -11313.258657192999
+Iteration 8100: Loss = -11303.716322718905
+Iteration 8200: Loss = -11303.709029308586
+Iteration 8300: Loss = -11303.701326763477
+Iteration 8400: Loss = -11303.495264112515
+Iteration 8500: Loss = -11303.49246568893
+Iteration 8600: Loss = -11303.491445269163
+Iteration 8700: Loss = -11303.490721007836
+Iteration 8800: Loss = -11303.48873294311
+Iteration 8900: Loss = -11303.48794529727
+Iteration 9000: Loss = -11303.48545118979
+Iteration 9100: Loss = -11303.485109213969
+Iteration 9200: Loss = -11303.484038749708
+Iteration 9300: Loss = -11303.484774938564
+1
+Iteration 9400: Loss = -11303.482813618313
+Iteration 9500: Loss = -11303.4821366276
+Iteration 9600: Loss = -11303.503303997168
+1
+Iteration 9700: Loss = -11303.480283183271
+Iteration 9800: Loss = -11303.477811649776
+Iteration 9900: Loss = -11303.32661629174
+pi: tensor([[0.4886, 0.5114],
+        [0.5023, 0.4977]], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+alpha: tensor([0.5567, 0.4433], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+beta: tensor([[[0.2133, 0.1051],
+         [0.6691, 0.2839]],
+
+        [[0.2993, 0.1030],
+         [0.9516, 0.2088]],
+
+        [[0.9731, 0.0953],
+         [0.0504, 0.1775]],
+
+        [[0.0633, 0.0952],
+         [0.2039, 0.9803]],
+
+        [[0.3920, 0.1152],
+         [0.5367, 0.7269]]], dtype=torch.float64, grad_fn=<SigmoidBackward0>)
+time is 0
+tensor([0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0,
+        0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1,
+        0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1,
+        0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+        0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 94
+Adjusted Rand Index: 0.7720997823854144
+time is 2
+tensor([0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1,
+        0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0,
+        1, 1, 1, 1])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 97
+Adjusted Rand Index: 0.8824242424242424
+time is 3
+tensor([0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 0, 0])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 13
+Adjusted Rand Index: 0.5430678981784419
+time is 4
+tensor([0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0,
+        1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0,
+        1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 99
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.3635413972991622
+Average Adjusted Rand Index: 0.815680000759236
+prior 1 times ------------------------------------------------------------------------------
+Iteration 0: Loss = -29762.212078432243
+Iteration 10: Loss = -11481.873572402183
+Iteration 20: Loss = -11295.183766151542
+Iteration 30: Loss = -11227.129898416846
+Iteration 40: Loss = -11227.144650026994
+1
+Iteration 50: Loss = -11227.144738538123
+2
+Iteration 60: Loss = -11227.144739048434
+3
+Stopping early at iteration 59 due to no improvement.
+pi: tensor([[0.7459, 0.2541],
+        [0.2834, 0.7166]], dtype=torch.float64)
+alpha: tensor([0.4913, 0.5087], dtype=torch.float64)
+beta: tensor([[[0.2953, 0.1056],
+         [0.0462, 0.1928]],
+
+        [[0.6887, 0.1050],
+         [0.0909, 0.5947]],
+
+        [[0.1075, 0.0966],
+         [0.8203, 0.4103]],
+
+        [[0.2670, 0.0962],
+         [0.6354, 0.6620]],
+
+        [[0.7528, 0.1172],
+         [0.1060, 0.9900]]], dtype=torch.float64)
+time is 0
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 2
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 3
+Adjusted Rand Index: 0.8824145678101706
+time is 2
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 4
+Adjusted Rand Index: 0.8448436976567872
+time is 3
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 0
+Adjusted Rand Index: 1.0
+time is 4
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 1
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.9214426515516987
+Average Adjusted Rand Index: 0.9216132692550077
+ours 1 times ------------------------------------------------------------------------------
+time_stamp: 5
+num_nodes: 100
+num_latent: 2
+Iteration 0: Loss = -29762.21207843224
+Iteration 100: Loss = -11715.172934798169
+Iteration 200: Loss = -11624.39955297476
+Iteration 300: Loss = -11557.474022202905
+Iteration 400: Loss = -11463.689414663551
+Iteration 500: Loss = -11422.45679071034
+Iteration 600: Loss = -11408.072200455716
+Iteration 700: Loss = -11405.721176614403
+Iteration 800: Loss = -11402.922013333187
+Iteration 900: Loss = -11401.869628440785
+Iteration 1000: Loss = -11398.83907250915
+Iteration 1100: Loss = -11398.436896898229
+Iteration 1200: Loss = -11398.154459550036
+Iteration 1300: Loss = -11397.93740226931
+Iteration 1400: Loss = -11397.764008799404
+Iteration 1500: Loss = -11397.621288076543
+Iteration 1600: Loss = -11397.500681705375
+Iteration 1700: Loss = -11397.396955681916
+Iteration 1800: Loss = -11397.30745693549
+Iteration 1900: Loss = -11397.230779342539
+Iteration 2000: Loss = -11397.165207894957
+Iteration 2100: Loss = -11397.108860265977
+Iteration 2200: Loss = -11397.060042420775
+Iteration 2300: Loss = -11397.017386510122
+Iteration 2400: Loss = -11396.979823967458
+Iteration 2500: Loss = -11396.946522438397
+Iteration 2600: Loss = -11396.916824898695
+Iteration 2700: Loss = -11396.89020594133
+Iteration 2800: Loss = -11396.868473947245
+Iteration 2900: Loss = -11396.84457397553
+Iteration 3000: Loss = -11396.824918281522
+Iteration 3100: Loss = -11396.807027121404
+Iteration 3200: Loss = -11396.790692908302
+Iteration 3300: Loss = -11396.796908126873
+1
+Iteration 3400: Loss = -11396.762014157868
+Iteration 3500: Loss = -11396.749387584568
+Iteration 3600: Loss = -11396.73774734872
+Iteration 3700: Loss = -11396.726995228164
+Iteration 3800: Loss = -11396.717828221685
+Iteration 3900: Loss = -11396.707824143918
+Iteration 4000: Loss = -11396.69926158842
+Iteration 4100: Loss = -11396.691301422206
+Iteration 4200: Loss = -11396.683889527741
+Iteration 4300: Loss = -11396.677516720472
+Iteration 4400: Loss = -11396.67052177391
+Iteration 4500: Loss = -11396.664480250533
+Iteration 4600: Loss = -11396.658814022734
+Iteration 4700: Loss = -11396.653482803938
+Iteration 4800: Loss = -11396.648684976692
+Iteration 4900: Loss = -11396.643624019518
+Iteration 5000: Loss = -11396.638936002342
+Iteration 5100: Loss = -11396.634359968431
+Iteration 5200: Loss = -11396.630207638695
+Iteration 5300: Loss = -11396.62645843895
+Iteration 5400: Loss = -11396.622944884746
+Iteration 5500: Loss = -11396.619662709407
+Iteration 5600: Loss = -11396.616573372548
+Iteration 5700: Loss = -11396.619342763839
+1
+Iteration 5800: Loss = -11396.610911548574
+Iteration 5900: Loss = -11396.608314880597
+Iteration 6000: Loss = -11396.60586038083
+Iteration 6100: Loss = -11396.603538000503
+Iteration 6200: Loss = -11396.60136594616
+Iteration 6300: Loss = -11396.599249038612
+Iteration 6400: Loss = -11396.59726014904
+Iteration 6500: Loss = -11396.595356864125
+Iteration 6600: Loss = -11396.594421011981
+Iteration 6700: Loss = -11396.591738211664
+Iteration 6800: Loss = -11396.59001846255
+Iteration 6900: Loss = -11396.588428293566
+Iteration 7000: Loss = -11396.586980714415
+Iteration 7100: Loss = -11396.58615130157
+Iteration 7200: Loss = -11396.584358973763
+Iteration 7300: Loss = -11396.583153957767
+Iteration 7400: Loss = -11396.582009141865
+Iteration 7500: Loss = -11396.580918165942
+Iteration 7600: Loss = -11396.579885367137
+Iteration 7700: Loss = -11396.57887169558
+Iteration 7800: Loss = -11396.578866485808
+Iteration 7900: Loss = -11396.576965047478
+Iteration 8000: Loss = -11396.576251497434
+Iteration 8100: Loss = -11396.575225377957
+Iteration 8200: Loss = -11396.574336693157
+Iteration 8300: Loss = -11396.573558415284
+Iteration 8400: Loss = -11396.576911094922
+1
+Iteration 8500: Loss = -11396.572025334974
+Iteration 8600: Loss = -11396.571118070337
+Iteration 8700: Loss = -11396.574837416669
+1
+Iteration 8800: Loss = -11396.569118806014
+Iteration 8900: Loss = -11396.569373580236
+1
+Iteration 9000: Loss = -11396.570111108744
+2
+Iteration 9100: Loss = -11396.567061098882
+Iteration 9200: Loss = -11393.958693656556
+Iteration 9300: Loss = -11393.954447935652
+Iteration 9400: Loss = -11393.923188511324
+Iteration 9500: Loss = -11393.922617508339
+Iteration 9600: Loss = -11393.916532361052
+Iteration 9700: Loss = -11393.916326118637
+Iteration 9800: Loss = -11393.915803055885
+Iteration 9900: Loss = -11393.915478265139
+pi: tensor([[5.6737e-01, 4.3263e-01],
+        [9.9999e-01, 8.3964e-06]], dtype=torch.float64,
+       grad_fn=<SoftmaxBackward0>)
+alpha: tensor([0.5684, 0.4316], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+beta: tensor([[[0.1818, 0.1055],
+         [0.0462, 0.3068]],
+
+        [[0.6887, 0.1272],
+         [0.0909, 0.5947]],
+
+        [[0.1075, 0.0986],
+         [0.8203, 0.4103]],
+
+        [[0.2670, 0.7770],
+         [0.6354, 0.6620]],
+
+        [[0.7528, 0.1187],
+         [0.1060, 0.9900]]], dtype=torch.float64, grad_fn=<SigmoidBackward0>)
+time is 0
+tensor([0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0,
+        0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1,
+        0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+        0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0,
+        1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0,
+        1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0,
+        0, 0, 0, 0])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 34
+Adjusted Rand Index: 0.09664612857751409
+time is 2
+tensor([0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1,
+        0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0,
+        1, 1, 1, 1])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208023791611811
+time is 3
+tensor([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 54
+Adjusted Rand Index: 0.0
+time is 4
+tensor([0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0,
+        1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0,
+        1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 99
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.2817284943518086
+Average Adjusted Rand Index: 0.5796513177093552
+prior 2 times ------------------------------------------------------------------------------
+Iteration 0: Loss = -15596.228789144732
+Iteration 10: Loss = -11308.098097921795
+Iteration 20: Loss = -11227.135587592691
+Iteration 30: Loss = -11227.14468070561
+1
+Iteration 40: Loss = -11227.144738711579
+2
+Iteration 50: Loss = -11227.14473904947
+3
+Stopping early at iteration 49 due to no improvement.
+pi: tensor([[0.7166, 0.2834],
+        [0.2541, 0.7459]], dtype=torch.float64)
+alpha: tensor([0.5087, 0.4913], dtype=torch.float64)
+beta: tensor([[[0.1928, 0.1056],
+         [0.1735, 0.2953]],
+
+        [[0.2291, 0.1050],
+         [0.3134, 0.2178]],
+
+        [[0.9597, 0.0966],
+         [0.0100, 0.6976]],
+
+        [[0.8280, 0.0962],
+         [0.7856, 0.2394]],
+
+        [[0.8774, 0.1172],
+         [0.5648, 0.0881]]], dtype=torch.float64)
+time is 0
+tensor([0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0,
+        0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1,
+        0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1,
+        0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+        0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 97
+Adjusted Rand Index: 0.8824145678101706
+time is 2
+tensor([0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1,
+        0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0,
+        1, 1, 1, 1])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 96
+Adjusted Rand Index: 0.8448436976567872
+time is 3
+tensor([1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0,
+        1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 100
+Adjusted Rand Index: 1.0
+time is 4
+tensor([0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0,
+        1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0,
+        1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 99
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.9214426515516987
+Average Adjusted Rand Index: 0.9216132692550077
+ours 2 times ------------------------------------------------------------------------------
+time_stamp: 5
+num_nodes: 100
+num_latent: 2
+Iteration 0: Loss = -15596.228789144732
+Iteration 100: Loss = -11520.05867124012
+Iteration 200: Loss = -11496.785439429821
+Iteration 300: Loss = -11494.103037990937
+Iteration 400: Loss = -11493.093451835814
+Iteration 500: Loss = -11492.63484909974
+Iteration 600: Loss = -11492.34727251056
+Iteration 700: Loss = -11492.135186669824
+Iteration 800: Loss = -11491.972591471249
+Iteration 900: Loss = -11491.832492514422
+Iteration 1000: Loss = -11491.698792325571
+Iteration 1100: Loss = -11491.563237609176
+Iteration 1200: Loss = -11491.411037534346
+Iteration 1300: Loss = -11491.17293699961
+Iteration 1400: Loss = -11490.561046150966
+Iteration 1500: Loss = -11465.354448469287
+Iteration 1600: Loss = -11303.19334001744
+Iteration 1700: Loss = -11274.83708466076
+Iteration 1800: Loss = -11257.165113364536
+Iteration 1900: Loss = -11250.931105308116
+Iteration 2000: Loss = -11232.623415145677
+Iteration 2100: Loss = -11232.28319823992
+Iteration 2200: Loss = -11231.841388669873
+Iteration 2300: Loss = -11231.782495845284
+Iteration 2400: Loss = -11223.068249010725
+Iteration 2500: Loss = -11222.973341593637
+Iteration 2600: Loss = -11222.94699227682
+Iteration 2700: Loss = -11222.615052522806
+Iteration 2800: Loss = -11222.603395022126
+Iteration 2900: Loss = -11222.556492842697
+Iteration 3000: Loss = -11222.537041203996
+Iteration 3100: Loss = -11222.532110906208
+Iteration 3200: Loss = -11222.527840957559
+Iteration 3300: Loss = -11222.523787617225
+Iteration 3400: Loss = -11222.518535462003
+Iteration 3500: Loss = -11222.498133664181
+Iteration 3600: Loss = -11222.492136678633
+Iteration 3700: Loss = -11222.489204148473
+Iteration 3800: Loss = -11222.48583784231
+Iteration 3900: Loss = -11222.483579548634
+Iteration 4000: Loss = -11222.481927948198
+Iteration 4100: Loss = -11222.488319025055
+1
+Iteration 4200: Loss = -11222.479025179513
+Iteration 4300: Loss = -11222.477345840767
+Iteration 4400: Loss = -11222.466265677087
+Iteration 4500: Loss = -11222.408421507203
+Iteration 4600: Loss = -11222.40753749118
+Iteration 4700: Loss = -11222.406298326983
+Iteration 4800: Loss = -11222.405209919478
+Iteration 4900: Loss = -11222.405543695384
+1
+Iteration 5000: Loss = -11222.406462965282
+2
+Iteration 5100: Loss = -11222.403207661717
+Iteration 5200: Loss = -11222.402678498542
+Iteration 5300: Loss = -11222.3994516859
+Iteration 5400: Loss = -11222.398031003175
+Iteration 5500: Loss = -11222.364462820937
+Iteration 5600: Loss = -11222.363487604414
+Iteration 5700: Loss = -11222.38448016101
+1
+Iteration 5800: Loss = -11222.362788307695
+Iteration 5900: Loss = -11222.362485065018
+Iteration 6000: Loss = -11222.362237704156
+Iteration 6100: Loss = -11222.361822873705
+Iteration 6200: Loss = -11222.36143863416
+Iteration 6300: Loss = -11222.361450135906
+1
+Iteration 6400: Loss = -11222.360023034835
+Iteration 6500: Loss = -11222.357433360254
+Iteration 6600: Loss = -11222.354349400966
+Iteration 6700: Loss = -11222.35382293899
+Iteration 6800: Loss = -11222.35348544192
+Iteration 6900: Loss = -11222.353118306684
+Iteration 7000: Loss = -11222.354827878255
+1
+Iteration 7100: Loss = -11222.351785821118
+Iteration 7200: Loss = -11222.351093988993
+Iteration 7300: Loss = -11222.351310453485
+1
+Iteration 7400: Loss = -11222.349913753922
+Iteration 7500: Loss = -11222.351798671887
+1
+Iteration 7600: Loss = -11222.349493987014
+Iteration 7700: Loss = -11222.349389825264
+Iteration 7800: Loss = -11222.381478403004
+1
+Iteration 7900: Loss = -11222.349143731431
+Iteration 8000: Loss = -11222.368364971579
+1
+Iteration 8100: Loss = -11222.329803719736
+Iteration 8200: Loss = -11222.326788128326
+Iteration 8300: Loss = -11222.326934219218
+1
+Iteration 8400: Loss = -11222.327095587934
+2
+Iteration 8500: Loss = -11222.329308856359
+3
+Iteration 8600: Loss = -11222.32682983219
+4
+Iteration 8700: Loss = -11222.314250733167
+Iteration 8800: Loss = -11222.270775933228
+Iteration 8900: Loss = -11222.270734263284
+Iteration 9000: Loss = -11222.328843618903
+1
+Iteration 9100: Loss = -11222.27026560824
+Iteration 9200: Loss = -11222.26996790907
+Iteration 9300: Loss = -11222.263162069501
+Iteration 9400: Loss = -11222.263933916718
+1
+Iteration 9500: Loss = -11222.263384972895
+2
+Iteration 9600: Loss = -11222.263104144944
+Iteration 9700: Loss = -11222.263703355506
+1
+Iteration 9800: Loss = -11222.262828866316
+Iteration 9900: Loss = -11222.263134864943
+1
+pi: tensor([[0.7338, 0.2662],
+        [0.2372, 0.7628]], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+alpha: tensor([0.5660, 0.4340], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+beta: tensor([[[0.1958, 0.1052],
+         [0.1735, 0.3031]],
+
+        [[0.2291, 0.1047],
+         [0.3134, 0.2178]],
+
+        [[0.9597, 0.0975],
+         [0.0100, 0.6976]],
+
+        [[0.8280, 0.0966],
+         [0.7856, 0.2394]],
+
+        [[0.8774, 0.1172],
+         [0.5648, 0.0881]]], dtype=torch.float64, grad_fn=<SigmoidBackward0>)
+time is 0
+tensor([0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0,
+        0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1,
+        0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1,
+        0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+        0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208031161549398
+time is 2
+tensor([0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1,
+        0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0,
+        1, 1, 1, 1])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208023791611811
+time is 3
+tensor([1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0,
+        1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 100
+Adjusted Rand Index: 1.0
+time is 4
+tensor([0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0,
+        1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0,
+        1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 99
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.9446732460693126
+Average Adjusted Rand Index: 0.9444827152248404
+prior 3 times ------------------------------------------------------------------------------
+Iteration 0: Loss = -19795.61575229045
+Iteration 10: Loss = -11487.112892053226
+Iteration 20: Loss = -11411.133489176202
+Iteration 30: Loss = -11227.073469105184
+Iteration 40: Loss = -11227.144179305355
+1
+Iteration 50: Loss = -11227.144735865619
+2
+Iteration 60: Loss = -11227.144739033401
+3
+Stopping early at iteration 59 due to no improvement.
+pi: tensor([[0.7459, 0.2541],
+        [0.2834, 0.7166]], dtype=torch.float64)
+alpha: tensor([0.4913, 0.5087], dtype=torch.float64)
+beta: tensor([[[0.2953, 0.1056],
+         [0.7900, 0.1928]],
+
+        [[0.3523, 0.1050],
+         [0.2183, 0.6633]],
+
+        [[0.1130, 0.0966],
+         [0.0543, 0.6093]],
+
+        [[0.8731, 0.0962],
+         [0.7503, 0.1147]],
+
+        [[0.9624, 0.1172],
+         [0.5505, 0.3954]]], dtype=torch.float64)
+time is 0
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 2
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 3
+Adjusted Rand Index: 0.8824145678101706
+time is 2
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 4
+Adjusted Rand Index: 0.8448436976567872
+time is 3
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 0
+Adjusted Rand Index: 1.0
+time is 4
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 1
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.9214426515516987
+Average Adjusted Rand Index: 0.9216132692550077
+ours 3 times ------------------------------------------------------------------------------
+time_stamp: 5
+num_nodes: 100
+num_latent: 2
+Iteration 0: Loss = -19795.61575229045
+Iteration 100: Loss = -11531.535353634898
+Iteration 200: Loss = -11505.308660304649
+Iteration 300: Loss = -11498.698703459107
+Iteration 400: Loss = -11495.939093503226
+Iteration 500: Loss = -11494.283940616662
+Iteration 600: Loss = -11492.526309293145
+Iteration 700: Loss = -11490.222434011634
+Iteration 800: Loss = -11488.865864756233
+Iteration 900: Loss = -11488.105375375802
+Iteration 1000: Loss = -11487.457944979924
+Iteration 1100: Loss = -11486.58154561269
+Iteration 1200: Loss = -11484.810802140486
+Iteration 1300: Loss = -11482.469066524416
+Iteration 1400: Loss = -11481.379599375414
+Iteration 1500: Loss = -11480.721400310567
+Iteration 1600: Loss = -11476.141236290348
+Iteration 1700: Loss = -11405.496182193614
+Iteration 1800: Loss = -11378.846792764549
+Iteration 1900: Loss = -11377.700506421086
+Iteration 2000: Loss = -11373.269972128295
+Iteration 2100: Loss = -11372.559755892436
+Iteration 2200: Loss = -11372.470531027813
+Iteration 2300: Loss = -11372.409567518449
+Iteration 2400: Loss = -11372.33734445819
+Iteration 2500: Loss = -11371.89950626688
+Iteration 2600: Loss = -11371.866125407872
+Iteration 2700: Loss = -11371.829072599245
+Iteration 2800: Loss = -11371.564855393839
+Iteration 2900: Loss = -11371.48806316256
+Iteration 3000: Loss = -11371.468964392607
+Iteration 3100: Loss = -11371.451529658609
+Iteration 3200: Loss = -11371.433674238757
+Iteration 3300: Loss = -11371.413582126293
+Iteration 3400: Loss = -11371.38938742058
+Iteration 3500: Loss = -11371.352828787023
+Iteration 3600: Loss = -11371.26594064767
+Iteration 3700: Loss = -11370.647872416328
+Iteration 3800: Loss = -11364.25544941612
+Iteration 3900: Loss = -11357.188375797477
+Iteration 4000: Loss = -11334.937489641607
+Iteration 4100: Loss = -11308.677061657303
+Iteration 4200: Loss = -11279.482415542909
+Iteration 4300: Loss = -11257.651330501438
+Iteration 4400: Loss = -11226.461931787642
+Iteration 4500: Loss = -11222.667731770776
+Iteration 4600: Loss = -11222.608810918195
+Iteration 4700: Loss = -11222.578245558825
+Iteration 4800: Loss = -11222.558861404106
+Iteration 4900: Loss = -11222.545199110167
+Iteration 5000: Loss = -11222.534903502492
+Iteration 5100: Loss = -11222.526811653326
+Iteration 5200: Loss = -11222.520312015862
+Iteration 5300: Loss = -11222.51508363395
+Iteration 5400: Loss = -11222.510812261324
+Iteration 5500: Loss = -11222.507224604107
+Iteration 5600: Loss = -11222.504157463109
+Iteration 5700: Loss = -11222.501488151407
+Iteration 5800: Loss = -11222.499141132352
+Iteration 5900: Loss = -11222.497034029997
+Iteration 6000: Loss = -11222.495068368095
+Iteration 6100: Loss = -11222.49744486963
+1
+Iteration 6200: Loss = -11222.496391660081
+2
+Iteration 6300: Loss = -11222.054125528552
+Iteration 6400: Loss = -11222.050259660942
+Iteration 6500: Loss = -11222.049603238806
+Iteration 6600: Loss = -11222.04785344126
+Iteration 6700: Loss = -11222.04662859074
+Iteration 6800: Loss = -11222.053139500944
+1
+Iteration 6900: Loss = -11222.043352315806
+Iteration 7000: Loss = -11222.04730646957
+1
+Iteration 7100: Loss = -11222.041788976223
+Iteration 7200: Loss = -11222.041628568246
+Iteration 7300: Loss = -11222.040706421734
+Iteration 7400: Loss = -11222.040322904093
+Iteration 7500: Loss = -11222.03983070788
+Iteration 7600: Loss = -11222.039865994528
+1
+Iteration 7700: Loss = -11222.039095054592
+Iteration 7800: Loss = -11222.076178423717
+1
+Iteration 7900: Loss = -11222.038464220841
+Iteration 8000: Loss = -11222.038175814625
+Iteration 8100: Loss = -11222.037984136547
+Iteration 8200: Loss = -11222.037629819619
+Iteration 8300: Loss = -11222.047299083319
+1
+Iteration 8400: Loss = -11222.037068842861
+Iteration 8500: Loss = -11222.036805935426
+Iteration 8600: Loss = -11222.036897842601
+1
+Iteration 8700: Loss = -11222.036437403773
+Iteration 8800: Loss = -11222.036280415134
+Iteration 8900: Loss = -11222.036191403806
+Iteration 9000: Loss = -11222.03596124399
+Iteration 9100: Loss = -11222.03561972915
+Iteration 9200: Loss = -11222.033942346232
+Iteration 9300: Loss = -11222.033814483379
+Iteration 9400: Loss = -11222.035125311026
+1
+Iteration 9500: Loss = -11222.03362409544
+Iteration 9600: Loss = -11222.033537320267
+Iteration 9700: Loss = -11222.03419323925
+1
+Iteration 9800: Loss = -11222.033388653555
+Iteration 9900: Loss = -11222.06354023524
+1
+pi: tensor([[0.7336, 0.2664],
+        [0.2368, 0.7632]], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+alpha: tensor([0.5657, 0.4343], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+beta: tensor([[[0.1960, 0.1052],
+         [0.7900, 0.3028]],
+
+        [[0.3523, 0.1047],
+         [0.2183, 0.6633]],
+
+        [[0.1130, 0.0975],
+         [0.0543, 0.6093]],
+
+        [[0.8731, 0.0966],
+         [0.7503, 0.1147]],
+
+        [[0.9624, 0.1172],
+         [0.5505, 0.3954]]], dtype=torch.float64, grad_fn=<SigmoidBackward0>)
+time is 0
+tensor([0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0,
+        0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1,
+        0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1,
+        0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+        0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208031161549398
+time is 2
+tensor([0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1,
+        0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0,
+        1, 1, 1, 1])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208023791611811
+time is 3
+tensor([1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0,
+        1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 100
+Adjusted Rand Index: 1.0
+time is 4
+tensor([0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0,
+        1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0,
+        1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 99
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.9446732460693126
+Average Adjusted Rand Index: 0.9444827152248404
+prior 4 times ------------------------------------------------------------------------------
+Iteration 0: Loss = -25682.08330646704
+Iteration 10: Loss = -11491.951285463996
+Iteration 20: Loss = -11489.03012720144
+Iteration 30: Loss = -11358.756684399155
+Iteration 40: Loss = -11227.127457366954
+Iteration 50: Loss = -11227.144624526294
+1
+Iteration 60: Loss = -11227.144738385665
+2
+Iteration 70: Loss = -11227.144739047588
+3
+Stopping early at iteration 69 due to no improvement.
+pi: tensor([[0.7166, 0.2834],
+        [0.2541, 0.7459]], dtype=torch.float64)
+alpha: tensor([0.5087, 0.4913], dtype=torch.float64)
+beta: tensor([[[0.1928, 0.1056],
+         [0.6354, 0.2953]],
+
+        [[0.6211, 0.1050],
+         [0.6288, 0.8403]],
+
+        [[0.9133, 0.0966],
+         [0.7335, 0.4504]],
+
+        [[0.9734, 0.0962],
+         [0.8673, 0.4816]],
+
+        [[0.8115, 0.1172],
+         [0.0682, 0.9186]]], dtype=torch.float64)
+time is 0
+tensor([0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0,
+        0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1,
+        0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1,
+        0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+        0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 97
+Adjusted Rand Index: 0.8824145678101706
+time is 2
+tensor([0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1,
+        0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0,
+        1, 1, 1, 1])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 96
+Adjusted Rand Index: 0.8448436976567872
+time is 3
+tensor([1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0,
+        1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 100
+Adjusted Rand Index: 1.0
+time is 4
+tensor([0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0,
+        1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0,
+        1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 99
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.9214426515516987
+Average Adjusted Rand Index: 0.9216132692550077
+ours 4 times ------------------------------------------------------------------------------
+time_stamp: 5
+num_nodes: 100
+num_latent: 2
+Iteration 0: Loss = -25682.08330646704
+Iteration 100: Loss = -11514.759753936783
+Iteration 200: Loss = -11407.181596019152
+Iteration 300: Loss = -11397.753683272298
+Iteration 400: Loss = -11393.348762362974
+Iteration 500: Loss = -11388.027369579533
+Iteration 600: Loss = -11380.078213330731
+Iteration 700: Loss = -11351.755441535197
+Iteration 800: Loss = -11333.490508370107
+Iteration 900: Loss = -11326.2297353983
+Iteration 1000: Loss = -11323.04243090433
+Iteration 1100: Loss = -11321.382645801079
+Iteration 1200: Loss = -11320.271729826998
+Iteration 1300: Loss = -11317.871231998217
+Iteration 1400: Loss = -11313.405000707255
+Iteration 1500: Loss = -11305.952104425582
+Iteration 1600: Loss = -11305.509026862
+Iteration 1700: Loss = -11305.467240135005
+Iteration 1800: Loss = -11305.440329522185
+Iteration 1900: Loss = -11305.421269532537
+Iteration 2000: Loss = -11305.406753015384
+Iteration 2100: Loss = -11305.394734594896
+Iteration 2200: Loss = -11305.3842771297
+Iteration 2300: Loss = -11305.37509504218
+Iteration 2400: Loss = -11305.367311761127
+Iteration 2500: Loss = -11305.361001001165
+Iteration 2600: Loss = -11305.355908065721
+Iteration 2700: Loss = -11305.351642211548
+Iteration 2800: Loss = -11305.347980285344
+Iteration 2900: Loss = -11305.344765323664
+Iteration 3000: Loss = -11305.341866063145
+Iteration 3100: Loss = -11305.339178085109
+Iteration 3200: Loss = -11305.336589099488
+Iteration 3300: Loss = -11305.339260968973
+1
+Iteration 3400: Loss = -11305.331080549851
+Iteration 3500: Loss = -11305.328433892604
+Iteration 3600: Loss = -11305.32641125282
+Iteration 3700: Loss = -11305.324506635114
+Iteration 3800: Loss = -11305.322442873305
+Iteration 3900: Loss = -11305.326854340861
+1
+Iteration 4000: Loss = -11305.317710427036
+Iteration 4100: Loss = -11305.316320644672
+Iteration 4200: Loss = -11305.315264731758
+Iteration 4300: Loss = -11305.314259442373
+Iteration 4400: Loss = -11305.313229995249
+Iteration 4500: Loss = -11305.312185986453
+Iteration 4600: Loss = -11305.310250003482
+Iteration 4700: Loss = -11305.298845438914
+Iteration 4800: Loss = -11305.24956153064
+Iteration 4900: Loss = -11305.248517200802
+Iteration 5000: Loss = -11305.251860372242
+1
+Iteration 5100: Loss = -11305.245517908748
+Iteration 5200: Loss = -11305.244351217287
+Iteration 5300: Loss = -11305.243712882593
+Iteration 5400: Loss = -11305.2430163829
+Iteration 5500: Loss = -11305.242291608696
+Iteration 5600: Loss = -11305.24127489229
+Iteration 5700: Loss = -11305.240842481473
+Iteration 5800: Loss = -11305.24053466865
+Iteration 5900: Loss = -11305.240267313193
+Iteration 6000: Loss = -11305.24002622692
+Iteration 6100: Loss = -11305.239925925052
+Iteration 6200: Loss = -11305.23959420027
+Iteration 6300: Loss = -11305.23939284655
+Iteration 6400: Loss = -11305.23919457331
+Iteration 6500: Loss = -11305.238992943667
+Iteration 6600: Loss = -11305.239809885577
+1
+Iteration 6700: Loss = -11305.238534429585
+Iteration 6800: Loss = -11305.238233786646
+Iteration 6900: Loss = -11305.23784783649
+Iteration 7000: Loss = -11305.237411541179
+Iteration 7100: Loss = -11305.236272623892
+Iteration 7200: Loss = -11305.23525996574
+Iteration 7300: Loss = -11305.235000167198
+Iteration 7400: Loss = -11305.235097922392
+1
+Iteration 7500: Loss = -11305.23474641797
+Iteration 7600: Loss = -11305.234646807121
+Iteration 7700: Loss = -11305.235312606628
+1
+Iteration 7800: Loss = -11305.234444384738
+Iteration 7900: Loss = -11305.235148748117
+1
+Iteration 8000: Loss = -11305.234635721738
+2
+Iteration 8100: Loss = -11305.23457120513
+3
+Iteration 8200: Loss = -11305.233952212375
+Iteration 8300: Loss = -11305.233383551687
+Iteration 8400: Loss = -11305.23334730522
+Iteration 8500: Loss = -11305.232575584025
+Iteration 8600: Loss = -11305.232643274701
+1
+Iteration 8700: Loss = -11305.233252990338
+2
+Iteration 8800: Loss = -11305.232527836866
+Iteration 8900: Loss = -11305.23561226571
+1
+Iteration 9000: Loss = -11305.232856345472
+2
+Iteration 9100: Loss = -11305.237075597752
+3
+Iteration 9200: Loss = -11305.232237329139
+Iteration 9300: Loss = -11305.232152819439
+Iteration 9400: Loss = -11305.233571699087
+1
+Iteration 9500: Loss = -11305.231503655112
+Iteration 9600: Loss = -11305.231460508207
+Iteration 9700: Loss = -11305.23141206223
+Iteration 9800: Loss = -11305.231355833615
+Iteration 9900: Loss = -11305.230571896389
+pi: tensor([[0.4301, 0.5699],
+        [0.6951, 0.3049]], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+alpha: tensor([0.5366, 0.4634], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+beta: tensor([[[0.2340, 0.1061],
+         [0.6354, 0.2684]],
+
+        [[0.6211, 0.1025],
+         [0.6288, 0.8403]],
+
+        [[0.9133, 0.0916],
+         [0.7335, 0.4504]],
+
+        [[0.9734, 0.0941],
+         [0.8673, 0.4816]],
+
+        [[0.8115, 0.1147],
+         [0.0682, 0.9186]]], dtype=torch.float64, grad_fn=<SigmoidBackward0>)
+time is 0
+tensor([0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0,
+        0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1,
+        0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 99
+Adjusted Rand Index: 0.96
+time is 1
+tensor([1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1,
+        0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+        0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1,
+        0, 0, 1, 1])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 93
+Adjusted Rand Index: 0.7369439308410987
+time is 2
+tensor([1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0,
+        0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,
+        0, 0, 0, 0])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 10
+Adjusted Rand Index: 0.6365119243670657
+time is 3
+tensor([1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208056373456518
+time is 4
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 4
+Adjusted Rand Index: 0.8448484848484848
+Global Adjusted Rand Index: 0.04476588297713142
+Average Adjusted Rand Index: 0.8198219954804602
+prior 5 times ------------------------------------------------------------------------------
+Iteration 0: Loss = -25998.20657914602
+Iteration 10: Loss = -11495.694090221516
+Iteration 20: Loss = -11495.560034151586
+Iteration 30: Loss = -11488.036746960337
+Iteration 40: Loss = -11483.348235877178
+Iteration 50: Loss = -11472.451884114458
+Iteration 60: Loss = -11447.78072148822
+Iteration 70: Loss = -11352.63244992052
+Iteration 80: Loss = -11312.277992811616
+Iteration 90: Loss = -11305.029835164703
+Iteration 100: Loss = -11304.975541222551
+Iteration 110: Loss = -11304.908794441997
+Iteration 120: Loss = -11304.293175731196
+Iteration 130: Loss = -11303.291764263184
+Iteration 140: Loss = -11303.42921563845
+1
+Iteration 150: Loss = -11305.794269497388
+2
+Iteration 160: Loss = -11307.238142533746
+3
+Stopping early at iteration 159 due to no improvement.
+pi: tensor([[0.4984, 0.5016],
+        [0.5168, 0.4832]], dtype=torch.float64)
+alpha: tensor([0.4959, 0.5041], dtype=torch.float64)
+beta: tensor([[[0.2766, 0.1055],
+         [0.2355, 0.2094]],
+
+        [[0.5303, 0.1034],
+         [0.0402, 0.0732]],
+
+        [[0.9552, 0.0952],
+         [0.4201, 0.6190]],
+
+        [[0.4567, 0.0970],
+         [0.3693, 0.4570]],
+
+        [[0.3643, 0.1154],
+         [0.4104, 0.0831]]], dtype=torch.float64)
+time is 0
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 2
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 5
+Adjusted Rand Index: 0.8080650161849864
+time is 2
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 4
+Adjusted Rand Index: 0.8448543354594036
+time is 3
+tensor([1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0,
+        1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 1, 1])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 90
+Adjusted Rand Index: 0.6363695132199884
+time is 4
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 1
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.3491600736827117
+Average Adjusted Rand Index: 0.8340193891344919
+ours 5 times ------------------------------------------------------------------------------
+time_stamp: 5
+num_nodes: 100
+num_latent: 2
+Iteration 0: Loss = -25998.20657914601
+Iteration 100: Loss = -11567.840793991478
+Iteration 200: Loss = -11520.795609091341
+Iteration 300: Loss = -11507.653110270596
+Iteration 400: Loss = -11501.72879125294
+Iteration 500: Loss = -11498.550242364247
+Iteration 600: Loss = -11496.459951175433
+Iteration 700: Loss = -11494.663333148728
+Iteration 800: Loss = -11493.36573043738
+Iteration 900: Loss = -11492.37155809207
+Iteration 1000: Loss = -11491.58530306111
+Iteration 1100: Loss = -11490.805079983114
+Iteration 1200: Loss = -11489.85258467517
+Iteration 1300: Loss = -11488.673472585846
+Iteration 1400: Loss = -11487.030144909579
+Iteration 1500: Loss = -11482.672021979177
+Iteration 1600: Loss = -11474.873759445552
+Iteration 1700: Loss = -11470.421175374999
+Iteration 1800: Loss = -11462.623875539415
+Iteration 1900: Loss = -11446.70683422519
+Iteration 2000: Loss = -11417.373487839423
+Iteration 2100: Loss = -11399.088192320869
+Iteration 2200: Loss = -11386.742057112302
+Iteration 2300: Loss = -11379.452477320308
+Iteration 2400: Loss = -11377.334786940892
+Iteration 2500: Loss = -11374.688138844615
+Iteration 2600: Loss = -11369.677793067003
+Iteration 2700: Loss = -11366.068454355433
+Iteration 2800: Loss = -11365.84129422691
+Iteration 2900: Loss = -11365.580611955904
+Iteration 3000: Loss = -11365.403080209158
+Iteration 3100: Loss = -11362.140752769603
+Iteration 3200: Loss = -11358.622151065345
+Iteration 3300: Loss = -11358.448744168974
+Iteration 3400: Loss = -11358.398087503037
+Iteration 3500: Loss = -11358.346492332399
+Iteration 3600: Loss = -11358.309813475564
+Iteration 3700: Loss = -11358.258720463598
+Iteration 3800: Loss = -11355.751325779576
+Iteration 3900: Loss = -11355.693794435792
+Iteration 4000: Loss = -11355.664190104486
+Iteration 4100: Loss = -11355.651735916748
+Iteration 4200: Loss = -11355.641000700241
+Iteration 4300: Loss = -11355.63283920219
+Iteration 4400: Loss = -11355.649276211652
+1
+Iteration 4500: Loss = -11355.619172256283
+Iteration 4600: Loss = -11355.613288251578
+Iteration 4700: Loss = -11355.607838848891
+Iteration 4800: Loss = -11355.602872654988
+Iteration 4900: Loss = -11355.59804995391
+Iteration 5000: Loss = -11355.600364961589
+1
+Iteration 5100: Loss = -11355.589478756889
+Iteration 5200: Loss = -11355.58610623314
+Iteration 5300: Loss = -11355.580820504452
+Iteration 5400: Loss = -11355.579013894097
+Iteration 5500: Loss = -11355.565633601447
+Iteration 5600: Loss = -11355.424589826587
+Iteration 5700: Loss = -11355.421681854497
+Iteration 5800: Loss = -11355.41851993283
+Iteration 5900: Loss = -11355.416171500077
+Iteration 6000: Loss = -11355.414570636467
+Iteration 6100: Loss = -11355.40987537993
+Iteration 6200: Loss = -11355.407100366308
+Iteration 6300: Loss = -11355.404769595641
+Iteration 6400: Loss = -11355.402183447795
+Iteration 6500: Loss = -11355.399758260413
+Iteration 6600: Loss = -11355.393688235155
+Iteration 6700: Loss = -11355.102518525695
+Iteration 6800: Loss = -11355.099650992675
+Iteration 6900: Loss = -11355.096382268666
+Iteration 7000: Loss = -11355.092293059226
+Iteration 7100: Loss = -11355.08649946082
+Iteration 7200: Loss = -11355.077429028655
+Iteration 7300: Loss = -11355.059382821075
+Iteration 7400: Loss = -11355.002371597915
+Iteration 7500: Loss = -11353.738109596745
+Iteration 7600: Loss = -11349.729456840147
+Iteration 7700: Loss = -11348.470529663145
+Iteration 7800: Loss = -11347.777778301359
+Iteration 7900: Loss = -11346.86464292952
+Iteration 8000: Loss = -11346.830777550706
+Iteration 8100: Loss = -11346.796245986594
+Iteration 8200: Loss = -11346.76801347651
+Iteration 8300: Loss = -11346.762334265099
+Iteration 8400: Loss = -11346.760239209592
+Iteration 8500: Loss = -11346.75845770093
+Iteration 8600: Loss = -11346.75678063986
+Iteration 8700: Loss = -11346.754956825333
+Iteration 8800: Loss = -11346.753657310315
+Iteration 8900: Loss = -11346.75004711711
+Iteration 9000: Loss = -11346.742184638277
+Iteration 9100: Loss = -11346.668428257259
+Iteration 9200: Loss = -11346.533874228697
+Iteration 9300: Loss = -11346.486978958024
+Iteration 9400: Loss = -11346.48621791117
+Iteration 9500: Loss = -11346.485223686632
+Iteration 9600: Loss = -11346.476114400708
+Iteration 9700: Loss = -11337.375004619513
+Iteration 9800: Loss = -11324.540642527008
+Iteration 9900: Loss = -11322.055128224041
+pi: tensor([[0.4159, 0.5841],
+        [0.6822, 0.3178]], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+alpha: tensor([0.5114, 0.4886], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+beta: tensor([[[0.2520, 0.1098],
+         [0.2355, 0.2417]],
+
+        [[0.5303, 0.1032],
+         [0.0402, 0.0732]],
+
+        [[0.9552, 0.0919],
+         [0.4201, 0.6190]],
+
+        [[0.4567, 0.0940],
+         [0.3693, 0.4570]],
+
+        [[0.3643, 0.1146],
+         [0.4104, 0.0831]]], dtype=torch.float64, grad_fn=<SigmoidBackward0>)
+time is 0
+tensor([0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0,
+        0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1,
+        0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0,
+        1, 1, 0, 0])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 6
+Adjusted Rand Index: 0.7720997823854144
+time is 2
+tensor([1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0,
+        0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1,
+        0, 0, 0, 0])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 9
+Adjusted Rand Index: 0.6691997785118287
+time is 3
+tensor([1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 95
+Adjusted Rand Index: 0.8080740404436667
+time is 4
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 2
+Adjusted Rand Index: 0.9208080808080809
+Global Adjusted Rand Index: 0.0236564932921765
+Average Adjusted Rand Index: 0.8181979525914143
+prior 6 times ------------------------------------------------------------------------------
+Iteration 0: Loss = -19632.599003500105
+Iteration 10: Loss = -11469.110795094646
+Iteration 20: Loss = -11227.111605983071
+Iteration 30: Loss = -11227.144191040936
+1
+Iteration 40: Loss = -11227.144735785028
+2
+Iteration 50: Loss = -11227.144739032698
+3
+Stopping early at iteration 49 due to no improvement.
+pi: tensor([[0.7459, 0.2541],
+        [0.2834, 0.7166]], dtype=torch.float64)
+alpha: tensor([0.4913, 0.5087], dtype=torch.float64)
+beta: tensor([[[0.2953, 0.1056],
+         [0.4429, 0.1928]],
+
+        [[0.7873, 0.1050],
+         [0.7133, 0.3982]],
+
+        [[0.5752, 0.0966],
+         [0.2950, 0.0964]],
+
+        [[0.8309, 0.0962],
+         [0.5577, 0.2897]],
+
+        [[0.5051, 0.1172],
+         [0.7379, 0.7151]]], dtype=torch.float64)
+time is 0
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 2
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 3
+Adjusted Rand Index: 0.8824145678101706
+time is 2
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 4
+Adjusted Rand Index: 0.8448436976567872
+time is 3
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 0
+Adjusted Rand Index: 1.0
+time is 4
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 1
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.9214426515516987
+Average Adjusted Rand Index: 0.9216132692550077
+ours 6 times ------------------------------------------------------------------------------
+time_stamp: 5
+num_nodes: 100
+num_latent: 2
+Iteration 0: Loss = -19632.599003500098
+Iteration 100: Loss = -11702.980705345797
+Iteration 200: Loss = -11648.283267168476
+Iteration 300: Loss = -11612.390066964514
+Iteration 400: Loss = -11593.131877985064
+Iteration 500: Loss = -11577.933412362752
+Iteration 600: Loss = -11561.417322779538
+Iteration 700: Loss = -11545.864674414455
+Iteration 800: Loss = -11523.90794119493
+Iteration 900: Loss = -11502.848937559054
+Iteration 1000: Loss = -11496.026496316359
+Iteration 1100: Loss = -11493.93111467602
+Iteration 1200: Loss = -11492.085543474019
+Iteration 1300: Loss = -11490.267330931647
+Iteration 1400: Loss = -11489.11632906513
+Iteration 1500: Loss = -11486.138540799433
+Iteration 1600: Loss = -11440.115326591831
+Iteration 1700: Loss = -11400.148987348399
+Iteration 1800: Loss = -11367.63841465106
+Iteration 1900: Loss = -11344.408834312466
+Iteration 2000: Loss = -11333.667845699863
+Iteration 2100: Loss = -11327.984599263282
+Iteration 2200: Loss = -11327.80082637491
+Iteration 2300: Loss = -11327.678142314913
+Iteration 2400: Loss = -11327.610283461248
+Iteration 2500: Loss = -11327.568948387365
+Iteration 2600: Loss = -11327.538459200749
+Iteration 2700: Loss = -11327.513308640493
+Iteration 2800: Loss = -11327.489536824754
+Iteration 2900: Loss = -11327.466227975783
+Iteration 3000: Loss = -11327.349818873823
+Iteration 3100: Loss = -11327.327628505753
+Iteration 3200: Loss = -11323.989776831393
+Iteration 3300: Loss = -11323.83163998135
+Iteration 3400: Loss = -11323.81420778844
+Iteration 3500: Loss = -11323.80450345922
+Iteration 3600: Loss = -11323.7971483124
+Iteration 3700: Loss = -11323.790269456958
+Iteration 3800: Loss = -11323.7776964965
+Iteration 3900: Loss = -11323.697652485025
+Iteration 4000: Loss = -11319.76980474052
+Iteration 4100: Loss = -11319.727082281574
+Iteration 4200: Loss = -11319.722115643512
+Iteration 4300: Loss = -11317.170544769233
+Iteration 4400: Loss = -11316.861801216171
+Iteration 4500: Loss = -11316.842995495494
+Iteration 4600: Loss = -11316.826035499736
+Iteration 4700: Loss = -11316.823702992755
+Iteration 4800: Loss = -11316.819315582732
+Iteration 4900: Loss = -11316.817370097464
+Iteration 5000: Loss = -11316.815770327277
+Iteration 5100: Loss = -11316.81438366926
+Iteration 5200: Loss = -11316.813264879758
+Iteration 5300: Loss = -11316.811946223901
+Iteration 5400: Loss = -11316.810751443692
+Iteration 5500: Loss = -11316.809289356894
+Iteration 5600: Loss = -11316.806755767937
+Iteration 5700: Loss = -11316.805082042041
+Iteration 5800: Loss = -11316.803452742328
+Iteration 5900: Loss = -11316.800898638825
+Iteration 6000: Loss = -11316.68088169912
+Iteration 6100: Loss = -11316.6801492654
+Iteration 6200: Loss = -11316.585173934423
+Iteration 6300: Loss = -11316.331859315855
+Iteration 6400: Loss = -11315.92910567783
+Iteration 6500: Loss = -11315.92795990419
+Iteration 6600: Loss = -11315.92680374373
+Iteration 6700: Loss = -11315.90509579974
+Iteration 6800: Loss = -11315.895043146917
+Iteration 6900: Loss = -11315.893945770507
+Iteration 7000: Loss = -11315.889975153312
+Iteration 7100: Loss = -11315.879880006543
+Iteration 7200: Loss = -11315.877590795804
+Iteration 7300: Loss = -11315.880085430175
+1
+Iteration 7400: Loss = -11315.876573474981
+Iteration 7500: Loss = -11315.87627103998
+Iteration 7600: Loss = -11315.826484730136
+Iteration 7700: Loss = -11315.788559526307
+Iteration 7800: Loss = -11315.787856232617
+Iteration 7900: Loss = -11315.785366693754
+Iteration 8000: Loss = -11315.747318017917
+Iteration 8100: Loss = -11315.716283643396
+Iteration 8200: Loss = -11315.715193344322
+Iteration 8300: Loss = -11315.70871568927
+Iteration 8400: Loss = -11315.713809259281
+1
+Iteration 8500: Loss = -11315.708381806362
+Iteration 8600: Loss = -11315.708269040995
+Iteration 8700: Loss = -11315.708134054405
+Iteration 8800: Loss = -11315.712869046423
+1
+Iteration 8900: Loss = -11314.92755541356
+Iteration 9000: Loss = -11314.917995386179
+Iteration 9100: Loss = -11314.891401706758
+Iteration 9200: Loss = -11314.893274560016
+1
+Iteration 9300: Loss = -11314.891089258728
+Iteration 9400: Loss = -11314.892185652936
+1
+Iteration 9500: Loss = -11314.89074796098
+Iteration 9600: Loss = -11314.890569272915
+Iteration 9700: Loss = -11314.890286215916
+Iteration 9800: Loss = -11314.899614937804
+1
+Iteration 9900: Loss = -11314.890107305198
+pi: tensor([[0.5682, 0.4318],
+        [0.4717, 0.5283]], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+alpha: tensor([0.5617, 0.4383], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+beta: tensor([[[0.2070, 0.1052],
+         [0.4429, 0.2911]],
+
+        [[0.7873, 0.1038],
+         [0.7133, 0.3982]],
+
+        [[0.5752, 0.0963],
+         [0.2950, 0.0964]],
+
+        [[0.8309, 0.0987],
+         [0.5577, 0.2897]],
+
+        [[0.5051, 0.1157],
+         [0.7379, 0.7151]]], dtype=torch.float64, grad_fn=<SigmoidBackward0>)
+time is 0
+tensor([0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 0,
+        0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1,
+        0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 98
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1,
+        0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+        0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1,
+        0, 0, 1, 1])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 94
+Adjusted Rand Index: 0.7721069260785004
+time is 2
+tensor([0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0,
+        1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1,
+        0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0,
+        1, 1, 1, 1])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 97
+Adjusted Rand Index: 0.8824177928584268
+time is 3
+tensor([0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1,
+        0, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0,
+        0, 0, 1, 0])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 26
+Adjusted Rand Index: 0.2229676145942866
+time is 4
+tensor([0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0,
+        1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+        0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0,
+        1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 0, 1])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 99
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.429198405150684
+Average Adjusted Rand Index: 0.7516600828678589
+prior 7 times ------------------------------------------------------------------------------
+Iteration 0: Loss = -28333.728461075483
+Iteration 10: Loss = -11495.694356962998
+Iteration 20: Loss = -11495.694353927605
+Iteration 30: Loss = -11495.68924325818
+Iteration 40: Loss = -11492.369506107896
+Iteration 50: Loss = -11485.020265825897
+Iteration 60: Loss = -11478.611077834337
+Iteration 70: Loss = -11466.826993554962
+Iteration 80: Loss = -11423.009628961256
+Iteration 90: Loss = -11322.465037099475
+Iteration 100: Loss = -11305.191270715482
+Iteration 110: Loss = -11304.991428241929
+Iteration 120: Loss = -11304.957788564789
+Iteration 130: Loss = -11304.778948139301
+Iteration 140: Loss = -11303.390666035742
+Iteration 150: Loss = -11303.271153506375
+Iteration 160: Loss = -11304.198855900006
+1
+Iteration 170: Loss = -11306.595614976608
+2
+Iteration 180: Loss = -11306.916100276947
+3
+Stopping early at iteration 179 due to no improvement.
+pi: tensor([[0.5002, 0.4998],
+        [0.5119, 0.4881]], dtype=torch.float64)
+alpha: tensor([0.4947, 0.5053], dtype=torch.float64)
+beta: tensor([[[0.2770, 0.1055],
+         [0.3000, 0.2090]],
+
+        [[0.6319, 0.1033],
+         [0.1343, 0.1948]],
+
+        [[0.5880, 0.0951],
+         [0.3288, 0.2777]],
+
+        [[0.8278, 0.0970],
+         [0.7007, 0.8403]],
+
+        [[0.4764, 0.1153],
+         [0.1816, 0.3593]]], dtype=torch.float64)
+time is 0
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 2
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 6
+Adjusted Rand Index: 0.7720997823854144
+time is 2
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 4
+Adjusted Rand Index: 0.8448543354594036
+time is 3
+tensor([1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0,
+        1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 1, 1])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 88
+Adjusted Rand Index: 0.5733577800500688
+time is 4
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 1
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.3539217480377238
+Average Adjusted Rand Index: 0.8142239957405935
+ours 7 times ------------------------------------------------------------------------------
+time_stamp: 5
+num_nodes: 100
+num_latent: 2
+Iteration 0: Loss = -28333.72846107548
+Iteration 100: Loss = -11620.795002994302
+Iteration 200: Loss = -11537.495158648902
+Iteration 300: Loss = -11510.388339327623
+Iteration 400: Loss = -11503.8741178132
+Iteration 500: Loss = -11500.880462359652
+Iteration 600: Loss = -11499.04445170175
+Iteration 700: Loss = -11497.563809639123
+Iteration 800: Loss = -11496.389192247589
+Iteration 900: Loss = -11495.832066514125
+Iteration 1000: Loss = -11495.454622429508
+Iteration 1100: Loss = -11495.054456655793
+Iteration 1200: Loss = -11494.479668074853
+Iteration 1300: Loss = -11493.899153913611
+Iteration 1400: Loss = -11493.272122865095
+Iteration 1500: Loss = -11492.558504460956
+Iteration 1600: Loss = -11491.399256898416
+Iteration 1700: Loss = -11489.988489497442
+Iteration 1800: Loss = -11487.704011060307
+Iteration 1900: Loss = -11480.634025239195
+Iteration 2000: Loss = -11474.028256400263
+Iteration 2100: Loss = -11464.069511398746
+Iteration 2200: Loss = -11459.416614955222
+Iteration 2300: Loss = -11452.09734357161
+Iteration 2400: Loss = -11449.638227248875
+Iteration 2500: Loss = -11441.535680712268
+Iteration 2600: Loss = -11430.069840906055
+Iteration 2700: Loss = -11413.477132600055
+Iteration 2800: Loss = -11399.665162968953
+Iteration 2900: Loss = -11385.867638295917
+Iteration 3000: Loss = -11369.746239293781
+Iteration 3100: Loss = -11352.01793334632
+Iteration 3200: Loss = -11334.343675203592
+Iteration 3300: Loss = -11333.017277881576
+Iteration 3400: Loss = -11329.015272509667
+Iteration 3500: Loss = -11322.998575250494
+Iteration 3600: Loss = -11321.268601230408
+Iteration 3700: Loss = -11320.267394134413
+Iteration 3800: Loss = -11318.972460360726
+Iteration 3900: Loss = -11314.983043735201
+Iteration 4000: Loss = -11314.605335013986
+Iteration 4100: Loss = -11314.544592389502
+Iteration 4200: Loss = -11314.504714002316
+Iteration 4300: Loss = -11314.474644273605
+Iteration 4400: Loss = -11314.423012967321
+Iteration 4500: Loss = -11311.133316145184
+Iteration 4600: Loss = -11311.071661460554
+Iteration 4700: Loss = -11311.04334770366
+Iteration 4800: Loss = -11310.97956368629
+Iteration 4900: Loss = -11310.851808804648
+Iteration 5000: Loss = -11310.659833548294
+Iteration 5100: Loss = -11310.631562111
+Iteration 5200: Loss = -11310.589989958566
+Iteration 5300: Loss = -11307.436922373461
+Iteration 5400: Loss = -11307.4259560967
+Iteration 5500: Loss = -11307.40058643598
+Iteration 5600: Loss = -11307.073790728771
+Iteration 5700: Loss = -11306.958767593609
+Iteration 5800: Loss = -11306.953107012587
+Iteration 5900: Loss = -11306.94737342409
+Iteration 6000: Loss = -11306.94276895533
+Iteration 6100: Loss = -11306.939433272957
+Iteration 6200: Loss = -11306.936206809412
+Iteration 6300: Loss = -11306.933020178225
+Iteration 6400: Loss = -11306.937046777375
+1
+Iteration 6500: Loss = -11306.920362233806
+Iteration 6600: Loss = -11306.824788111157
+Iteration 6700: Loss = -11306.816778034765
+Iteration 6800: Loss = -11305.959208896611
+Iteration 6900: Loss = -11305.951722877995
+Iteration 7000: Loss = -11305.948534728963
+Iteration 7100: Loss = -11305.941723756037
+Iteration 7200: Loss = -11305.92416161675
+Iteration 7300: Loss = -11305.920073221736
+Iteration 7400: Loss = -11305.9197433306
+Iteration 7500: Loss = -11305.916976955641
+Iteration 7600: Loss = -11305.912108352808
+Iteration 7700: Loss = -11305.911419602699
+Iteration 7800: Loss = -11305.909164770792
+Iteration 7900: Loss = -11305.909266920007
+1
+Iteration 8000: Loss = -11305.90969914823
+2
+Iteration 8100: Loss = -11305.9068837343
+Iteration 8200: Loss = -11305.907425926822
+1
+Iteration 8300: Loss = -11305.90577333259
+Iteration 8400: Loss = -11305.907543247067
+1
+Iteration 8500: Loss = -11305.906999149523
+2
+Iteration 8600: Loss = -11305.903985869643
+Iteration 8700: Loss = -11305.903558419566
+Iteration 8800: Loss = -11305.90329890704
+Iteration 8900: Loss = -11305.903066539231
+Iteration 9000: Loss = -11305.903860776825
+1
+Iteration 9100: Loss = -11305.90180366059
+Iteration 9200: Loss = -11305.900678510829
+Iteration 9300: Loss = -11305.873376217973
+Iteration 9400: Loss = -11305.87234503263
+Iteration 9500: Loss = -11305.872461571975
+1
+Iteration 9600: Loss = -11305.871772853523
+Iteration 9700: Loss = -11305.87148596256
+Iteration 9800: Loss = -11305.87126255381
+Iteration 9900: Loss = -11305.871095557019
+pi: tensor([[0.4893, 0.5107],
+        [0.5117, 0.4883]], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+alpha: tensor([0.4421, 0.5579], dtype=torch.float64, grad_fn=<SoftmaxBackward0>)
+beta: tensor([[[0.2854, 0.1053],
+         [0.3000, 0.2119]],
+
+        [[0.6319, 0.1041],
+         [0.1343, 0.1948]],
+
+        [[0.5880, 0.0956],
+         [0.3288, 0.2777]],
+
+        [[0.8278, 0.0953],
+         [0.7007, 0.8403]],
+
+        [[0.4764, 0.1153],
+         [0.1816, 0.3593]]], dtype=torch.float64, grad_fn=<SigmoidBackward0>)
+time is 0
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1,
+        1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0,
+        1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 2
+Adjusted Rand Index: 0.9208080808080809
+time is 1
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+tensor([0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0,
+        0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+        1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0])
+Difference count: 5
+Adjusted Rand Index: 0.8080650161849864
+time is 2
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+tensor([1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0,
+        1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0,
+        1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1,
+        0, 0, 0, 0])
+Difference count: 2
+Adjusted Rand Index: 0.9208056373456518
+time is 3
+tensor([1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0,
+        1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0,
+        1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0,
+        0, 1, 1, 1])
+tensor([0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1,
+        0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1,
+        0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 87
+Adjusted Rand Index: 0.5430678981784419
+time is 4
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+tensor([1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1,
+        0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1,
+        0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1,
+        1, 0, 1, 0])
+Difference count: 1
+Adjusted Rand Index: 0.96
+Global Adjusted Rand Index: 0.37328944134902897
+Average Adjusted Rand Index: 0.8305493265034322
+True loss:  11247.151078605853
+new:  [0.3635413972991622, 0.2817284943518086, 0.9446732460693126, 0.9446732460693126, 0.04476588297713142, 0.0236564932921765, 0.429198405150684, 0.37328944134902897] [0.815680000759236, 0.5796513177093552, 0.9444827152248404, 0.9444827152248404, 0.8198219954804602, 0.8181979525914143, 0.7516600828678589, 0.8305493265034322] [11303.0922357951, 11393.915194028807, 11222.262783515733, 11222.033252030542, 11305.222368138346, 11321.992845211968, 11314.890043286778, 11305.870849392739]
+prior:  [0.9214426515516987, 0.9214426515516987, 0.9214426515516987, 0.9214426515516987, 0.9214426515516987, 0.3491600736827117, 0.9214426515516987, 0.3539217480377238] [0.9216132692550077, 0.9216132692550077, 0.9216132692550077, 0.9216132692550077, 0.9216132692550077, 0.8340193891344919, 0.9216132692550077, 0.8142239957405935] [11227.14473904786, 11227.144739048434, 11227.14473904947, 11227.144739033401, 11227.144739047588, 11307.238142533746, 11227.144739032698, 11306.916100276947]
+Traceback (most recent call last):
+  File "/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/main.py", line 347, in <module>
+    prior_random_loss, prior_kmeans_loss = main(time_stamp = time_stamp, 
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/users/aiwwdw/git_repository/Statistical-clustering-of-temporal-networks/main.py", line 276, in main
+    prior_trial_loss[prior_max_index].item(), prior_kmeans_loss.item()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'float' object has no attribute 'item'
