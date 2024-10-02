@@ -10,16 +10,16 @@ from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 import os
 import torch.nn.functional as F
 from torch.distributions import Dirichlet
+from torch_geometric.data import Data, DataLoader
+from tauNN import GNNModel, TAU_init,TAU_transition, tau_init_new, tau_transition_new,adjacency_to_edge_index
 
 torch.autograd.set_detect_anomaly(True)
 
 def J(tau_init, tau_transition, alpha, pi, beta, Y):
     N, Q = tau_init.shape
     T = Y.shape[0]
-    
 
     tau_marg = tau_margin_generator(tau_init,tau_transition)
-    
     q_indices = torch.arange(Q).view(1, 1, Q, 1, 1).expand(T, Q, Q, N, N)
     l_indices = torch.arange(Q).view(1, Q, 1, 1, 1).expand(T, Q, Q, N, N)
     t_indices = torch.arange(T).view(T, 1, 1, 1, 1).expand(T, Q, Q, N, N)
@@ -62,17 +62,15 @@ def phi_vectorized(q, l, t, y, beta, distribution='Bernoulli'):
     
     return result
 
-
 def tau_margin_generator(tau_init, tau_transition):
     time_stamp, num_nodes, num_latent, _ = tau_transition.shape
-    tau = torch.zeros((time_stamp, num_nodes, num_latent), dtype= torch.float64)
+    tau = torch.zeros((time_stamp, num_nodes, num_latent))
     for t in range(time_stamp):
         result = tau_init[:, :]
         for t_prime in range(t):
             result = torch.einsum('ij,ijk->ik', result, tau_transition[t_prime+1, :, :,:])
         tau[t,:,:] = result
     return tau
-
 
 def initial_clustering(adj_matrices, num_latent):
     # 인접 행렬을 쌓아 하나의 큰 행렬로 만듭니다.
@@ -102,7 +100,7 @@ def inital_random(adj_matrices,num_latent):
     time_stamp, num_nodes , _ = adj_matrices.shape
     epsilon = 1e-2
 
-    concentration = torch.ones(num_latent, dtype=torch.float64)
+    concentration = torch.ones(num_latent)
     tau_init = torch.stack([Dirichlet(concentration).sample() for _ in range(num_nodes)])
     tau_transition = torch.stack([
                         torch.stack([
@@ -112,7 +110,7 @@ def inital_random(adj_matrices,num_latent):
                         ])
     alpha = Dirichlet(concentration).sample()
     pi = torch.stack([Dirichlet(concentration).sample() for _ in range(num_latent)])
-    beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
+    beta = torch.rand(time_stamp, num_latent, num_latent)
 
 
     tau_init = torch.clamp(tau_init, min=epsilon, max=1 - epsilon)
@@ -160,7 +158,8 @@ def estimate(adjacency_matrix,
              bernoulli_case = 'low_plus', 
              trial = 0,
              num_iterations = 10000,
-             mode = 'new_random'):
+             mode = 'new_random',
+             node_latent = 4):
     
     time_stamp, num_nodes , _ = adjacency_matrix.shape
 
@@ -186,6 +185,18 @@ def estimate(adjacency_matrix,
 
     tau_init_pre, tau_transition_pre, pi_pre, beta_pre, alpha_pre= initialization
 
+    # Gradient ascent
+    tau_init = F.softmax(tau_init_pre, dim=1)
+    tau_transition = F.softmax(tau_transition_pre, dim=3)
+
+    TAU_init_model = TAU_init(input_dim=node_latent, output_dim= num_latent)  
+    TAU_transition_model = TAU_transition(input_dim=node_latent,latent_dim= num_latent, output_dim= num_latent * num_latent)  
+    GNN_latent = GNNModel(num_nodes=num_nodes, hidden_dim=16, output_dim=node_latent)
+
+    alpha = F.softmax(alpha_pre, dim=0)
+    pi = F.softmax(pi_pre,dim=1)
+    beta = F.sigmoid(beta_pre)
+
     # tau_init_pre, tau_transition_pre, pi_pre, beta_pre, alpha_pre= inital_parameter(adjacency_matrix, num_latent)
 
 
@@ -194,8 +205,11 @@ def estimate(adjacency_matrix,
 
 
     # Optimizer
+    params = list(TAU_init_model.parameters()) + \
+            list(TAU_transition_model.parameters()) + \
+            list(GNN_latent.parameters())
     optimizer_theta = optim.Adam([pi_pre, alpha_pre, beta_pre], lr=5e-2)
-    optimizer_tau = optim.Adam([tau_init_pre, tau_transition_pre], lr=5e-2)
+    optimizer_tau =  optim.Adam(params, lr=0.001)    
 
     # Learning rate scheduler
     scheduler_theta = StepLR(optimizer_theta, step_size=200, gamma=0.9)
@@ -208,27 +222,45 @@ def estimate(adjacency_matrix,
     best_loss = float('inf') 
 
     str_stability = str(stability).replace('0.', '0p')
-    # Gradient ascent
-    tau_init = F.softmax(tau_init_pre, dim=1)
-    tau_transition = F.softmax(tau_transition_pre, dim=3)
-    alpha = F.softmax(alpha_pre, dim=0)
-    pi = F.softmax(pi_pre,dim=1)
-    beta = F.sigmoid(beta_pre)
+
 
     # print(tau_init, tau_transition, pi, beta, alpha)
 
     for iter in range(num_iterations):
-
+        
         optimizer_theta.zero_grad()
         optimizer_tau.zero_grad()
         
-        tau_init = F.softmax(tau_init_pre, dim=1)
-        tau_transition = F.softmax(tau_transition_pre, dim=3)
+
+        edge_indices_list = adjacency_to_edge_index(Y)
+
+        node_ids = torch.arange(num_nodes)
+        data_list = []
+
+        for edge_index in edge_indices_list:
+            data = Data(x=node_ids, edge_index=edge_index)
+            data_list.append(data)
+
+        loader = DataLoader(data_list, batch_size=10, shuffle=True)
+        for batch in loader:
+            output = GNN_latent(batch.x, batch.edge_index)
+        splits = torch.split(output, 100)
+
+        tau_transition = torch.zeros(time_stamp,num_nodes,num_latent,num_latent)
+
+        for t, node_embedding in enumerate(splits):
+            if t == 0:
+                tau_init = tau_init_new(node_embedding, TAU_init_model)
+            else:
+                result = torch.zeros(num_nodes,num_latent*num_latent)
+                for t_prime in range (t):
+                    result = TAU_transition_model(splits[t_prime], result)  
+                tau_transition[t] = F.softmax(result.view(num_nodes, num_latent, num_latent), dim=2)
+
         alpha = F.softmax(alpha_pre, dim=0)
         pi = F.softmax(pi_pre,dim=1)
         beta = F.sigmoid(beta_pre)
-
-
+        
         loss = -J(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
         loss.backward()
         
@@ -268,6 +300,7 @@ def estimate(adjacency_matrix,
 if __name__ == "__main__":
     num_nodes = 100
     num_latent = 2
+    node_latent = 4
 
     time_stamp = 5
     stability = 0.75
@@ -293,4 +326,12 @@ if __name__ == "__main__":
     intitalization_new_pre = initial_before_softmax(initialization)
     inital_gradient(intitalization_new_pre)
 
-    estimate(adjacency_matrix = Y, initialization = intitalization_new_pre, num_latent = num_latent, stability = stability, total_iteration = iteration, bernoulli_case = bernoulli_case, trial = trial)
+    estimate(adjacency_matrix = Y,
+              initialization = intitalization_new_pre, 
+              num_latent = num_latent, 
+              stability = stability, 
+              total_iteration = iteration, 
+              bernoulli_case = bernoulli_case, 
+              trial = trial,
+              node_latent= node_latent)
+ 
