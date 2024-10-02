@@ -72,29 +72,6 @@ def tau_margin_generator(tau_init, tau_transition):
         tau[t,:,:] = result
     return tau
 
-def initial_clustering(adj_matrices, num_latent):
-    # 인접 행렬을 쌓아 하나의 큰 행렬로 만듭니다.
-    stacked_matrix = torch.hstack([matrix for matrix in adj_matrices])
-    # k-means 알고리즘 적용
-    kmeans = KMeans(n_clusters=num_latent, random_state=0)
-    initial_labels = kmeans.fit_predict(stacked_matrix)
-    initial_labels_tensor = torch.tensor(initial_labels, dtype=torch.int64)
-    one_hot_labels = torch.nn.functional.one_hot(initial_labels_tensor, num_classes=num_latent)
-    one_hot_labels = one_hot_labels.to(dtype=torch.float64)
-    return one_hot_labels
-
-def inital_parameter(adj_matrices,num_latent):
-    time_stamp, num_nodes , _ = adj_matrices.shape
-    pi = torch.eye(num_latent, dtype=torch.float64, requires_grad=True)
-    alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64, requires_grad=True)
-    beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64, requires_grad=True)
-
-    tau_init = initial_clustering(adj_matrices, num_latent)
-    tau_init.requires_grad_()
-    
-    tau_transition = torch.eye(num_latent, dtype=torch.float64).expand(time_stamp, num_nodes, num_latent, num_latent).clone().requires_grad_()
-    
-    return tau_init, tau_transition, pi, beta, alpha
 
 def inital_random(adj_matrices,num_latent):
     time_stamp, num_nodes , _ = adj_matrices.shape
@@ -149,7 +126,7 @@ def inital_gradient(intitalization):
 
 
 
-def estimate(adjacency_matrix, 
+def GNN_estimate(adjacency_matrix, 
              initialization,
              num_latent = 2 , 
              stability = 0.9, 
@@ -158,7 +135,7 @@ def estimate(adjacency_matrix,
              bernoulli_case = 'low_plus', 
              trial = 0,
              num_iterations = 10000,
-             mode = 'new_random',
+             mode = 'GNN',
              node_latent = 4):
     
     time_stamp, num_nodes , _ = adjacency_matrix.shape
@@ -291,9 +268,9 @@ def estimate(adjacency_matrix,
                 break
 
             if iter % 500 == 0:
-                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}_4/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     
-    torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}_4/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+    torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     return loss
     
 
@@ -316,7 +293,7 @@ if __name__ == "__main__":
     # bernoulli_case = 'large'
 
     str_stability = str(stability).replace('0.', '0p')
-    Y = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}_4/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
+    Y = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
     
     # initialization = inital_random(Y,num_latent)
     # torch.save(initialization,f"initalization.pt")
@@ -326,7 +303,7 @@ if __name__ == "__main__":
     intitalization_new_pre = initial_before_softmax(initialization)
     inital_gradient(intitalization_new_pre)
 
-    estimate(adjacency_matrix = Y,
+    GNN_estimate(adjacency_matrix = Y,
               initialization = intitalization_new_pre, 
               num_latent = num_latent, 
               stability = stability, 

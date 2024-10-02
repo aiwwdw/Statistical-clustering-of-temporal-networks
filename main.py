@@ -3,6 +3,7 @@ from model_compact import estimate
 from evaluation import eval
 from true_model import true_J
 from model_gpu import estimate_gpu
+from GNN_model import GNN_estimate
 from old_model_compact import estimate_old
 import numpy as np
 import torch
@@ -144,6 +145,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                         bernoulli_case = bernoulli_case)
     
     initialization_kmeans = inital_kmeans(Y,num_latent)
+    torch.save(initialization_kmeans, f"parameter/{num_nodes}_{time_stamp}_{str_stability}/initialization/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/initialization_kmeans.pt")
     initialization_kmeans_new = tuple(tensor.clone() for tensor in initialization_kmeans)
 
     print("prior kmeans ------------------------------------------------------------------------------")
@@ -175,7 +177,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                         total_iteration = total_iteration, 
                         bernoulli_case = bernoulli_case,
                         trial = 0,
-                        num_iterations = 20000,
+                        num_iterations = 10000,
                         mode = 'new_kmeans')
     
     kmeans_global_ARI, kmeans_average_ARI = eval(bernoulli_case =bernoulli_case, 
@@ -198,6 +200,8 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
     for j in range(num_trials):
         # 추정
         initialization = inital_random(Y,num_latent)
+        torch.save(initialization, f"parameter/{num_nodes}_{time_stamp}_{str_stability}/initialization/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/initialization_{j}.pt")
+    
         initialization_new = tuple(tensor.clone() for tensor in initialization)
 
         print(f"prior {j} times ------------------------------------------------------------------------------")
@@ -273,7 +277,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
         prior_trial_global_ARI[prior_max_index], prior_trial_average_ARI[prior_max_index],  
         prior_kmeans_global_ARI, prior_kmeans_average_ARI, 
         trial_loss[max_index], true_loss.item(), kmeans_loss.item(),
-        prior_trial_loss[prior_max_index].item(), prior_kmeans_loss.item()
+        prior_trial_loss[prior_max_index], prior_kmeans_loss.item()
         )
     # return global_ARI, average_ARI, loss, true_loss
     
@@ -282,10 +286,10 @@ if __name__ == "__main__":
     time_stamp = 5
     num_latent = 2
     num_nodes = 100
-    stability = 0.75
+    stability = 0.751
     total_iteration = 0
     distribution = 'Bernoulli'
-    num_trials = 8
+    num_trials = 1
     
     # bernoulli_case = 'low_minus'
     # bernoulli_case = 'low_plus'
@@ -306,7 +310,11 @@ if __name__ == "__main__":
     directory_kmeans_est = f"parameter/{num_nodes}_{time_stamp}_{str_stability}/new_kmeans_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
     directory_prior_random_est = f"parameter/{num_nodes}_{time_stamp}_{str_stability}/prior_random_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
     directory_prior_kmeans_est = f"parameter/{num_nodes}_{time_stamp}_{str_stability}/prior_kmeans_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
+    directory_initialization_est = f"parameter/{num_nodes}_{time_stamp}_{str_stability}/initialization/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
 
+    if not os.path.exists(directory_output):
+        os.makedirs(directory_output)
+    
     if not os.path.exists(directory_adj):
         os.makedirs(directory_adj)
 
@@ -324,9 +332,11 @@ if __name__ == "__main__":
 
     if not os.path.exists(directory_prior_kmeans_est):
         os.makedirs(directory_prior_kmeans_est)
+        
+    if not os.path.exists(directory_initialization_est):
+        os.makedirs(directory_initialization_est)
 
-    if not os.path.exists(directory_output):
-        os.makedirs(directory_output)
+   
 
     csv_file_path = f'output/{num_nodes}_{time_stamp}_{str_stability}/result_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}.csv'
     df = pd.DataFrame(columns=["iteration", "global_ari", "average_ari", "kmeans_global_ari", "kmeans_average_ari","prior_random_global_ari", "prior_random_average_ari","prior_kmeans_global_ari", "prior_kmeans_average_ari", "true_loss", "loss", "kmeans_loss","prior_random_loss", "prior_kmeans_loss" ])
