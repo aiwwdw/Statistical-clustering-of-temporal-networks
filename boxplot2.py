@@ -2,19 +2,22 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# 다섯 개의 CSV 파일을 읽어옵니다.
-file_paths = [
-    'output/100_5_0p75/result_low_minus_100_5_0p75.csv',
-    'output/100_5_0p75/result_low_plus_100_5_0p75.csv',
-    'output/100_5_0p75/result_medium_minus_100_5_0p75.csv',
-    'output/100_5_0p75/result_medium_plus_100_5_0p75.csv',
-    'output/100_5_0p75/result_medium_with_affiliation_100_5_0p75.csv'
-]
 
-# 각 파일에서 데이터를 읽어오고 필요한 열만 추출합니다.
+setting = '100_5_0p6'
+
+
 data_frames = []
 labels = ['low-', 'low+', 'medium-', 'medium+', 'medium w/ affiliation']
 est_types = ['', 'kmeans_','prior_random_','prior_kmeans_']
+
+file_paths = [
+    f'output/{setting}/result_low_minus_{setting}.csv',
+    f'output/{setting}/result_low_plus_{setting}.csv',
+    f'output/{setting}/result_medium_minus_{setting}.csv',
+    f'output/{setting}/result_medium_plus_{setting}.csv',
+    f'output/{setting}/result_medium_with_affiliation_{setting}.csv'
+]
+
 for est_type in est_types:
     for file_path, label in zip(file_paths, labels):
         global_ari_str = f'{est_type}global_ari'
@@ -62,7 +65,7 @@ for est_type in est_types:
     plt.xticks(range(len(labels)), labels)
 
     # 플롯을 파일로 저장합니다.
-    output_file_path = f'boxplot_{est_type}global_average.png'
+    output_file_path = f'{setting}_boxplot_{est_type}global_average.png'
     plt.savefig(output_file_path)
 
     # 플롯을 표시합니다.

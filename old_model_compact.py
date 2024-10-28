@@ -248,7 +248,7 @@ def estimate_old(adjacency_matrix,
             if np.isnan(current_loss):
                 break
             # print(best_loss, loss)
-            if loss >= best_loss:
+            if loss >= best_loss-1e-5:
                 no_improve_count += 1
                 print(no_improve_count)
             else:

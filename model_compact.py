@@ -10,22 +10,24 @@ from torch.optim.lr_scheduler import StepLR, CosineAnnealingLR
 import os
 import torch.nn.functional as F
 from torch.distributions import Dirichlet
+from utility import initial_before_softmax, inital_gradient
 
 torch.autograd.set_detect_anomaly(True)
 
-def J(tau_init, tau_transition, alpha, pi, beta, Y):
+def J(tau_init, tau_transition, alpha, pi, beta, Y, device):
     N, Q = tau_init.shape
     T = Y.shape[0]
     
-
-    tau_marg = tau_margin_generator(tau_init,tau_transition)
     
-    q_indices = torch.arange(Q).view(1, 1, Q, 1, 1).expand(T, Q, Q, N, N)
-    l_indices = torch.arange(Q).view(1, Q, 1, 1, 1).expand(T, Q, Q, N, N)
-    t_indices = torch.arange(T).view(T, 1, 1, 1, 1).expand(T, Q, Q, N, N)
+    tau_marg = tau_margin_generator(tau_init,tau_transition).to(device)
+
+    q_indices = torch.arange(Q).view(1, 1, Q, 1, 1).expand(T, Q, Q, N, N).to(device)
+    l_indices = torch.arange(Q).view(1, Q, 1, 1, 1).expand(T, Q, Q, N, N).to(device)
+    t_indices = torch.arange(T).view(T, 1, 1, 1, 1).expand(T, Q, Q, N, N).to(device)
     Y_indices = Y.view(T,1,1,N,N).expand(T, Q, Q, N, N)
-    phi_values_new = torch.zeros((T, Q, Q, N, N))
+
     phi_values_new = phi_vectorized(q_indices,l_indices ,t_indices, Y_indices, beta)
+
 
     log_phi_values = torch.log(phi_values_new)
     
@@ -41,7 +43,6 @@ def J(tau_init, tau_transition, alpha, pi, beta, Y):
    
 
     # Second term
-   
     term2=0
     for t in range(1, T):
         term2 += (torch.einsum('ij,ijk->ijk', tau_marg[t-1, :, :], tau_transition[t, :, :,:]) * (torch.log(pi[:, :]).unsqueeze(0).expand(N,Q,Q) - torch.log(tau_transition[t, :, :, :]))).sum()
@@ -63,92 +64,27 @@ def phi_vectorized(q, l, t, y, beta, distribution='Bernoulli'):
     return result
 
 
+# def tau_margin_generator(tau_init, tau_transition):
+#     time_stamp, num_nodes, num_latent, _ = tau_transition.shape
+#     tau = torch.zeros((time_stamp, num_nodes, num_latent))
+#     for t in range(time_stamp):
+#         result = tau_init[:, :]
+#         for t_prime in range(t):
+#             result = torch.einsum('ij,ijk->ik', result, tau_transition[t_prime+1, :, :,:])
+#         tau[t,:,:] = result
+#     return tau
+ 
 def tau_margin_generator(tau_init, tau_transition):
     time_stamp, num_nodes, num_latent, _ = tau_transition.shape
-    tau = torch.zeros((time_stamp, num_nodes, num_latent), dtype= torch.float64)
+    tau = torch.zeros((time_stamp, num_nodes, num_latent))
+    result = tau_init[:, :]
     for t in range(time_stamp):
-        result = tau_init[:, :]
-        for t_prime in range(t):
-            result = torch.einsum('ij,ijk->ik', result, tau_transition[t_prime+1, :, :,:])
+        if t == 0:
+            tau[t,:,:] = result
+            continue
+        result= torch.einsum('ij,ijk->ik', result, tau_transition[t, :, :,:])
         tau[t,:,:] = result
     return tau
-
-
-def initial_clustering(adj_matrices, num_latent):
-    # 인접 행렬을 쌓아 하나의 큰 행렬로 만듭니다.
-    stacked_matrix = torch.hstack([matrix for matrix in adj_matrices])
-    # k-means 알고리즘 적용
-    kmeans = KMeans(n_clusters=num_latent, random_state=0)
-    initial_labels = kmeans.fit_predict(stacked_matrix)
-    initial_labels_tensor = torch.tensor(initial_labels, dtype=torch.int64)
-    one_hot_labels = torch.nn.functional.one_hot(initial_labels_tensor, num_classes=num_latent)
-    one_hot_labels = one_hot_labels.to(dtype=torch.float64)
-    return one_hot_labels
-
-def inital_parameter(adj_matrices,num_latent):
-    time_stamp, num_nodes , _ = adj_matrices.shape
-    pi = torch.eye(num_latent, dtype=torch.float64, requires_grad=True)
-    alpha = torch.full((num_latent,), 1/num_latent, dtype=torch.float64, requires_grad=True)
-    beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64, requires_grad=True)
-
-    tau_init = initial_clustering(adj_matrices, num_latent)
-    tau_init.requires_grad_()
-    
-    tau_transition = torch.eye(num_latent, dtype=torch.float64).expand(time_stamp, num_nodes, num_latent, num_latent).clone().requires_grad_()
-    
-    return tau_init, tau_transition, pi, beta, alpha
-
-def inital_random(adj_matrices,num_latent):
-    time_stamp, num_nodes , _ = adj_matrices.shape
-    epsilon = 1e-2
-
-    concentration = torch.ones(num_latent, dtype=torch.float64)
-    tau_init = torch.stack([Dirichlet(concentration).sample() for _ in range(num_nodes)])
-    tau_transition = torch.stack([
-                        torch.stack([
-                            torch.stack([Dirichlet(concentration).sample() for _ in range(num_latent)])
-                                for __ in range(num_nodes)
-                            ]) for ___ in range(time_stamp)
-                        ])
-    alpha = Dirichlet(concentration).sample()
-    pi = torch.stack([Dirichlet(concentration).sample() for _ in range(num_latent)])
-    beta = torch.rand(time_stamp, num_latent, num_latent, dtype=torch.float64)
-
-
-    tau_init = torch.clamp(tau_init, min=epsilon, max=1 - epsilon)
-    tau_transition = torch.clamp(tau_transition, min=epsilon, max=1 - epsilon)
-    alpha = torch.clamp(alpha, min=epsilon, max=1 - epsilon)
-    pi = torch.clamp(pi, min=epsilon, max=1 - epsilon)
-    beta = torch.clamp(beta, min=epsilon, max=1 - epsilon)
-
-    tau_init = tau_init / tau_init.sum(dim=1, keepdim=True)
-    tau_transition = tau_transition/tau_transition.sum(dim=3, keepdim=True)
-    alpha =alpha/alpha.sum(dim=0, keepdim=True)
-    pi = pi / pi.sum(dim=1, keepdim=True)
-    
-    return tau_init, tau_transition, pi, beta, alpha
-
-def initial_before_softmax(intitalization):
-    tau_init, tau_transition, pi, beta, alpha = intitalization
-    epsilon = 1e-2
-    # 로그를 취할 때 양수인 값만 허용≈
-    tau_init = torch.log(torch.clamp(tau_init, min=epsilon, max = 1-epsilon))
-    tau_transition = torch.log(torch.clamp(tau_transition, min=epsilon, max = 1-epsilon))
-    pi = torch.log(torch.clamp(pi, min=epsilon, max = 1-epsilon))
-    alpha = torch.log(torch.clamp(alpha, min=epsilon, max = 1-epsilon))
-
-    beta = np.log(beta/ (1 - beta))
-
-    return tau_init, tau_transition, pi, beta, alpha
-
-def inital_gradient(intitalization):
-    tau_init, tau_transition, pi, beta, alpha = intitalization
-    tau_init.requires_grad_()
-    tau_transition.requires_grad_()
-    pi.requires_grad_()
-    beta.requires_grad_()
-    alpha.requires_grad_()
-
 
 
 def estimate(adjacency_matrix, 
@@ -160,9 +96,11 @@ def estimate(adjacency_matrix,
              bernoulli_case = 'low_plus', 
              trial = 0,
              num_iterations = 10000,
+             device = 'cpu',
              mode = 'new_random'):
     
     time_stamp, num_nodes , _ = adjacency_matrix.shape
+    adjacency_matrix = adjacency_matrix.to(torch.int32)
 
     print("time_stamp:", time_stamp)
     print("num_nodes:", num_nodes)
@@ -186,6 +124,19 @@ def estimate(adjacency_matrix,
 
     tau_init_pre, tau_transition_pre, pi_pre, beta_pre, alpha_pre= initialization
 
+    tau_init_pre = tau_init_pre.to(device)
+    tau_transition_pre = tau_transition_pre.to(device)
+    pi_pre = pi_pre.to(device)
+    beta_pre = beta_pre.to(device)
+    alpha_pre = alpha_pre.to(device)
+    adjacency_matrix = adjacency_matrix.to(device)
+    
+    tau_init_pre.requires_grad_()
+    tau_transition_pre.requires_grad_()
+    pi_pre.requires_grad_()
+    beta_pre.requires_grad_()
+    alpha_pre.requires_grad_()
+
     # tau_init_pre, tau_transition_pre, pi_pre, beta_pre, alpha_pre= inital_parameter(adjacency_matrix, num_latent)
 
 
@@ -208,29 +159,45 @@ def estimate(adjacency_matrix,
     best_loss = float('inf') 
 
     str_stability = str(stability).replace('0.', '0p')
-    # Gradient ascent
-    tau_init = F.softmax(tau_init_pre, dim=1)
-    tau_transition = F.softmax(tau_transition_pre, dim=3)
-    alpha = F.softmax(alpha_pre, dim=0)
-    pi = F.softmax(pi_pre,dim=1)
-    beta = F.sigmoid(beta_pre)
+
+    # tau_init = torch.softmax(tau_init_pre, dim=1)
+    # tau_transition = torch.softmax(tau_transition_pre, dim=3)
+    # alpha = torch.softmax(alpha_pre, dim=0)
+    # pi = torch.softmax(pi_pre,dim=1)
+    # beta = torch.sigmoid(beta_pre)
 
     # print(tau_init, tau_transition, pi, beta, alpha)
-
     for iter in range(num_iterations):
+
 
         optimizer_theta.zero_grad()
         optimizer_tau.zero_grad()
+       
+
+        tau_init = torch.softmax(tau_init_pre, dim=1)
+        tau_transition = torch.softmax(tau_transition_pre, dim=3)
+        alpha = torch.softmax(alpha_pre, dim=0)
+        pi = torch.softmax(pi_pre,dim=1)
+        beta = torch.sigmoid(beta_pre)
+
+        # tau_init = tau_init.to(device)
+        # tau_transition = tau_transition.to(device)
+        # pi = pi.to(device)
+        # beta = beta.to(device)
+        # alpha = alpha.to(device)
+        # adjacency_matrix = adjacency_matrix.to(device)
         
-        tau_init = F.softmax(tau_init_pre, dim=1)
-        tau_transition = F.softmax(tau_transition_pre, dim=3)
-        alpha = F.softmax(alpha_pre, dim=0)
-        pi = F.softmax(pi_pre,dim=1)
-        beta = F.sigmoid(beta_pre)
+        # tau_init.requires_grad_()
+        # tau_transition.requires_grad_()
+        # pi.requires_grad_()
+        # beta.requires_grad_()
+        # alpha.requires_grad_()
+
+        loss = -J(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix, device)
 
 
-        loss = -J(tau_init, tau_transition, alpha, pi, beta, adjacency_matrix)
         loss.backward()
+
         
         optimizer_theta.step()
         optimizer_tau.step()
@@ -244,6 +211,8 @@ def estimate(adjacency_matrix,
         if iter % 100 == 0:
             current_loss = -loss.item()
             if np.isnan(current_loss):
+                print(f"Stopping early at iteration {iter} due to Nan VALUE.")
+                torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
                 break
             print(f"Iteration {iter}: Loss = {current_loss}")
             # print(best_loss, loss)
@@ -256,12 +225,10 @@ def estimate(adjacency_matrix,
             
             if no_improve_count >= patience:
                 print(f"Stopping early at iteration {iter} due to no improvement.")
-                break
-
-            if iter % 500 == 0:
                 torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
-    
+                break  
     torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
+
     return loss
     
 

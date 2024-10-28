@@ -105,6 +105,19 @@ def inital_prior(intitalization):
 
     return tau_init, tau_transition, pi, beta, alpha
 
+# def initial_before_softmax(intitalization):
+#     tau_init, tau_transition, pi, beta, alpha = intitalization
+#     epsilon = 1e-2
+
+#     # 각 텐서를 float32로 변환한 후 clamp와 log 적용
+#     tau_init = torch.log(torch.clamp(tau_init.to(torch.float32), min=epsilon, max=1-epsilon))
+#     tau_transition = torch.log(torch.clamp(tau_transition.to(torch.float32), min=epsilon, max=1-epsilon))
+#     pi = torch.log(torch.clamp(pi.to(torch.float32), min=epsilon, max=1-epsilon))
+#     alpha = torch.log(torch.clamp(alpha.to(torch.float32), min=epsilon, max=1-epsilon))
+#     beta = torch.log(torch.clamp(beta.to(torch.float32), min=epsilon, max=1-epsilon))
+
+#     return tau_init, tau_transition, pi, beta, alpha
+
 def initial_before_softmax(intitalization):
     tau_init, tau_transition, pi, beta, alpha = intitalization
     epsilon = 1e-2
@@ -113,8 +126,7 @@ def initial_before_softmax(intitalization):
     tau_transition = torch.log(torch.clamp(tau_transition, min=epsilon, max = 1-epsilon))
     pi = torch.log(torch.clamp(pi, min=epsilon, max = 1-epsilon))
     alpha = torch.log(torch.clamp(alpha, min=epsilon, max = 1-epsilon))
-
-    beta = logit_safe(beta)
+    beta = torch.log(torch.clamp(beta, min=epsilon, max = 1-epsilon))
 
     return tau_init, tau_transition, pi, beta, alpha
 
@@ -145,7 +157,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                         bernoulli_case = bernoulli_case)
     
     initialization_kmeans = inital_kmeans(Y,num_latent)
-    torch.save(initialization_kmeans, f"parameter/{num_nodes}_{time_stamp}_{str_stability}/initialization/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/initialization_kmeans.pt")
+    torch.save(initialization_kmeans, f"parameter/{num_nodes}_{time_stamp}_{str_stability}/initialization/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/initialization_kmeans_{total_iteration}.pt")
     initialization_kmeans_new = tuple(tensor.clone() for tensor in initialization_kmeans)
 
     print("prior kmeans ------------------------------------------------------------------------------")
@@ -200,10 +212,10 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
     for j in range(num_trials):
         # 추정
         initialization = inital_random(Y,num_latent)
-        torch.save(initialization, f"parameter/{num_nodes}_{time_stamp}_{str_stability}/initialization/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/initialization_{j}.pt")
+        torch.save(initialization, f"parameter/{num_nodes}_{time_stamp}_{str_stability}/initialization/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/initialization_{total_iteration}.pt")
     
         initialization_new = tuple(tensor.clone() for tensor in initialization)
-
+        
         print(f"prior {j} times ------------------------------------------------------------------------------")
         prior_random_loss = estimate_old(adjacency_matrix = Y, 
                                         initialization = initialization,
@@ -233,7 +245,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                         total_iteration = total_iteration, 
                         bernoulli_case = bernoulli_case,
                         trial = j,
-                        num_iterations = 10000,
+                        num_iterations = 5000,
                         mode = 'new_random')
     
         # loss = estimate_gpu(adjacency_matrix = Y, 
@@ -286,16 +298,16 @@ if __name__ == "__main__":
     time_stamp = 5
     num_latent = 2
     num_nodes = 100
-    stability = 0.751
+    stability = 0.6
     total_iteration = 0
     distribution = 'Bernoulli'
-    num_trials = 1
+    num_trials = 8
     
     # bernoulli_case = 'low_minus'
     # bernoulli_case = 'low_plus'
-    bernoulli_case = 'medium_minus'
+    # bernoulli_case = 'medium_minus'
     # bernoulli_case = 'medium_plus'
-    # bernoulli_case = 'medium_with_affiliation'
+    bernoulli_case = 'medium_with_affiliation'
     # bernoulli_case = 'large'
 
     str_stability = str(stability).replace('0.', '0p')

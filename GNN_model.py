@@ -185,8 +185,8 @@ def GNN_estimate(adjacency_matrix,
     params = list(TAU_init_model.parameters()) + \
             list(TAU_transition_model.parameters()) + \
             list(GNN_latent.parameters())
-    optimizer_theta = optim.Adam([pi_pre, alpha_pre, beta_pre], lr=5e-2)
-    optimizer_tau =  optim.Adam(params, lr=0.001)    
+    optimizer_theta = optim.Adam([pi_pre, alpha_pre, beta_pre], lr=5e-4)
+    optimizer_tau =  optim.Adam(params, lr=5e-5)    
 
     # Learning rate scheduler
     scheduler_theta = StepLR(optimizer_theta, step_size=200, gamma=0.9)
@@ -209,7 +209,7 @@ def GNN_estimate(adjacency_matrix,
         optimizer_tau.zero_grad()
         
 
-        edge_indices_list = adjacency_to_edge_index(Y)
+        edge_indices_list = adjacency_to_edge_index(adjacency_matrix)
 
         node_ids = torch.arange(num_nodes)
         data_list = []
@@ -227,7 +227,7 @@ def GNN_estimate(adjacency_matrix,
 
         for t, node_embedding in enumerate(splits):
             if t == 0:
-                tau_init = tau_init_new(node_embedding, TAU_init_model)
+                tau_init = F.softmax(tau_init_new(node_embedding, TAU_init_model),dim=1)
             else:
                 result = torch.zeros(num_nodes,num_latent*num_latent)
                 for t_prime in range (t):
@@ -277,11 +277,11 @@ def GNN_estimate(adjacency_matrix,
 if __name__ == "__main__":
     num_nodes = 100
     num_latent = 2
-    node_latent = 4
+    node_latent = 5
 
     time_stamp = 5
-    stability = 0.75
-    iteration = 92
+    stability = 0.751
+    iteration = 0
     trial = 5
 
 
