@@ -280,13 +280,9 @@ if __name__ == "__main__":
     node_latent = 5
 
     time_stamp = 5
-<<<<<<< HEAD
     stability = 0.751
     iteration = 0
-=======
-    stability = 0.752
-    iteration = 92
->>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
+
     trial = 5
 
 

@@ -2,11 +2,11 @@ nohup python main.py > output/output__medium_plus_10_0p9.txt 2>&1 &
 
 
 
-nohup python main.py > output/100_5_0p6/output_low_minus_100_5_0p6.txt 2>&1 &
-nohup python main.py > output/100_5_0p6/output_low_plus_100_5_0p6.txt 2>&1 &
-nohup python main.py > output/100_5_0p6/output_medium_minus_100_5_0p6.txt 2>&1 &
-nohup python main.py > output/100_5_0p6/output_medium_plus_100_5_0p6.txt 2>&1 &
-nohup python main.py > output/100_5_0p6/output_medium_with_affiliation_100_5_0p6.txt 2>&1 &
+nohup python main.py > output/100_10_0p75/output_low_minus_100_10_0p75.txt 2>&1 &
+nohup python main.py > output/100_10_0p75/output_low_plus_100_10_0p75.txt 2>&1 &
+nohup python main.py > output/100_10_0p75/output_medium_minus_100_10_0p75.txt 2>&1 &
+nohup python main.py > output/100_10_0p75/output_medium_plus_100_10_0p75.txt 2>&1 &
+nohup python main.py > output/100_10_0p75/output_medium_with_affiliation_100_10_0p75.txt 2>&1 &
 
 
 
