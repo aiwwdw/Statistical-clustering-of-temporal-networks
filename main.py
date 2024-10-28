@@ -295,15 +295,19 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
     
 
 if __name__ == "__main__":
-    time_stamp = 5
+    time_stamp = 10
     num_latent = 2
     num_nodes = 100
+<<<<<<< HEAD
     stability = 0.6
+=======
+    stability = 0.75
+>>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
     total_iteration = 0
     distribution = 'Bernoulli'
     num_trials = 8
     
-    # bernoulli_case = 'low_minus'
+    bernoulli_case = 'low_minus'
     # bernoulli_case = 'low_plus'
     # bernoulli_case = 'medium_minus'
     # bernoulli_case = 'medium_plus'

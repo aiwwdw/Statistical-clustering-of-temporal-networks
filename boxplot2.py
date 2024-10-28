@@ -3,7 +3,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
+<<<<<<< HEAD
 setting = '100_5_0p6'
+=======
+setting = '100_5_0p75'
+>>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
 
 
 data_frames = []
@@ -11,11 +15,19 @@ labels = ['low-', 'low+', 'medium-', 'medium+', 'medium w/ affiliation']
 est_types = ['', 'kmeans_','prior_random_','prior_kmeans_']
 
 file_paths = [
+<<<<<<< HEAD
     f'output/{setting}/result_low_minus_{setting}.csv',
     f'output/{setting}/result_low_plus_{setting}.csv',
     f'output/{setting}/result_medium_minus_{setting}.csv',
     f'output/{setting}/result_medium_plus_{setting}.csv',
     f'output/{setting}/result_medium_with_affiliation_{setting}.csv'
+=======
+    f'output/{setting}_4/result_low_minus_{setting}.csv',
+    f'output/{setting}_4/result_low_plus_{setting}.csv',
+    f'output/{setting}/result_medium_minus_{setting}.csv',
+    f'output/{setting}_4/result_medium_plus_{setting}.csv',
+    f'output/{setting}_4/result_medium_with_affiliation_{setting}.csv'
+>>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
 ]
 
 for est_type in est_types:

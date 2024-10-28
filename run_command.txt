@@ -10,4 +10,5 @@ nohup python main.py > output/100_5_0p6/output_medium_with_affiliation_100_5_0p6
 
 
 
+
 cd git_repository/Statistical-clustering-of-temporal-networks
