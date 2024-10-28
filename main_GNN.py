@@ -134,7 +134,6 @@ def inital_gradient(intitalization, device):
     beta.requires_grad_()
     alpha.requires_grad_()
 
-<<<<<<< HEAD
     return tau_init, tau_transition, pi, beta, alpha
 
 def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, total_iteration = 0, distribution = 'Bernoulli', bernoulli_case = 'medium_plus', num_trials = 1, mode = 'new'):
@@ -189,12 +188,9 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                         total_iteration = total_iteration, 
                         bernoulli_case = bernoulli_case,
                         trial = 0,
-<<<<<<< HEAD
                         num_iterations = 10,
                         device= device,
-=======
-                        num_iterations = 10000,
->>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
+
                         mode = 'new_kmeans')
     
     kmeans_global_ARI, kmeans_average_ARI = eval(bernoulli_case =bernoulli_case, 
@@ -244,11 +240,8 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                                                                 mode = 'prior_random')
         
         intitalization_new_pre = initial_before_softmax(initialization_new)
-<<<<<<< HEAD
         inital_gradient(intitalization_new_pre,device)
-=======
-        inital_gradient(intitalization_new_pre)
->>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
+
 
         print(f"ours {j} times ------------------------------------------------------------------------------")
         loss = estimate(adjacency_matrix = Y, 
@@ -258,12 +251,9 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                         total_iteration = total_iteration, 
                         bernoulli_case = bernoulli_case,
                         trial = j,
-<<<<<<< HEAD
                         num_iterations = 10,
                         device= device,
-=======
-                        num_iterations = 10000,
->>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
+
                         mode = 'new_random')
     
         # loss = estimate_gpu(adjacency_matrix = Y, 
@@ -291,11 +281,8 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                         bernoulli_case = bernoulli_case,
                         trial = j,
                         num_iterations = 10000,
-<<<<<<< HEAD
                         mode = 'GNN')
-=======
-                        mode = 'GNN_random')
->>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
+
         
         GNN_global_ARI, GNN_average_ARI = eval(bernoulli_case =bernoulli_case, 
                                         num_nodes = num_nodes,
@@ -303,11 +290,8 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                                         stability = stability, 
                                         total_iteration = total_iteration,
                                         trial = j,
-<<<<<<< HEAD
                                         mode = 'GNN')
-=======
-                                        mode = 'GNN_random')
->>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
+
     
 
 
@@ -351,11 +335,7 @@ if __name__ == "__main__":
     time_stamp = 5
     num_latent = 2
     num_nodes = 100
-<<<<<<< HEAD
     stability = 0.751
-=======
-    stability = 0.752
->>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
     total_iteration = 0
     distribution = 'Bernoulli'
     num_trials = 1
@@ -380,10 +360,8 @@ if __name__ == "__main__":
     directory_kmeans_est = f"parameter/{num_nodes}_{time_stamp}_{str_stability}/new_kmeans_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
     directory_prior_random_est = f"parameter/{num_nodes}_{time_stamp}_{str_stability}/prior_random_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
     directory_prior_kmeans_est = f"parameter/{num_nodes}_{time_stamp}_{str_stability}/prior_kmeans_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
-<<<<<<< HEAD
     directory_GNN_est = f"parameter/{num_nodes}_{time_stamp}_{str_stability}/GNN_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
-=======
->>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
+
     directory_initialization_est = f"parameter/{num_nodes}_{time_stamp}_{str_stability}/initialization/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}"
 
     if not os.path.exists(directory_output):
@@ -409,12 +387,10 @@ if __name__ == "__main__":
         
     if not os.path.exists(directory_initialization_est):
         os.makedirs(directory_initialization_est)
-<<<<<<< HEAD
         
     if not os.path.exists(directory_GNN_est):
         os.makedirs(directory_GNN_est)
-=======
->>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
+
 
    
 
