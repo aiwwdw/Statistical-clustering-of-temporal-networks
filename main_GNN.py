@@ -137,8 +137,6 @@ def inital_gradient(intitalization, device):
 <<<<<<< HEAD
     return tau_init, tau_transition, pi, beta, alpha
 
-=======
->>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
 def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, total_iteration = 0, distribution = 'Bernoulli', bernoulli_case = 'medium_plus', num_trials = 1, mode = 'new'):
 
     # 데이터 생성
@@ -180,12 +178,8 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
                                                             mode = 'prior_kmeans')
     
     intitalization_kmeans_new_pre = initial_before_softmax(initialization_kmeans_new)
-<<<<<<< HEAD
     # intitalization_kmeans_new_pre = inital_gradient(intitalization_kmeans_new_pre, device)
     # print(intitalization_kmeans_new_pre[0])
-=======
-    inital_gradient(intitalization_kmeans_new_pre)
->>>>>>> cf7dea5746bdd9615bf8690b45cf77458e14273b
 
     print("ours kmeans ------------------------------------------------------------------------------")
     kmeans_loss = estimate(adjacency_matrix = Y, 
