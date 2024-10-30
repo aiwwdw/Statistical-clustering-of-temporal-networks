@@ -4,7 +4,7 @@ import seaborn as sns
 
 
 
-setting = '100_5_0p6'
+setting = '100_10_0p75'
 
 
 
@@ -62,7 +62,7 @@ for est_type in est_types:
     plt.legend(handles=[global_legend, average_legend], title='ARI Type')
 
     # 플롯 세부사항 설정
-    plt.title('Boxplot of Global ARI (White) and Average ARI (Gray) by Condition')
+    plt.title(f'Boxplot of Global ARI (White) and Average ARI (Gray) in {est_type}')
     plt.ylabel('Adjusted Rand Index')
     plt.xticks(range(len(labels)), labels)
 
