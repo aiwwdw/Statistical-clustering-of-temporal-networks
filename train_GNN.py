@@ -16,11 +16,11 @@ from tauNN import GNNModel, TAU_init,TAU_transition, tau_init_new, tau_transitio
 
 torch.autograd.set_detect_anomaly(True)
 
-def J(tau_init, tau_transition, alpha, pi, beta, Y):
-    N, Q = tau_init.shape
+def J(tau_inits, tau_transitions, alpha, pi, beta, Y):
+    batch_size, N, Q = tau_inits.shape
     batch_size, T, _,_ = Y.shape
 
-    tau_marg = tau_margin_generator(tau_init,tau_transition)
+    tau_marg = tau_margin_generator(tau_inits,tau_transitions)
     print(tau_marg.shape)
     q_indices = torch.arange(Q).view(1, 1, 1, Q, 1, 1).expand(batch_size, T, Q, Q, N, N).to("cuda:0")
     l_indices = torch.arange(Q).view(1, 1, Q, 1, 1, 1).expand(batch_size, T, Q, Q, N, N).to("cuda:0")
@@ -43,7 +43,6 @@ def J(tau_init, tau_transition, alpha, pi, beta, Y):
    
 
     # Second term
-   
     term2=0
     for t in range(1, T):
         term2 += (torch.einsum('ij,ijk->ijk', tau_marg[t-1, :, :], tau_transition[t, :, :,:]) * (torch.log(pi[:, :]).unsqueeze(0).expand(N,Q,Q) - torch.log(tau_transition[t, :, :, :]))).sum()
@@ -65,13 +64,13 @@ def phi_vectorized(q, l, t, y, beta, distribution='Bernoulli'):
     return result
 
 def tau_margin_generator(tau_init, tau_transition):
-    time_stamp, num_nodes, num_latent, _ = tau_transition.shape
-    tau = torch.zeros((time_stamp, num_nodes, num_latent)).to('cuda:0')
+    batch_size, time_stamp, num_nodes, num_latent, _ = tau_transition.shape
+    tau = torch.zeros((batch_size, time_stamp, num_nodes, num_latent)).to('cuda:0')
     for t in range(time_stamp):
-        result = tau_init[:, :]
+        result = tau_init[:, :, :]
         for t_prime in range(t):
-            result = torch.einsum('ij,ijk->ik', result, tau_transition[t_prime+1, :, :,:])
-        tau[t,:,:] = result
+            result = torch.einsum('bij,bijk->bik', result, tau_transition[: t_prime+1, :, :,:])
+        tau[:,t,:,:] = result
     return tau
 
 
@@ -186,15 +185,18 @@ def GNN_estimate(adjacency_matrices,  # 이제 DataLoader가 됩니다
         total_loss = 0
 
         # DataLoader에서 배치 단위로 데이터를 가져옵니다.
-        for batch_idx in range(batch_size):
-            for batch_data in adjacency_matrices:
-                adjacency_batch = batch_data[0].to(device)  # 배치를 불러오고 장치로 이동
-                batch_size, time_stamp, num_nodes, _ = adjacency_batch.shape
+        for batch_data in adjacency_matrices:
+            adjacency_batch = batch_data[0]
+            print(adjacency_batch.shape)
+            batch_size, time_stamp, num_nodes, _ = adjacency_batch.shape
 
-                # 그래디언트 초기화
-                optimizer_theta.zero_grad()
-                optimizer_tau.zero_grad()
+            # 그래디언트 초기화
+            optimizer_theta.zero_grad()
+            optimizer_tau.zero_grad()
+            tau_inits = []
+            tau_transitions = []
 
+            for batch_idx in range(batch_size):
                 edge_indices_list = adjacency_to_edge_index(adjacency_batch[batch_idx])
 
                 node_ids = torch.arange(num_nodes).to(device)
@@ -219,41 +221,20 @@ def GNN_estimate(adjacency_matrices,  # 이제 DataLoader가 됩니다
                         for t_prime in range (t):
                             result = TAU_transition_model(splits[t_prime], result)  
                         tau_transition[t] = F.softmax(result.view(num_nodes, num_latent, num_latent), dim=2)
+                tau_inits.append(tau_init)
+                tau_transitions.append(tau_transition)
+            
+            tau_inits_tensor = torch.stack(tau_inits)  # [batch_size, num_nodes, num_latent]
+            tau_transitions_tensor = torch.stack(tau_transitions)
 
-            # 배치에 대해 tau_transition 초기화
-            # tau_transition = torch.zeros(batch_size, time_stamp, num_nodes, num_latent, num_latent).to(device)
-
-            # 모델 예측 및 업데이트 수행
-            # for t in range(time_stamp):
-            #     node_embeddings = []
-                
-            #     # 현재 시점의 배치 데이터로부터 그래프 데이터 추출
-            #     for batch_idx in range(batch_size):
-            #         edge_index = adjacency_to_edge_index(adjacency_batch[batch_idx])  # 각 배치의 현재 시점 데이터
-            #         node_ids = torch.arange(num_nodes).to(device)
-            #         data = Data(x=node_ids, edge_index=edge_index)
-            #         node_embedding = GNN_latent(data.x, data.edge_index)  # GNN 모델로 임베딩 추출
-            #         node_embeddings.append(node_embedding)
-                
-            #     node_embeddings = torch.stack(node_embeddings)  # 배치 차원으로 스택
-
-            #     if t == 0:
-            #         # 초기화 단계에서 tau_init 계산
-            #         tau_init = F.softmax(tau_init_new(node_embeddings, TAU_init_model), dim=2)
-            #     else:
-            #         result = torch.zeros(batch_size, num_nodes, num_latent * num_latent).to(device)
-            #         for t_prime in range(t):
-            #             # 이전 시점의 임베딩을 기반으로 tau_transition 계산
-            #             result = TAU_transition_model(node_embeddings, result)
-            #         tau_transition[:, t] = F.softmax(result.view(batch_size, num_nodes, num_latent, num_latent), dim=3)
 
             # 파라미터 갱신
             alpha = F.softmax(alpha_pre, dim=0).to(device)
             pi = F.softmax(pi_pre, dim=1).to(device)
             beta = F.sigmoid(beta_pre).to(device)
-
+            print(tau_init.shape)
             # 손실 계산 (예: 음의 로그 우도)
-            loss = -J(tau_init, tau_transition, alpha, pi, beta, adjacency_batch)
+            loss = -J(tau_inits_tensor, tau_transitions_tensor, alpha, pi, beta, adjacency_batch)
             loss.backward()
 
             # 옵티마이저를 통해 파라미터 업데이트
@@ -307,7 +288,7 @@ if __name__ == "__main__":
         Y = torch.load(f'parameter/{num_nodes}_{time_stamp}_{str_stability}/adjacency/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/Y_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{iteration}.pt')
         Y_list.append(Y)
 
-    adjacency_matrices = torch.stack(Y_list, dim=0)
+    adjacency_matrices = torch.stack(Y_list, dim=0).to(device)
 
     # 데이터를 DataLoader로 묶기
     dataset = TensorDataset(adjacency_matrices)

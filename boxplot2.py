@@ -67,7 +67,7 @@ for est_type in est_types:
     plt.xticks(range(len(labels)), labels)
 
     # 플롯을 파일로 저장합니다.
-    output_file_path = f'{setting}_boxplot_{est_type}global_average.png'
+    output_file_path = f'plot/{setting}/{setting}_boxplot_{est_type}global_average.png'
     plt.savefig(output_file_path)
 
     # 플롯을 표시합니다.

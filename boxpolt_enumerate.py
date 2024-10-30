@@ -47,5 +47,5 @@ for i, file_path in enumerate(file_paths):
 plt.subplots_adjust(left=0.1, right=0.9, top=0.88, bottom=0.1, wspace=0.05, hspace=0.05)  # 간격 조정
 
 # 파일로 저장
-plt.savefig(f'output_{setting}.png', dpi=300, bbox_inches='tight')  # 여백 제거하여 저장
+plt.savefig(f'plot/overall/output_{setting}.png', dpi=300, bbox_inches='tight')  # 여백 제거하여 저장
 plt.show()
