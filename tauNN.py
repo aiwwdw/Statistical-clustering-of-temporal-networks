@@ -71,6 +71,7 @@ class GNNModel(nn.Module):
         return x
     
 def adjacency_to_edge_index(Y):
+    print(f"Shape of Y: {Y.shape}") 
     T, N, _ = Y.shape  # Y는 (T, N, N) 크기
     edge_indices = []
 

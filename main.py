@@ -304,11 +304,11 @@ if __name__ == "__main__":
     distribution = 'Bernoulli'
     num_trials = 8
     
-    bernoulli_case = 'low_minus'
+    # bernoulli_case = 'low_minus'
     # bernoulli_case = 'low_plus'
     # bernoulli_case = 'medium_minus'
     # bernoulli_case = 'medium_plus'
-    # bernoulli_case = 'medium_with_affiliation'
+    bernoulli_case = 'medium_with_affiliation'
     # bernoulli_case = 'large'
 
     str_stability = str(stability).replace('0.', '0p')
