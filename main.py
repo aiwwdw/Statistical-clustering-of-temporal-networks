@@ -295,10 +295,10 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
     
 
 if __name__ == "__main__":
-    time_stamp = 10
+    time_stamp = 5
     num_latent = 2
     num_nodes = 100
-    stability = 0.75
+    stability = 0.9
 
     total_iteration = 0
     distribution = 'Bernoulli'
