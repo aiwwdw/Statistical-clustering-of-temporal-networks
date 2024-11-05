@@ -295,7 +295,7 @@ def main(time_stamp = 10, num_latent = 2, num_nodes = 100, stability = 0.9, tota
     
 
 if __name__ == "__main__":
-    time_stamp = 5
+    time_stamp = 10
     num_latent = 2
     num_nodes = 100
     stability = 0.9
@@ -305,10 +305,10 @@ if __name__ == "__main__":
     num_trials = 8
     
     # bernoulli_case = 'low_minus'
-    # bernoulli_case = 'low_plus'
+    bernoulli_case = 'low_plus'
     # bernoulli_case = 'medium_minus'
     # bernoulli_case = 'medium_plus'
-    bernoulli_case = 'medium_with_affiliation'
+    # bernoulli_case = 'medium_with_affiliation'
     # bernoulli_case = 'large'
 
     str_stability = str(stability).replace('0.', '0p')
