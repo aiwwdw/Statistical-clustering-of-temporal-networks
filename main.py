@@ -298,7 +298,7 @@ if __name__ == "__main__":
     time_stamp = 10
     num_latent = 2
     num_nodes = 100
-    stability = 0.9
+    stability = 0.89
 
     total_iteration = 0
     distribution = 'Bernoulli'
