@@ -3,7 +3,7 @@ import matplotlib.image as mpimg
 from matplotlib.gridspec import GridSpec
 
 # 파일 경로 및 설정
-setting = '100_5_0p9'
+setting = '100_5_0p75'
 file_paths = [
     f'plot/{setting}/{setting}_boxplot_global_average.png',          # Ours - Random
     f'plot/{setting}/{setting}_boxplot_kmeans_global_average.png',   # Ours - K-means
