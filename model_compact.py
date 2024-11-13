@@ -211,8 +211,8 @@ def estimate(adjacency_matrix,
         # Check for stopping criteria every 100 iterations
        
         if iter % 100 == 0:
-            end_time = time.time()
-            print(f"Execution Time: {(end_time - start_time)/100} seconds")
+            # end_time = time.time()
+            # print(f"Execution Time: {(end_time - start_time)/100} seconds")
             current_loss = -loss.item()
             if np.isnan(current_loss):
                 print(f"Stopping early at iteration {iter} due to Nan VALUE.")
@@ -231,7 +231,7 @@ def estimate(adjacency_matrix,
                 print(f"Stopping early at iteration {iter} due to no improvement.")
                 torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
                 break  
-            start_time = time.time()
+            # start_time = time.time()
     torch.save([pi_pre, alpha_pre, beta_pre, tau_init_pre, tau_transition_pre], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
 
     return loss

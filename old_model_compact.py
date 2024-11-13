@@ -245,8 +245,8 @@ def estimate_old(adjacency_matrix,
         loss = - J(tau_init,tau_transition, alpha, pi, beta, adjacency_matrix)
 
         if iteration % 10 == 9:
-            end_time = time.time()
-            print(f"Execution Time: {(end_time - start_time)/10} seconds")
+            # end_time = time.time()
+            # print(f"Execution Time: {(end_time - start_time)/10} seconds")
             current_loss = -loss.item()
             print(f"Iteration {iteration+1}: Loss = {current_loss}")
             if np.isnan(current_loss):
@@ -259,13 +259,13 @@ def estimate_old(adjacency_matrix,
                 best_loss = loss
                 no_improve_count = 0
             
-            if no_improve_count >= 3:
+            if no_improve_count >= 10:
                 print(f"Stopping early at iteration {iteration} due to no improvement.")
                 break
 
             if iteration % 50 == 0:
                 torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
-            start_time = time.time()
+            # start_time = time.time()
     torch.save([pi, alpha, beta, tau_init, tau_transition], f'parameter/{num_nodes}_{time_stamp}_{str_stability}/{mode}_estimation/{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}/estimate_{bernoulli_case}_{num_nodes}_{time_stamp}_{str_stability}_{total_iteration}_{trial}.pt')
     return loss
 
