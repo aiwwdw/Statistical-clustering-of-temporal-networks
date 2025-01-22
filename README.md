@@ -1,1 +1,1 @@
-# Statistical-clustering-of-temporal-networks
+# Statistical clustering of temporal networks
