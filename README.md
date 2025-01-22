@@ -36,4 +36,7 @@ The proposed approach demonstrates improvements in speed, memory efficiency, and
 
 ---
 
-## How to Run
+## Resources
+
+- **[Research Paper](https://github.com/aiwwdw/Statistical-clustering-of-temporal-networks/blob/main/STATISTICAL_CLUSTERING_using_Optimizer-2.pdf)**: Detailed description of the research and findings.
+
