@@ -33,15 +33,6 @@ The proposed approach demonstrates improvements in speed, memory efficiency, and
    - Evaluates performance using synthetic datasets under various conditions (e.g., group stability, time stamps).
    - Demonstrates superiority of optimizer-based methods in Adjusted Rand Index (ARI) metrics.
 
----
-
-## File Structure
-
-- **`main.py`**: Entry point for training and evaluating the model.
-- **`dsbm_model.py`**: Implementation of the Dynamic Stochastic Block Model.
-- **`optimizer_utils.py`**: Utility functions for gradient descent optimization.
-- **`synthetic_data_generator.py`**: Generates synthetic temporal network datasets.
-- **`evaluation.py`**: Calculates evaluation metrics like ARI for clustering results.
 
 ---
 
